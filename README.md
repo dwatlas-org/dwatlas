@@ -20,4 +20,6 @@ uv sync
 
 ### Contributing
 
-Simply create a branch (use a clear name like `feat/user-auth` or `fix/header-typo`) and submit a pull request.
+Simply create a branch (prefer a clear name like `feat/user-auth` or `fix/header-typo`) and submit a pull request.
+
+Join the community on [Zulip](https://dwatlas.zulipchat.com/).
