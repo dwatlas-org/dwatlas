@@ -15,6 +15,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.get("/")
 def root():
     return {"Hello": "World"}
@@ -23,8 +24,3 @@ def root():
 @app.get("/dashboard/{id}")
 def dashboard(id: int, name: str | None = None):
     return {"id": id, "name": name}
-
-
-@app.post("/auth/login")
-def login(username: str, password: str):
-    pass
