@@ -1,7 +1,7 @@
 from sqlmodel import Session
 
 from .database import sqlite_engine
-from .models import User
+from .models import User, UserCreate, UserPublic
 
 
 def get_users_all():
@@ -10,13 +10,14 @@ def get_users_all():
     return users
 
 
-def create_user(username: str, email: str | None, full_name: str | None, disabled: bool | None):
+def create_user(user: UserCreate, response_model=UserPublic):
     with Session(sqlite_engine) as session:
-        user = User(username=username, email=email, full_name=full_name, disabled=disabled)
-        session.add(user)
+        extra_data = {"hashed_password": hash_password(user.password)}
+        db_user = User.model_validate(user, update=extra_data)
+        session.add(db_user)
         session.commit()
-        session.refresh(user)
-    return user
+        session.refresh(db_user)
+    return db_user
 
 
 def delete_user(user_id: int):
@@ -26,10 +27,14 @@ def delete_user(user_id: int):
         session.commit()
 
 
-def get_user(user_id: int):
+def get_user(user_id: int, response_model=UserPublic):
     with Session(sqlite_engine) as session:
         user = session.query(User).get(user_id)
     return user
+
+
+def hash_password(password: str):
+    return "thisisnotahash"
 
 
 def update_user(user_id: int, username: str | None, email: str | None, full_name: str | None, disabled: bool | None):
