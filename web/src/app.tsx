@@ -1,11 +1,11 @@
-import './global.css'
+import "./global.css";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card'
+} from "@/components/ui/card";
 
 function App() {
   return (
@@ -22,9 +22,9 @@ function App() {
             Your design system is ready. Start building your next component.
           </CardContent>
         </Card>
-      </div >
+      </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
