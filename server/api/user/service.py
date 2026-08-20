@@ -26,6 +26,12 @@ def delete_user(user_id: int):
         session.commit()
 
 
+def get_user(user_id: int):
+    with Session(sqlite_engine) as session:
+        user = session.query(User).get(user_id)
+    return user
+
+
 def update_user(user_id: int, username: str | None, email: str | None, full_name: str | None, disabled: bool | None):
     with Session(sqlite_engine) as session:
         user = session.query(User).get(user_id)
