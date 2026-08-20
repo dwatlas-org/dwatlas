@@ -8,8 +8,7 @@ from sqlalchemy.ext.asyncio import (
 )
 
 POSTGRES_URL = os.getenv(
-    "POSTGRES_URL",
-    "postgresql+asyncpg://readonly_user:password@server/meucorre"
+    "POSTGRES_URL", "postgresql+asyncpg://readonly_user:password@server/meucorre"
 )
 
 postgres_engine = create_async_engine(
@@ -24,6 +23,7 @@ PostgresSessionLocal = async_sessionmaker(
     class_=AsyncSession,
     expire_on_commit=False,
 )
+
 
 async def postgres_session() -> AsyncGenerator[AsyncSession, None]:
     async with PostgresSessionLocal() as session:
