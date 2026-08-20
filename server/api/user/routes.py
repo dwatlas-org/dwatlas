@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from .service import get_users_all, create_user, delete_user, update_user
+from .service import get_users_all, create_user, delete_user, get_user, update_user
 
 router = APIRouter()
 
@@ -23,6 +23,11 @@ def api_create_user(username: str, email: str | None, full_name: str | None, dis
 @router.post("/user/delete")
 def api_delete_user(user_id: int):
     return delete_user(user_id)
+
+
+@router.get("/user/{user_id}")
+def api_get_user(user_id: int):
+    return get_user(user_id)
 
 
 @router.post("/user/update")
