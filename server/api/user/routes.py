@@ -1,8 +1,6 @@
 from fastapi import APIRouter
-from sqlmodel import Session
 
-from .database import sqlite_engine
-from .models import User
+from .service import get_users_all, create_user, delete_user, update_user
 
 router = APIRouter()
 
@@ -13,39 +11,20 @@ def login(username: str, password: str):
 
 
 @router.get("/user/all")
-def get_users_all():
-    with Session(sqlite_engine) as session:
-        users = session.query(User).all()
-    return users
+def api_get_users_all():
+    return get_users_all()
 
 
 @router.post("/user/create")
-def create_user(username: str, email: str | None, full_name: str | None, disabled: bool | None):
-    with Session(sqlite_engine) as session:
-        user = User(username=username, email=email, full_name=full_name, disabled=disabled)
-        session.add(user)
-        session.commit()
-        session.refresh(user)
-    return user
+def api_create_user(username: str, email: str | None, full_name: str | None, disabled: bool | None):
+    return create_user()
 
 
 @router.post("/user/delete")
-def delete_user(user_id: int):
-    with Session(sqlite_engine) as session:
-        user = session.query(User).filter_by(id=user_id).first()
-        session.delete(user)
-        session.commit()
+def api_delete_user(user_id: int):
+    return delete_user(user_id)
 
 
 @router.post("/user/update")
-def update_user(user_id: int, username: str | None, email: str | None, full_name: str | None, disabled: bool | None):
-    with Session(sqlite_engine) as session:
-        user = session.query(User).filter_by(id=user_id).first()
-        user.username = username
-        user.email = email
-        user.full_name = full_name
-        user.disabled = disabled
-        session.commit()
-        session.refresh(user)
-    return user
-
+def api_update_user(user_id: int, username: str | None, email: str | None, full_name: str | None, disabled: bool | None):
+    return update_user(user_id, username, email, full_name, disabled)
