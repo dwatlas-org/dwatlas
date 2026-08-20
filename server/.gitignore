@@ -14,9 +14,11 @@ __pycache__/
 htmlcov/
 .tox/
 
+.zed
 .vscode/
 .idea/
 *.swp
 .DS_Store
+tmux.*
 
 *.log
