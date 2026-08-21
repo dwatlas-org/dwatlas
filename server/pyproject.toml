@@ -9,3 +9,8 @@ dependencies = [
 
 [tool.fastapi]
 entrypoint = "api.main:app"
+
+[dependency-groups]
+dev = [
+    "prek>=0.4.14",
+]
