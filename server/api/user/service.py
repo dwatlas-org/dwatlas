@@ -3,6 +3,8 @@ from sqlmodel import Session
 from .database import sqlite_engine
 from .models import User, UserCreate, UserPublic
 
+# TODO 🚨 You probably want to use `session.exec()` instead of `session.query()`.
+
 
 def get_users_all():
     with Session(sqlite_engine) as session:
@@ -37,7 +39,13 @@ def hash_password(password: str):
     return "thisisnotahash"
 
 
-def update_user(user_id: int, username: str | None, email: str | None, full_name: str | None, disabled: bool | None):
+def update_user(
+    user_id: int,
+    username: str | None,
+    email: str | None,
+    full_name: str | None,
+    disabled: bool | None,
+):
     with Session(sqlite_engine) as session:
         user = session.query(User).get(user_id)
         user.username = username
