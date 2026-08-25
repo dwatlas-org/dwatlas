@@ -1,37 +1,38 @@
 from sqlmodel import Session
 
-from .database import sqlite_engine
-from .models import User, UserCreate, UserPublic
+from .models import User, UserCreate
 
 # TODO 🚨 You probably want to use `session.exec()` instead of `session.query()`.
 
 
-def get_users_all():
-    with Session(sqlite_engine) as session:
-        users = session.query(User).all()
+class UserNotFoundError(Exception):
+    pass
+
+
+def read_users(session: Session):
+    users = session.query(User).all()
     return users
 
 
-def create_user(user: UserCreate, response_model=UserPublic):
-    with Session(sqlite_engine) as session:
-        extra_data = {"hashed_password": hash_password(user.password)}
-        db_user = User.model_validate(user, update=extra_data)
-        session.add(db_user)
-        session.commit()
-        session.refresh(db_user)
+def create_user(user: UserCreate, session: Session):
+    extra_data = {"hashed_password": hash_password(user.password)}
+    db_user = User.model_validate(user, update=extra_data)
+    session.add(db_user)
+    session.commit()
+    session.refresh(db_user)
     return db_user
 
 
-def delete_user(user_id: int):
-    with Session(sqlite_engine) as session:
-        user = session.query(User).get(user_id)
-        session.delete(user)
-        session.commit()
+def delete_user(user_id: int, session: Session):
+    user = session.query(User).get(user_id)
+    if not user:
+        raise UserNotFoundError
+    session.delete(user)
+    session.commit()
 
 
-def get_user(user_id: int, response_model=UserPublic):
-    with Session(sqlite_engine) as session:
-        user = session.query(User).get(user_id)
+def read_user(user_id: int, session: Session):
+    user = session.query(User).get(user_id)
     return user
 
 
@@ -39,19 +40,12 @@ def hash_password(password: str):
     return "thisisnotahash"
 
 
-def update_user(
-    user_id: int,
-    username: str | None,
-    email: str | None,
-    full_name: str | None,
-    disabled: bool | None,
-):
-    with Session(sqlite_engine) as session:
-        user = session.query(User).get(user_id)
-        user.username = username
-        user.email = email
-        user.full_name = full_name
-        user.disabled = disabled
+def update_user(user_id: int, user: UserUpdate, session: Session):
+    db_user = session.get(User, user_id)
+    if db_user:
+        user_data = user.model_dump(exclude_unset=True)
+        db_user.sqlmodel_update(user_data)
+        session.add(db_user)
         session.commit()
-        session.refresh(user)
-    return user
+        session.refresh(db_user)
+    return db_user
