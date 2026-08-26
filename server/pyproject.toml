@@ -7,11 +7,20 @@ dependencies = [
     "sqlmodel>=0.0.39",
 ]
 
+[tool.ruff.lint.flake8-bugbear]
+# Allow default arguments like, e.g., `data: List[str] = fastapi.Query(None)`.
+extend-immutable-calls = ["fastapi.Depends", "fastapi.Query"]
+
 [tool.fastapi]
 entrypoint = "api.main:app"
 
+[tool.pytest.ini_options]
+pythonpath = ["."]
+
 [dependency-groups]
 dev = [
+    "pytest>=9.1.1",
+    "requests>=2.34.2",
     "prek>=0.4.14",
     "pytest>=9.1.1",
 ]
