@@ -1,5 +1,5 @@
-from sqlmodel import Field, SQLModel
 from pydantic import EmailStr
+from sqlmodel import Field, SQLModel
 
 
 class UserBase(SQLModel):
@@ -20,3 +20,11 @@ class UserCreate(UserBase):
 
 class UserPublic(UserBase):
     id: int
+
+
+class UserUpdate(SQLModel):
+    username: str | None = None
+    email: EmailStr | None = None
+    full_name: str | None = None
+    password: str | None = None
+    disabled: bool | None = None
