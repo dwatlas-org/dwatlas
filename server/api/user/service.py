@@ -1,6 +1,6 @@
 from sqlmodel import Session
 
-from .models import User, UserCreate
+from .models import User, UserCreate, UserUpdate
 
 # TODO 🚨 You probably want to use `session.exec()` instead of `session.query()`.
 
