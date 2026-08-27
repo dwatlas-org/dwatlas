@@ -1,3 +1,4 @@
+from pwdlib import PasswordHash
 from sqlmodel import Session, select
 
 from .models import User, UserCreate, UserUpdate
@@ -35,8 +36,15 @@ def read_user(user_id: int, session: Session):
     return user
 
 
-def hash_password(password: str):
-    return "thisisnotahash"
+def hash_password(password_plain: str) -> str:
+    hasher = PasswordHash.recommended()
+    password_hash = hasher.hash(password_plain)
+    return password_hash
+
+
+def verify_password(password_plain: str, password_hashed: str) -> bool:
+    hasher = PasswordHash.recommended()
+    return hasher.verify(password_plain, password_hashed)
 
 
 def update_user(user_id: int, user: UserUpdate, session: Session):
