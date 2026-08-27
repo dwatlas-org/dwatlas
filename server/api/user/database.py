@@ -1,12 +1,10 @@
-import os
-
 from sqlmodel import Session, SQLModel, create_engine
+
+from api.config import settings
 
 from .models import *
 
-SQLITE_URL = os.getenv("SQLITE_URL", "sqlite:///:memory:")
-
-sqlite_engine = create_engine(SQLITE_URL, echo=True)
+sqlite_engine = create_engine(settings.SQLITE_URL, echo=True)
 SQLModel.metadata.create_all(sqlite_engine)
 
 
