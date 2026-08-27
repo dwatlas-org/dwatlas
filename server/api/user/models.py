@@ -1,3 +1,5 @@
+import datetime
+
 from pydantic import EmailStr
 from sqlmodel import Field, SQLModel
 
@@ -7,6 +9,14 @@ class UserBase(SQLModel):
     email: EmailStr | None = None
     full_name: str | None = None
     disabled: bool | None = None
+    created: datetime.datetime | None = Field(
+        default_factory=lambda: datetime.datetime.now(datetime.UTC)
+    )
+    updated: datetime.datetime | None = Field(
+        default_factory=lambda: datetime.datetime.now(datetime.UTC),
+        sa_column_kwargs={"onupdate": lambda: datetime.datetime.now(datetime.UTC)},
+    )
+    last_login: datetime.datetime | None = None
 
 
 class User(UserBase, table=True):
