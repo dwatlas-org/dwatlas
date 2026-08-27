@@ -31,3 +31,8 @@ def test_api_delete_user(client: TestClient):
     assert response.status_code == 200
     data = response.json()
     assert len(data) == 0
+
+
+def test_api_delete_user_notfound(client: TestClient):
+    response = client.delete("/user/999")
+    assert response.status_code == 404
