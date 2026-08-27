@@ -1,3 +1,5 @@
+import datetime
+
 from fastapi.testclient import TestClient
 
 
@@ -24,6 +26,10 @@ def test_api_update_user(client: TestClient):
     assert data["username"] == username
     assert data["email"] == email
     assert data["full_name"] == full_name
+    datetime_format = "%Y-%m-%dT%H:%M:%S.%f"
+    updated_old = datetime.datetime.strptime(data["updated"], datetime_format).replace(
+        tzinfo=datetime.UTC
+    )
 
     # Update User
     new_username = "Aurora"
@@ -34,6 +40,12 @@ def test_api_update_user(client: TestClient):
     assert data["username"] == new_username
     assert data["email"] == email
     assert data["full_name"] == full_name
+    assert (
+        datetime.datetime.strptime(data["updated"], datetime_format).replace(
+            tzinfo=datetime.UTC
+        )
+        > updated_old
+    )
 
     # Check user
     response = client.get("/user/1")
@@ -43,3 +55,9 @@ def test_api_update_user(client: TestClient):
     assert data["username"] == new_username
     assert data["email"] == email
     assert data["full_name"] == full_name
+    assert (
+        datetime.datetime.strptime(data["updated"], datetime_format).replace(
+            tzinfo=datetime.UTC
+        )
+        > updated_old
+    )
