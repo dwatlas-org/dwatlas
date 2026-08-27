@@ -2,7 +2,7 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from postgres import create_async_engine
+from sqlalchemy.ext.asyncio import create_async_engine
 
 from api.config import settings
 from api.user.routes import router as router_user
