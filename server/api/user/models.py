@@ -9,6 +9,11 @@ class UserBase(SQLModel):
     email: EmailStr | None = None
     full_name: str | None = None
     disabled: bool | None = None
+
+
+class User(UserBase, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    hashed_password: str = Field()
     created: datetime.datetime | None = Field(
         default_factory=lambda: datetime.datetime.now(datetime.UTC)
     )
@@ -19,17 +24,15 @@ class UserBase(SQLModel):
     last_login: datetime.datetime | None = None
 
 
-class User(UserBase, table=True):
-    id: int | None = Field(default=None, primary_key=True)
-    hashed_password: str = Field()
-
-
 class UserCreate(UserBase):
     password: str
 
 
 class UserPublic(UserBase):
     id: int
+    created: datetime.datetime
+    updated: datetime.datetime
+    last_login: datetime.datetime | None = None
 
 
 class UserUpdate(SQLModel):
