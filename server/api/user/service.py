@@ -1,8 +1,6 @@
-from sqlmodel import Session
+from sqlmodel import Session, select
 
 from .models import User, UserCreate, UserUpdate
-
-# TODO 🚨 You probably want to use `session.exec()` instead of `session.query()`.
 
 
 class UserNotFoundError(Exception):
@@ -10,7 +8,8 @@ class UserNotFoundError(Exception):
 
 
 def read_users(session: Session):
-    users = session.query(User).all()
+    statement = select(User)
+    users = session.exec(statement).all()
     return users
 
 
@@ -24,7 +23,7 @@ def create_user(user: UserCreate, session: Session):
 
 
 def delete_user(user_id: int, session: Session):
-    user = session.query(User).get(user_id)
+    user = session.get(User, user_id)
     if not user:
         raise UserNotFoundError
     session.delete(user)
@@ -32,7 +31,7 @@ def delete_user(user_id: int, session: Session):
 
 
 def read_user(user_id: int, session: Session):
-    user = session.query(User).get(user_id)
+    user = session.get(User, user_id)
     return user
 
 
