@@ -19,6 +19,7 @@ entrypoint = "api.main:app"
 
 [tool.pytest.ini_options]
 pythonpath = ["."]
+asyncio_mode = "auto"
 
 [dependency-groups]
 dev = [
