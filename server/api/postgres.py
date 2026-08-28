@@ -1,11 +1,12 @@
 from collections.abc import AsyncGenerator
 
-from config import settings
 from sqlalchemy.ext.asyncio import (
     AsyncSession,
     async_sessionmaker,
     create_async_engine,
 )
+
+from .config import settings
 
 engine = create_async_engine(
     str(settings.POSTGRES_URL),
@@ -23,7 +24,7 @@ async_session_factory = async_sessionmaker(
 )
 
 
-async def get_db_session() -> AsyncGenerator[AsyncSession, None]:
+async def get_pg_session() -> AsyncGenerator[AsyncSession, None]:
     async with async_session_factory() as session:
         try:
             yield session
