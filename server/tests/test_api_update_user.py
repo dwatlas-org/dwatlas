@@ -1,6 +1,10 @@
 import datetime
 
 from fastapi.testclient import TestClient
+from sqlmodel import Session
+
+from api.user.models import User
+from api.user.service import verify_password
 
 
 def test_api_update_user(client: TestClient):
@@ -61,3 +65,22 @@ def test_api_update_user(client: TestClient):
         )
         > updated_old
     )
+
+
+def test_api_update_user_password_hash(client: TestClient, session: Session):
+    not_a_hash = "notahash"
+    user = User(username="malka", hashed_password=not_a_hash)
+    session.add(user)
+    session.commit()
+
+    user = session.get(User, 1)
+    assert user.hashed_password == not_a_hash
+
+    # Update User
+    new_password = "supersecure123!"
+    response = client.post("/user/update/1", json={"password": new_password})
+    assert response.status_code == 200
+
+    user = session.get(User, 1)
+    assert user.hashed_password != not_a_hash
+    assert verify_password(new_password, user.hashed_password)
