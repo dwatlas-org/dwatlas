@@ -1,6 +1,7 @@
 import datetime
 
 from pydantic import EmailStr
+from sqlalchemy import UniqueConstraint
 from sqlmodel import Field, SQLModel
 
 
@@ -12,6 +13,7 @@ class UserBase(SQLModel):
 
 
 class User(UserBase, table=True):
+    __table_args__ = (UniqueConstraint("username"),)
     id: int | None = Field(default=None, primary_key=True)
     hashed_password: str = Field()
     created: datetime.datetime | None = Field(
