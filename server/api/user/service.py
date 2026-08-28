@@ -37,20 +37,23 @@ def read_user(user_id: int, session: Session):
 
 
 def hash_password(password_plain: str) -> str:
-    hasher = PasswordHash.recommended()
-    password_hash = hasher.hash(password_plain)
+    ph = PasswordHash.recommended()
+    password_hash = ph.hash(password_plain)
     return password_hash
 
 
 def verify_password(password_plain: str, password_hashed: str) -> bool:
-    hasher = PasswordHash.recommended()
-    return hasher.verify(password_plain, password_hashed)
+    ph = PasswordHash.recommended()
+    return ph.verify(password_plain, password_hashed)
 
 
 def update_user(user_id: int, user: UserUpdate, session: Session):
     db_user = session.get(User, user_id)
     if db_user:
         user_data = user.model_dump(exclude_unset=True)
+        if user.password:
+            hashed_password = hash_password(user.password)
+            user_data["hashed_password"] = hashed_password
         db_user.sqlmodel_update(user_data)
         session.add(db_user)
         session.commit()
