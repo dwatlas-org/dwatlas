@@ -6,9 +6,9 @@ import {
   FieldDescription,
   FieldGroup,
   FieldLabel,
-  FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { LoginForm } from "./login-form";
 
 type SignupFormProps = React.ComponentProps<"div"> & {
   Form?: React.ElementType;
@@ -28,13 +28,13 @@ export function SignupForm({
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card className="overflow-hidden p-0">
-        <CardContent className="grid p-0 md:grid-cols-2">
+        <CardContent className="grid gap-6 p-0">
           <Form method="post" className="p-6 md:p-8">
             <FieldGroup>
               <div className="flex flex-col items-center gap-2 text-center">
-                <h1 className="text-2xl font-bold">Create your account</h1>
+                <h1 className="text-2xl font-bold">Sign Up</h1>
                 <p className="text-sm text-balance text-muted-foreground">
-                  Enter your email below to create your account
+                  Tell us who you are and why.
                 </p>
               </div>
               {success ? (
@@ -91,9 +91,6 @@ export function SignupForm({
               </Field>
             </FieldGroup>
           </Form>
-          <div className="relative hidden bg-muted md:block">
-            SIGN IN FORM GOES HERE (TODO)
-          </div>
         </CardContent>
       </Card>
       <FieldDescription className="px-6 text-center">
