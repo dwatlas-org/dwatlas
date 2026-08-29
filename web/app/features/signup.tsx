@@ -27,8 +27,8 @@ export function Signup() {
   const isSubmitting = fetcher.state === "submitting";
 
   return (
-    <div className="flex min-h-svh flex-col items-center justify-center p-6 md:p-10">
-      <div className="w-full max-w-sm md:max-w-4xl">
+    <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
+      <div className="w-full max-w-sm">
         <SignupForm
           Form={fetcher.Form}
           isSubmitting={isSubmitting}
@@ -38,7 +38,7 @@ export function Signup() {
               ? `Successfully signed up with ${fetcher.data.email}`
               : undefined
           }
-          className="mx-auto max-w-md py-10"
+          className="mx-auto py-10"
         />
       </div>
     </div>
