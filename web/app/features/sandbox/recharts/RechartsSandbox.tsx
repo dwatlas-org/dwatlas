@@ -314,7 +314,7 @@ export function RechartsSandbox() {
                 stroke={CORES.cinza}
                 strokeWidth={3}
                 dot={{
-                  r: 4,
+                  r: 5,
                   fill: CORES.cinza,
                   stroke: CORES.cinza,
                 }}
@@ -326,7 +326,21 @@ export function RechartsSandbox() {
                   dataKey="users"
                   position="top"
                   fill={CORES.marrom}
-                  fontSize={11}
+                  fontSize={12}
+                  dy={-8}
+                />
+
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: "#FFFFFF",
+                    color: "#000000",
+                  }}
+                  labelStyle={{
+                    color: "#000000",
+                  }}
+                  itemStyle={{
+                    color: "#000000",
+                  }}
                 />
               </Line>
             </LineChart>

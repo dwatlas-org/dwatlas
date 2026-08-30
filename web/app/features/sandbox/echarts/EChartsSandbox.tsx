@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import ReactECharts from "echarts-for-react";
+import { EChartsDrilldownMap } from "./EChartsDrilldownMap";
 import * as echarts from "echarts";
 
 import {
@@ -417,154 +418,6 @@ export function EChartsSandbox() {
     }),
     [data],
   );
-
-  /*
-   * ------------------------------------------------------
-   * GRÁFICO 4
-   * MAPA DO BRASIL
-   * ------------------------------------------------------
-   */
-
-  const mapOption = useMemo(() => {
-    if (!data || !brazilMap) {
-      return {};
-    }
-
-    const stateValues = new Map(
-      data.states.map((item) => [item.state, item.users]),
-    );
-
-    const mapData = brazilMap.features.map((feature) => {
-      const stateName = feature.properties.NM_UF;
-
-      return {
-        name: stateName,
-
-        value: stateValues.get(stateName) ?? 0,
-      };
-    });
-
-    const maxValue = Math.max(...mapData.map((item) => item.value), 1);
-
-    return {
-      title: {
-        text: "Distribuição dos usuários por estado",
-
-        left: 20,
-        top: 10,
-
-        textStyle: {
-          color: CORES.marrom,
-          fontSize: 18,
-          fontWeight: "bold",
-        },
-      },
-
-      tooltip: {
-        trigger: "item",
-
-        formatter: (params: { name: string; value?: number }) => {
-          const value = params.value ?? 0;
-
-          return `
-                        <strong>${params.name}</strong><br />
-                        ${value.toLocaleString("pt-BR")} usuários
-                    `;
-        },
-      },
-
-      visualMap: {
-        min: 0,
-
-        max: maxValue,
-
-        left: 20,
-
-        top: "middle",
-
-        orient: "vertical",
-
-        text: ["Mais usuários", "Menos usuários"],
-
-        textStyle: {
-          color: CORES.cinza,
-        },
-
-        inRange: {
-          color: [
-            CORES.fundoMapa,
-            CORES.amareloClaro,
-            CORES.amarelo,
-            CORES.marromMedio,
-          ],
-        },
-
-        calculable: false,
-      },
-
-      series: [
-        {
-          name: "Usuários",
-
-          type: "map",
-
-          map: "BrasilEstados",
-
-          nameProperty: "NM_UF",
-
-          roam: false,
-
-          left: "center",
-
-          top: 75,
-
-          zoom: 1.1,
-
-          data: mapData,
-
-          itemStyle: {
-            borderColor: "#FFFFFF",
-
-            borderWidth: 1,
-
-            areaColor: CORES.fundoMapa,
-          },
-
-          label: {
-            show: true,
-
-            color: CORES.marrom,
-
-            fontSize: 9,
-
-            formatter: (params: { value?: number }) => {
-              if (!params.value) {
-                return "";
-              }
-
-              return String(params.value);
-            },
-          },
-
-          emphasis: {
-            label: {
-              show: true,
-
-              color: CORES.marrom,
-
-              fontWeight: "bold",
-            },
-
-            itemStyle: {
-              areaColor: CORES.amarelo,
-
-              borderColor: "#FFFFFF",
-            },
-          },
-        },
-      ],
-    };
-  }, [data, brazilMap]);
 
   /*
    * ------------------------------------------------------
@@ -1196,13 +1049,7 @@ export function EChartsSandbox() {
       {/* MAPA */}
 
       <div className="rounded-lg border p-4">
-        <ReactECharts
-          option={mapOption}
-          style={{
-            width: "100%",
-            height: "650px",
-          }}
-        />
+        <EChartsDrilldownMap data={data} />
       </div>
 
       {/* GANHOS */}

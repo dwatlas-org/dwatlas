@@ -474,5 +474,143 @@
       "users": 9,
       "logo": "/sandbox-data/company-logos/bee-delivery.png"
     }
-  ]
+  ],
+  "citiesByState": {
+    "SP": [
+      {
+        "city": "São Paulo",
+        "users": 245
+      },
+      {
+        "city": "Campinas",
+        "users": 54
+      },
+      {
+        "city": "Guarulhos",
+        "users": 41
+      },
+      {
+        "city": "Osasco",
+        "users": 27
+      },
+      {
+        "city": "São Bernardo do Campo",
+        "users": 24
+      },
+      {
+        "city": "Santo André",
+        "users": 18
+      },
+      {
+        "city": "Sorocaba",
+        "users": 15
+      },
+      {
+        "city": "Ribeirão Preto",
+        "users": 14
+      },
+      {
+        "city": "São José dos Campos",
+        "users": 12
+      },
+      {
+        "city": "Santos",
+        "users": 10
+      },
+      {
+        "city": "Jundiaí",
+        "users": 8
+      },
+      {
+        "city": "Outros municípios",
+        "users": 10
+      }
+    ],
+    "RJ": [
+      {
+        "city": "Rio de Janeiro",
+        "users": 93
+      },
+      {
+        "city": "Niterói",
+        "users": 22
+      },
+      {
+        "city": "Duque de Caxias",
+        "users": 18
+      },
+      {
+        "city": "São Gonçalo",
+        "users": 14
+      },
+      {
+        "city": "Nova Iguaçu",
+        "users": 10
+      },
+      {
+        "city": "Belford Roxo",
+        "users": 6
+      },
+      {
+        "city": "Petrópolis",
+        "users": 5
+      },
+      {
+        "city": "Outros municípios",
+        "users": 8
+      }
+    ],
+    "MG": [
+      {
+        "city": "Belo Horizonte",
+        "users": 38
+      },
+      {
+        "city": "Uberlândia",
+        "users": 12
+      },
+      {
+        "city": "Contagem",
+        "users": 10
+      },
+      {
+        "city": "Juiz de Fora",
+        "users": 8
+      },
+      {
+        "city": "Betim",
+        "users": 7
+      },
+      {
+        "city": "Uberaba",
+        "users": 5
+      },
+      {
+        "city": "Montes Claros",
+        "users": 4
+      },
+      {
+        "city": "Outros municípios",
+        "users": 8
+      }
+    ]
+  },
+  "mapDrilldown": {
+    "defaultLevel": "state",
+    "countryMap": "/sandbox-data/maps/BR_UF_2025.json",
+    "states": {
+      "SP": {
+        "name": "São Paulo",
+        "municipalityMap": "/sandbox-data/maps/SP_Municipios.json"
+      },
+      "RJ": {
+        "name": "Rio de Janeiro",
+        "municipalityMap": "/sandbox-data/maps/RJ_Municipios.json"
+      },
+      "MG": {
+        "name": "Minas Gerais",
+        "municipalityMap": "/sandbox-data/maps/MG_Municipios.json"
+      }
+    }
+  }
 }

@@ -1,5 +1,7 @@
 import { EChartsSandbox } from "./sandbox/echarts/EChartsSandbox";
 import { RechartsSandbox } from "./sandbox/recharts/RechartsSandbox";
+import { LeafletDrilldownMap } from "./sandbox/leaflet/LeafletDrilldownMap";
+import { LeafletSandbox } from "./sandbox/leaflet/LeafletSandbox";
 
 export function Sandbox() {
   if (!import.meta.env.DEV) {
@@ -19,6 +21,10 @@ export function Sandbox() {
       <hr className="my-12" />
 
       <RechartsSandbox />
+
+      <hr className="my-12" />
+
+      <LeafletSandbox />
     </section>
   );
 }

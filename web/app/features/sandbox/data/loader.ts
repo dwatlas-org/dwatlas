@@ -60,6 +60,29 @@ export type CompanyTreemapData = {
   logo: string;
 };
 
+export type CityData = {
+  city: string;
+  users: number;
+};
+
+export type CitiesByStateData = {
+  [stateCode: string]: CityData[];
+};
+
+export type MapDrilldownState = {
+  name: string;
+  municipalityMap: string;
+};
+
+export type MapDrilldownData = {
+  defaultLevel: string;
+  countryMap: string;
+
+  states: {
+    [stateCode: string]: MapDrilldownState;
+  };
+};
+
 /*
  * ------------------------------------------------------
  * ESTRUTURA COMPLETA DO JSON FICTÍCIO
@@ -88,6 +111,8 @@ export type ChartsData = {
   vehicles: VehicleData[];
 
   companyTreemap: CompanyTreemapData[];
+  citiesByState: CitiesByStateData;
+  mapDrilldown: MapDrilldownData;
 };
 
 /*
@@ -153,5 +178,7 @@ export function loadChartsData(): Promise<ChartsData> {
  */
 
 export function loadBrazilStatesMap(): Promise<GeoJsonFeatureCollection> {
-  return loadJson<GeoJsonFeatureCollection>("/sandbox-data/BR_UF_2025.json");
+  return loadJson<GeoJsonFeatureCollection>(
+    "/sandbox-data/maps/BR_UF_2025.json",
+  );
 }
