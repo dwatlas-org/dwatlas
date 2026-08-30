@@ -1,0 +1,478 @@
+{
+  "summary": {
+    "totalUsers": 1248,
+    "totalEarnings": 865420.75,
+    "totalExpenses": 238640.4,
+    "averageAge": 32.7
+  },
+  "usersOverTime": [
+    {
+      "period": "2025-01",
+      "users": 42
+    },
+    {
+      "period": "2025-02",
+      "users": 51
+    },
+    {
+      "period": "2025-03",
+      "users": 68
+    },
+    {
+      "period": "2025-04",
+      "users": 73
+    },
+    {
+      "period": "2025-05",
+      "users": 91
+    },
+    {
+      "period": "2025-06",
+      "users": 104
+    },
+    {
+      "period": "2025-07",
+      "users": 96
+    },
+    {
+      "period": "2025-08",
+      "users": 118
+    },
+    {
+      "period": "2025-09",
+      "users": 127
+    },
+    {
+      "period": "2025-10",
+      "users": 139
+    },
+    {
+      "period": "2025-11",
+      "users": 151
+    },
+    {
+      "period": "2025-12",
+      "users": 163
+    }
+  ],
+  "gender": [
+    {
+      "gender": "Homem",
+      "users": 1036
+    },
+    {
+      "gender": "Mulher",
+      "users": 167
+    },
+    {
+      "gender": "Outro",
+      "users": 18
+    },
+    {
+      "gender": "Não informado",
+      "users": 27
+    }
+  ],
+  "ageGroups": [
+    {
+      "ageGroup": "18–19",
+      "users": 31
+    },
+    {
+      "ageGroup": "20–24",
+      "users": 148
+    },
+    {
+      "ageGroup": "25–29",
+      "users": 354
+    },
+    {
+      "ageGroup": "30–34",
+      "users": 286
+    },
+    {
+      "ageGroup": "35–39",
+      "users": 191
+    },
+    {
+      "ageGroup": "40–44",
+      "users": 112
+    },
+    {
+      "ageGroup": "45–49",
+      "users": 67
+    },
+    {
+      "ageGroup": "50+",
+      "users": 59
+    }
+  ],
+  "states": [
+    {
+      "state": "São Paulo",
+      "code": "SP",
+      "users": 478
+    },
+    {
+      "state": "Rio de Janeiro",
+      "code": "RJ",
+      "users": 176
+    },
+    {
+      "state": "Minas Gerais",
+      "code": "MG",
+      "users": 92
+    },
+    {
+      "state": "Paraná",
+      "code": "PR",
+      "users": 71
+    },
+    {
+      "state": "Rio Grande do Sul",
+      "code": "RS",
+      "users": 58
+    },
+    {
+      "state": "Santa Catarina",
+      "code": "SC",
+      "users": 47
+    },
+    {
+      "state": "Distrito Federal",
+      "code": "DF",
+      "users": 42
+    },
+    {
+      "state": "Pernambuco",
+      "code": "PE",
+      "users": 39
+    },
+    {
+      "state": "Bahia",
+      "code": "BA",
+      "users": 35
+    },
+    {
+      "state": "Goiás",
+      "code": "GO",
+      "users": 31
+    },
+    {
+      "state": "Ceará",
+      "code": "CE",
+      "users": 28
+    },
+    {
+      "state": "Espírito Santo",
+      "code": "ES",
+      "users": 24
+    },
+    {
+      "state": "Pará",
+      "code": "PA",
+      "users": 19
+    },
+    {
+      "state": "Mato Grosso do Sul",
+      "code": "MS",
+      "users": 17
+    },
+    {
+      "state": "Mato Grosso",
+      "code": "MT",
+      "users": 16
+    },
+    {
+      "state": "Alagoas",
+      "code": "AL",
+      "users": 15
+    },
+    {
+      "state": "Rio Grande do Norte",
+      "code": "RN",
+      "users": 14
+    },
+    {
+      "state": "Maranhão",
+      "code": "MA",
+      "users": 13
+    },
+    {
+      "state": "Paraíba",
+      "code": "PB",
+      "users": 9
+    },
+    {
+      "state": "Amazonas",
+      "code": "AM",
+      "users": 7
+    },
+    {
+      "state": "Acre",
+      "code": "AC",
+      "users": 4
+    },
+    {
+      "state": "Piauí",
+      "code": "PI",
+      "users": 4
+    },
+    {
+      "state": "Rondônia",
+      "code": "RO",
+      "users": 3
+    },
+    {
+      "state": "Sergipe",
+      "code": "SE",
+      "users": 3
+    },
+    {
+      "state": "Roraima",
+      "code": "RR",
+      "users": 2
+    },
+    {
+      "state": "Amapá",
+      "code": "AP",
+      "users": 2
+    },
+    {
+      "state": "Tocantins",
+      "code": "TO",
+      "users": 1
+    }
+  ],
+  "earningsOverTime": [
+    {
+      "period": "2025-01",
+      "value": 48230.45
+    },
+    {
+      "period": "2025-02",
+      "value": 52780.3
+    },
+    {
+      "period": "2025-03",
+      "value": 56140.8
+    },
+    {
+      "period": "2025-04",
+      "value": 61790.25
+    },
+    {
+      "period": "2025-05",
+      "value": 68920.5
+    },
+    {
+      "period": "2025-06",
+      "value": 72340.15
+    },
+    {
+      "period": "2025-07",
+      "value": 69580.9
+    },
+    {
+      "period": "2025-08",
+      "value": 74890.6
+    },
+    {
+      "period": "2025-09",
+      "value": 78950.4
+    },
+    {
+      "period": "2025-10",
+      "value": 84220.75
+    },
+    {
+      "period": "2025-11",
+      "value": 91430.2
+    },
+    {
+      "period": "2025-12",
+      "value": 105145.45
+    }
+  ],
+  "expensesOverTime": [
+    {
+      "period": "2025-01",
+      "value": 13240.2
+    },
+    {
+      "period": "2025-02",
+      "value": 14890.35
+    },
+    {
+      "period": "2025-03",
+      "value": 15780.6
+    },
+    {
+      "period": "2025-04",
+      "value": 16940.1
+    },
+    {
+      "period": "2025-05",
+      "value": 18320.45
+    },
+    {
+      "period": "2025-06",
+      "value": 19110.7
+    },
+    {
+      "period": "2025-07",
+      "value": 18740.8
+    },
+    {
+      "period": "2025-08",
+      "value": 20280.2
+    },
+    {
+      "period": "2025-09",
+      "value": 21490.35
+    },
+    {
+      "period": "2025-10",
+      "value": 22670.5
+    },
+    {
+      "period": "2025-11",
+      "value": 26130.75
+    },
+    {
+      "period": "2025-12",
+      "value": 30115.4
+    }
+  ],
+  "expenseCategories": [
+    {
+      "category": "Combustível",
+      "value": 68420.5
+    },
+    {
+      "category": "Manutenção",
+      "value": 45870.25
+    },
+    {
+      "category": "Alimentação",
+      "value": 32640.8
+    },
+    {
+      "category": "Seguro",
+      "value": 21950.4
+    },
+    {
+      "category": "Internet e telefone",
+      "value": 18320.75
+    },
+    {
+      "category": "Impostos e taxas",
+      "value": 14980.6
+    },
+    {
+      "category": "Lavagem do veículo",
+      "value": 11450.35
+    }
+  ],
+  "companies": [
+    {
+      "company": "iFood",
+      "users": 684,
+      "percentage": 54.8
+    },
+    {
+      "company": "99",
+      "users": 247,
+      "percentage": 19.8
+    },
+    {
+      "company": "Rappi",
+      "users": 143,
+      "percentage": 11.5
+    },
+    {
+      "company": "Lalamove",
+      "users": 69,
+      "percentage": 5.5
+    },
+    {
+      "company": "Uber",
+      "users": 46,
+      "percentage": 3.7
+    },
+    {
+      "company": "Outras",
+      "users": 59,
+      "percentage": 4.7
+    }
+  ],
+  "vehicles": [
+    {
+      "vehicle": "Moto",
+      "users": 741,
+      "percentage": 59.4
+    },
+    {
+      "vehicle": "Bicicleta",
+      "users": 298,
+      "percentage": 23.9
+    },
+    {
+      "vehicle": "Carro",
+      "users": 112,
+      "percentage": 9.0
+    },
+    {
+      "vehicle": "A pé",
+      "users": 53,
+      "percentage": 4.2
+    },
+    {
+      "vehicle": "Outros",
+      "users": 44,
+      "percentage": 3.5
+    }
+  ],
+  "companyTreemap": [
+    {
+      "company": "iFood",
+      "users": 684,
+      "logo": "/sandbox-data/company-logos/ifood.png"
+    },
+    {
+      "company": "99",
+      "users": 247,
+      "logo": "/sandbox-data/company-logos/99.png"
+    },
+    {
+      "company": "Rappi",
+      "users": 143,
+      "logo": "/sandbox-data/company-logos/rappi.png"
+    },
+    {
+      "company": "Lalamove",
+      "users": 69,
+      "logo": "/sandbox-data/company-logos/lalamove.png"
+    },
+    {
+      "company": "Uber",
+      "users": 46,
+      "logo": "/sandbox-data/company-logos/uber.png"
+    },
+    {
+      "company": "Loggi",
+      "users": 34,
+      "logo": "/sandbox-data/company-logos/loggi.png"
+    },
+    {
+      "company": "Borzo",
+      "users": 16,
+      "logo": "/sandbox-data/company-logos/borzo.png"
+    },
+    {
+      "company": "Bee Delivery",
+      "users": 9,
+      "logo": "/sandbox-data/company-logos/bee-delivery.png"
+    }
+  ]
+}
