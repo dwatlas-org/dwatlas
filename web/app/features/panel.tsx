@@ -38,7 +38,7 @@ export async function panelsLoader(): Promise<Panel[]> {
   ];
 }
 
-export function Panels() {
+export function Panel() {
   const panels = useLoaderData<typeof panelsLoader>();
 
   return (
