@@ -27,7 +27,7 @@ export function Signup() {
   const isSubmitting = fetcher.state === "submitting";
 
   return (
-    <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
+    <div className="flex min-h-svh w-full items-center justify-center p-6 bg-[#f0f0f0] md:p-10">
       <div className="w-full max-w-sm">
         <SignupForm
           Form={fetcher.Form}
