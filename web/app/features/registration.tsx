@@ -2,7 +2,7 @@ import { useFetcher, useRouteError, isRouteErrorResponse } from "react-router";
 import { Card, CardContent } from "@/components/ui/card";
 import { FieldDescription } from "@/components/ui/field";
 import { LoginForm } from "@/components/login-form";
-import { RequestForm } from "@/components/request-form";
+import { RequestForm } from "@/components/register-form";
 
 export async function requestAction({ request }: { request: Request }) {
   const formData = await request.formData();
@@ -30,7 +30,7 @@ export function Registration() {
   const isSubmitting = fetcher.state === "submitting";
 
   return (
-    <div className="flex min-h-svh flex-col items-center justify-center p-6 md:p-10">
+    <div className="flex min-h-svh flex-col items-center justify-center p-6 bg-[#F0F0F0] md:p-10">
       <div className="w-full max-w-sm md:max-w-4xl">
         <div className="mx-auto flex flex-col gap-6 py-10">
           <Card className="overflow-hidden p-0">
