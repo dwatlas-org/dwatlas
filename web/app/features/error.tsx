@@ -1,6 +1,6 @@
 import { isRouteErrorResponse, Link } from "react-router";
 
-export function ErrorBoundary({ error }) {
+export function ErrorBoundary({ error }: { error?: unknown }) {
   let message = "Oops!";
   let details = "An unexpected error occurred.";
   let stack: string | undefined;
@@ -17,12 +17,12 @@ export function ErrorBoundary({ error }) {
   }
 
   return (
-    <main className="pt-16 p-4 container mx-auto">
+    <main className="flex flex-col items-center justify-center pt-16 p-4 container mx-auto">
       <h1>{message}</h1>
       <p>{details}</p>
       <br />
       <Link className="underline" to="/">
-        Return to Home
+        Go back
       </Link>
       {stack && (
         <pre className="w-full p-4 overflow-x-auto">
