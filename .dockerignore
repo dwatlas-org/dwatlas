@@ -1,0 +1,15 @@
+.git
+.gitignore
+.venv
+**/.venv
+**/node_modules
+**/__pycache__
+**/.pytest_cache
+**/.ruff_cache
+**/dist
+*.pyc
+*.db
+*.db-journal
+.env
+.env.*
+server/.zed
