@@ -12,6 +12,9 @@ type SignupFormProps = React.ComponentProps<"div"> & {
   bare?: boolean;
 };
 
+const inputClass =
+  "h-10 w-full rounded-lg border border-slate-200 bg-white px-3.5 text-sm outline-none transition-all placeholder:text-slate-400 focus-visible:border-slate-400 focus-visible:ring-2 focus-visible:ring-slate-200";
+
 function SignupFormBody({
   className,
   Form = "form",
@@ -29,19 +32,19 @@ function SignupFormBody({
     <Form
       method="post"
       className={cn(
-        "p-8 lg:p-12 flex flex-col gap-6 justify-between",
+        "flex flex-col justify-between gap-6 p-8 lg:p-12",
         className,
       )}
     >
       <div className="flex flex-col gap-6">
         <div className="flex flex-col items-start gap-1 text-left">
-          <div className="text-[11px] font-bold tracking-wider text-[#13315C] uppercase">
+          <div className="text-[11px] font-bold uppercase tracking-wider text-[#13315C]">
             NEW TO THE DASHBOARD?
           </div>
-          <h2 className="font-heading text-3xl font-bold text-slate-900 mt-1">
+          <h2 className="mt-1 font-heading text-3xl font-bold text-slate-900">
             Create an account
           </h2>
-          <p className="text-sm text-slate-500 mt-1">
+          <p className="mt-1 text-sm text-slate-500">
             Tell us who you are and why.
           </p>
         </div>
@@ -51,11 +54,11 @@ function SignupFormBody({
         ) : null}
         {error ? <div className="text-sm text-red-600">{error}</div> : null}
 
-        <div className="flex flex-col gap-4 mt-2">
+        <div className="mt-2 flex flex-col gap-4">
           <Field className="flex flex-col gap-1.5">
             <FieldLabel
               htmlFor="email"
-              className="font-semibold text-slate-800 text-sm"
+              className="text-sm font-semibold text-slate-800"
             >
               E-mail
             </FieldLabel>
@@ -65,7 +68,7 @@ function SignupFormBody({
               type="email"
               placeholder="you@organisation.org"
               required
-              className="h-10 px-3.5 rounded-lg border-slate-200 bg-white placeholder:text-slate-400 focus-visible:ring-2 focus-visible:ring-slate-200 focus-visible:border-slate-400 transition-all outline-none"
+              className={inputClass}
             />
           </Field>
 
@@ -73,7 +76,7 @@ function SignupFormBody({
             <Field className="flex flex-col gap-1.5">
               <FieldLabel
                 htmlFor="password"
-                className="font-semibold text-slate-800 text-sm"
+                className="text-sm font-semibold text-slate-800"
               >
                 Password
               </FieldLabel>
@@ -83,13 +86,13 @@ function SignupFormBody({
                 type="password"
                 placeholder="••••••••"
                 required
-                className="h-10 px-3.5 rounded-lg border-slate-200 bg-white placeholder:text-slate-400 focus-visible:ring-2 focus-visible:ring-slate-200 focus-visible:border-slate-400 transition-all outline-none"
+                className={inputClass}
               />
             </Field>
             <Field className="flex flex-col gap-1.5">
               <FieldLabel
                 htmlFor="confirm-password"
-                className="font-semibold text-slate-800 text-sm"
+                className="text-sm font-semibold text-slate-800"
               >
                 Confirm
               </FieldLabel>
@@ -99,7 +102,7 @@ function SignupFormBody({
                 type="password"
                 placeholder="••••••••"
                 required
-                className="h-10 px-3.5 rounded-lg border-slate-200 bg-white placeholder:text-slate-400 focus-visible:ring-2 focus-visible:ring-slate-200 focus-visible:border-slate-400 transition-all outline-none"
+                className={inputClass}
               />
             </Field>
           </div>
@@ -112,7 +115,7 @@ function SignupFormBody({
         <Button
           type="submit"
           disabled={isSubmitting}
-          className="h-10 w-full bg-[#13315C] hover:bg-[#0E2545] text-white font-semibold rounded-lg flex items-center justify-center gap-2 transition-all active:scale-[0.98] disabled:opacity-60"
+          className="flex h-10 w-full items-center justify-center gap-2 rounded-lg bg-[#13315C] font-semibold text-white transition-all hover:bg-[#0E2545] active:scale-[0.98] disabled:opacity-60"
         >
           <span>{isSubmitting ? "Creating Account..." : "Create account"}</span>
           <ArrowRight className="size-4 shrink-0" />

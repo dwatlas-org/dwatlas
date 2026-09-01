@@ -20,8 +20,10 @@ type RequestFormProps = React.ComponentProps<"div"> & {
   bare?: boolean;
 };
 
-const inputClass =
-  "h-10 px-3.5 rounded-lg border-slate-200 bg-white placeholder:text-slate-400 focus-visible:ring-2 focus-visible:ring-slate-200 focus-visible:border-slate-400 transition-all outline-none";
+const baseControlClass =
+  "w-full rounded-lg border border-slate-200 bg-white text-sm outline-none transition-all placeholder:text-slate-400 focus-visible:border-slate-400 focus-visible:ring-2 focus-visible:ring-slate-200";
+
+const inputClass = cn(baseControlClass, "h-10 px-3.5");
 
 function RequestFormBody({
   Form = "form",
@@ -41,7 +43,7 @@ function RequestFormBody({
           <Field className="flex flex-col gap-1.5">
             <FieldLabel
               htmlFor="name"
-              className="font-semibold text-slate-800 text-sm"
+              className="text-sm font-semibold text-slate-800"
             >
               Full name
             </FieldLabel>
@@ -56,7 +58,7 @@ function RequestFormBody({
           <Field className="flex flex-col gap-1.5">
             <FieldLabel
               htmlFor="email"
-              className="font-semibold text-slate-800 text-sm"
+              className="text-sm font-semibold text-slate-800"
             >
               Organizational e-mail
             </FieldLabel>
@@ -72,7 +74,7 @@ function RequestFormBody({
           <Field className="flex flex-col gap-1.5">
             <FieldLabel
               htmlFor="organization"
-              className="font-semibold text-slate-800 text-sm"
+              className="text-sm font-semibold text-slate-800"
             >
               Organization / Institution
             </FieldLabel>
@@ -81,7 +83,10 @@ function RequestFormBody({
                 id="organization"
                 name="organization"
                 defaultValue=""
-                className="h-10 w-full cursor-pointer appearance-none rounded-lg border border-slate-200 bg-white px-3.5 pr-9 text-sm transition-all outline-none focus-visible:ring-2 focus-visible:ring-slate-200 focus-visible:border-slate-400"
+                className={cn(
+                  inputClass,
+                  "cursor-pointer appearance-none pr-9",
+                )}
               >
                 <option value="" disabled>
                   Select your organization
@@ -95,14 +100,14 @@ function RequestFormBody({
               </select>
               <ChevronDown
                 aria-hidden="true"
-                className="pointer-events-none absolute top-1/2 right-3 size-4 -translate-y-1/2 text-slate-400"
+                className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-slate-400"
               />
             </div>
           </Field>
           <Field className="flex flex-col gap-1.5">
             <FieldLabel
               htmlFor="bio"
-              className="font-semibold text-slate-800 text-sm"
+              className="text-sm font-semibold text-slate-800"
             >
               Purpose of access
             </FieldLabel>
@@ -111,10 +116,13 @@ function RequestFormBody({
               name="bio"
               placeholder="Briefly describe what you intend to do with the data."
               required
-              className="field-sizing-content min-h-24 w-full rounded-lg border border-slate-200 bg-white px-3.5 py-2.5 text-sm transition-colors outline-none placeholder:text-slate-400 focus-visible:ring-2 focus-visible:ring-slate-200 focus-visible:border-slate-400"
+              className={cn(
+                baseControlClass,
+                "field-sizing-content min-h-24 px-3.5 py-2.5",
+              )}
             />
           </Field>
-          <div className="flex items-start gap-3 rounded-lg bg-[#F1F5F9] px-3.5 py-3 text-sm text-slate-600">
+          <div className="flex items-start gap-3 rounded-lg bg-slate-100 px-3.5 py-3 text-sm text-slate-600">
             <Info className="mt-0.5 size-4 shrink-0 text-[#13315C]" />
             <p>
               Access is granted individually and reviewed by the DeliveryWorker
@@ -140,18 +148,18 @@ export function RequestForm({
     return (
       <div
         className={cn(
-          "p-8 lg:p-12 flex flex-col gap-6 justify-between",
+          "flex flex-col justify-between gap-6 p-8 lg:p-12",
           className,
         )}
       >
         <div className="flex flex-col items-start gap-1 text-left">
-          <div className="text-[11px] font-bold tracking-wider text-[#13315C] uppercase">
+          <div className="text-[11px] font-bold uppercase tracking-wider text-[#13315C]">
             FOR THOSE WHO DON'T HAVE AN ACCOUNT YET
           </div>
-          <h2 className="font-heading text-3xl font-bold text-slate-900 mt-1">
+          <h2 className="mt-1 font-heading text-3xl font-bold text-slate-900">
             Request access
           </h2>
-          <p className="text-sm text-slate-500 mt-1">
+          <p className="mt-1 text-sm text-slate-500">
             Tell us who you are and how you'll use the data.
           </p>
         </div>
@@ -160,7 +168,7 @@ export function RequestForm({
           type="submit"
           form="profile"
           disabled={isSubmitting}
-          className="h-10 w-full bg-[#13315C] hover:bg-[#0E2545] text-white font-semibold rounded-lg transition-all active:scale-[0.98]"
+          className="h-10 w-full rounded-lg bg-[#13315C] font-semibold text-white transition-all hover:bg-[#0E2545] active:scale-[0.98]"
         >
           {isSubmitting ? "Sending request..." : "Send access request"}
         </Button>
