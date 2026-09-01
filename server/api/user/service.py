@@ -1,3 +1,5 @@
+import datetime
+
 from pwdlib import PasswordHash
 from sqlmodel import Session, select
 
@@ -23,6 +25,10 @@ def authenticate_user(*, username: str, password: str, session: Session) -> User
         user = None
     elif not verify_password(password, user.hashed_password):
         user = None
+    else:
+        user.last_login = datetime.datetime.now(datetime.UTC)
+        session.add(user)
+        session.commit()
     return user
 
 
