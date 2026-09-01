@@ -28,15 +28,14 @@ export function Signup() {
   const isSubmitting = fetcher.state === "submitting";
 
   return (
-    <div className="min-h-svh w-full bg-[#F0F0F0] flex flex-col items-center justify-start pb-12">
-      <h1 className="text-4xl font-bold">Create your account</h1>
-      <span className="text-sm text-slate-500 pb-6">
+    <div className="flex min-h-svh w-full flex-col items-center bg-slate-50 px-4 py-12">
+      <h1 className="text-4xl font-bold text-slate-900">Create your account</h1>
+      <span className="mb-8 mt-2 text-sm text-slate-500">
         Sign up to access the dashboard.
       </span>
       <div className="w-full max-w-2xl">
-        <Card className="overflow-hidden bg-white ring-1 ring-slate-200/70 shadow-sm rounded-2xl p-0">
+        <Card className="overflow-hidden rounded-2xl bg-white p-0 shadow-sm ring-1 ring-slate-200/70">
           <CardContent>
-            <div className="hidden lg:block" />
             <SignupForm
               bare
               Form={fetcher.Form}
@@ -60,17 +59,17 @@ export function ErrorBoundary() {
 
   if (isRouteErrorResponse(error)) {
     return (
-      <div className="text-red-600">
-        <h3 className="font-bold">Error {error.status}</h3>
-        <p>{error.statusText || error.data}</p>
+      <div className="flex flex-col gap-1.5 p-8 text-red-600">
+        <h3 className="text-lg font-bold">Error {error.status}</h3>
+        <p className="text-sm opacity-90">{error.statusText || error.data}</p>
       </div>
     );
   }
 
   return (
-    <div className="text-red-600">
-      <h3 className="font-bold">Unexpected Error</h3>
-      <p>
+    <div className="flex flex-col gap-1.5 p-8 text-red-600">
+      <h3 className="text-lg font-bold">Unexpected error</h3>
+      <p className="text-sm opacity-90">
         {error instanceof Error ? error.message : "An unknown error occurred"}
       </p>
     </div>

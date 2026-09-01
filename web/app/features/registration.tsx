@@ -41,16 +41,17 @@ export function Registration() {
   const isSubmitting = fetcher.state === "submitting";
 
   return (
-    <div className="min-h-svh w-full bg-[#F0F0F0] flex flex-col items-center justify-center px-6 pb-12">
-      <h1 className="text-4xl font-bold">Access the dashboard</h1>
-      <span className="text-sm text-slate-500 pb-6">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+    <div className="flex min-h-svh w-full flex-col items-center justify-center bg-slate-50 px-6 py-12">
+      <h1 className="text-4xl font-bold text-slate-900">
+        Access the dashboard
+      </h1>
+      <span className="mb-8 mt-2 text-sm text-slate-500">
+        Log in or request access to continue.
       </span>
       <div className="w-full max-w-4xl">
-        <Card className="overflow-hidden bg-white ring-1 ring-slate-200/70 shadow-sm rounded-2xl p-0">
-          <CardContent className="grid lg:grid-cols-2 p-0 gap-0">
+        <Card className="overflow-hidden rounded-2xl bg-white p-0 shadow-sm ring-1 ring-slate-200/70">
+          <CardContent className="grid p-0 lg:grid-cols-2 lg:divide-x lg:divide-slate-100">
             <LoginForm bare />
-            {/*<Separator orientation="vertical" className="border-t-mist-700/20 w-1" />*/}
             <RequestForm
               bare
               Form={fetcher.Form}
@@ -91,17 +92,17 @@ export function ErrorBoundary() {
 
   if (isRouteErrorResponse(error)) {
     return (
-      <div className="text-red-600">
-        <h3 className="font-bold">Error {error.status}</h3>
-        <p>{error.statusText || error.data}</p>
+      <div className="flex flex-col gap-1.5 p-8 text-red-600">
+        <h3 className="text-lg font-bold">Error {error.status}</h3>
+        <p className="text-sm opacity-90">{error.statusText || error.data}</p>
       </div>
     );
   }
 
   return (
-    <div className="text-red-600">
-      <h3 className="font-bold">Unexpected Error</h3>
-      <p>
+    <div className="flex flex-col gap-1.5 p-8 text-red-600">
+      <h3 className="text-lg font-bold">Unexpected error</h3>
+      <p className="text-sm opacity-90">
         {error instanceof Error ? error.message : "An unknown error occurred"}
       </p>
     </div>
