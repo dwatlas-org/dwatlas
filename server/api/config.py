@@ -27,6 +27,9 @@ class Settings(BaseSettings):
 
     SQLITE_DB_PATH: str = "app.db"
     SQLITE_URL: str | None = None
+    AUTH_SECRET_KEY: str | None = None
+    AUTH_ALGORITHM: str = "HS256"
+    AUTH_ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
 
     SENDMAIL_API_KEY: str = "secret-access-key"
     SENDMAIL_FROM: str = "noreply@dwatlas.org"
