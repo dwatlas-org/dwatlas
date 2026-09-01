@@ -1,4 +1,5 @@
 import { useFetcher, useRouteError, isRouteErrorResponse } from "react-router";
+import { Card, CardContent } from "@/components/ui/card";
 import { SignupForm } from "@/components/signup-form";
 
 export async function signupAction({ request }: { request: Request }) {
@@ -27,19 +28,28 @@ export function Signup() {
   const isSubmitting = fetcher.state === "submitting";
 
   return (
-    <div className="flex min-h-svh w-full items-center justify-center p-6 bg-[#f0f0f0] md:p-10">
-      <div className="w-full max-w-sm">
-        <SignupForm
-          Form={fetcher.Form}
-          isSubmitting={isSubmitting}
-          error={fetcher.data?.error}
-          success={
-            fetcher.data?.success
-              ? `Successfully signed up with ${fetcher.data.email}`
-              : undefined
-          }
-          className="mx-auto py-10"
-        />
+    <div className="min-h-svh w-full bg-[#F0F0F0] flex flex-col items-center justify-start pb-12">
+      <h1 className="text-4xl font-bold">Create your account</h1>
+      <span className="text-sm text-slate-500 pb-6">
+        Sign up to access the dashboard.
+      </span>
+      <div className="w-full max-w-2xl">
+        <Card className="overflow-hidden bg-white ring-1 ring-slate-200/70 shadow-sm rounded-2xl p-0">
+          <CardContent>
+            <div className="hidden lg:block" />
+            <SignupForm
+              bare
+              Form={fetcher.Form}
+              isSubmitting={isSubmitting}
+              error={fetcher.data?.error}
+              success={
+                fetcher.data?.success
+                  ? `Successfully signed up with ${fetcher.data.email}`
+                  : undefined
+              }
+            />
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
