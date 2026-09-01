@@ -15,6 +15,37 @@ uv sync --directory dwatlas/server
 
 Test the environment by running `pnpm dev` from the _web folder_ and `uv run fastapi dev` from the _server folder_.
 
+### Docker
+
+Build the image and run the dev stage.
+
+```bash
+docker build --target dev -t dwatlas:dev .
+```
+
+```bash
+docker run --rm -p 5173:5173 -p 8000:8000 \
+  -v "$PWD/server:/app/server" \
+  -v "$PWD/web:/app/web" \
+  -v /app/web/node_modules \
+  -v /app/server/.venv \
+  --env-file server/.env.local \
+  dwatlas:dev
+```
+
+Build the testing stage to run the full check suite inside the build.
+
+```bash
+docker build --target testing -t dwatlas:testing .
+```
+
+Drop into a shell in any built stage with `--entrypoint`.
+
+```bash
+docker run --rm -it --entrypoint sh dwatlas:dev
+```
+
+
 ### Contributing
 
 Simply create a branch (prefer a clear name like `feat/user-auth` or `fix/header-typo`) and submit a PR.

@@ -1,0 +1,37 @@
+FROM debian:testing-slim AS base
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates \
+    curl \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /usr/local/bin/
+
+COPY --from=node:22-slim /usr/local/bin/ /usr/local/bin/
+COPY --from=node:22-slim /usr/local/lib/node_modules /usr/local/lib/node_modules
+
+RUN corepack enable pnpm
+
+WORKDIR /app
+
+FROM base AS deps
+
+COPY server/pyproject.toml server/uv.lock /app/server/
+COPY web/package.json web/pnpm-lock.yaml /app/web/
+
+RUN uv sync --directory /app/server --frozen
+
+RUN pnpm --dir /app/web install --frozen-lockfile
+
+FROM deps AS source
+COPY . /app
+
+FROM source AS dev
+ENV PATH="/app/server/.venv/bin:$PATH"
+EXPOSE 5173 8000
+CMD ["sh", "-c", "uv run --directory /app/server fastapi dev --host 0.0.0.0 & pnpm --dir /app/web dev --host 0.0.0.0 && wait"]
+
+FROM source AS testing
+RUN uv run --directory /app/server pytest
+RUN pnpm --dir /app/web lint
