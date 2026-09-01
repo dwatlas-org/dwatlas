@@ -1,3 +1,5 @@
+from typing import Annotated
+
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session
 
@@ -15,13 +17,8 @@ from .service import (
 router = APIRouter()
 
 
-@router.post("/user/login")
-def login(username: str, password: str):
-    pass
-
-
 @router.get("/user/all")
-def api_read_users(*, session: Session = Depends(get_session)):
+def api_read_users(*, session: Annotated[Session, Depends(get_session)]):
     return read_users(session)
 
 
