@@ -3,9 +3,27 @@ from sqlmodel import Session, select
 
 from .models import User, UserCreate, UserUpdate
 
+DUMMY_HASH = PasswordHash.recommended().hash("dummypassword")
+
 
 class UserNotFoundError(Exception):
     pass
+
+
+def get_user(username: str, session: Session):
+    statement = select(User).where(User.username == username)
+    user = session.exec(statement).first()
+    return user
+
+
+def authenticate_user(*, username: str, password: str, session: Session) -> User | None:
+    user = get_user(username, session)
+    if not user:
+        verify_password(password, DUMMY_HASH)
+        user = None
+    elif not verify_password(password, user.hashed_password):
+        user = None
+    return user
 
 
 def read_users(session: Session):
