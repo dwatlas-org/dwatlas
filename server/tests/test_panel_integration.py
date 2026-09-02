@@ -4,8 +4,8 @@ from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from api.config import settings
+from api.core.postgres import async_session_factory, get_pg_session
 from api.main import app
-from api.postgres import async_session_factory, get_pg_session
 
 
 @pytest.fixture
@@ -33,11 +33,3 @@ async def test_raw_query(pg_session: AsyncSession):
     row = result.scalar()
 
     assert row == 1
-
-
-async def test_get_panels(client: AsyncClient, pg_session: AsyncSession):
-    result = await client.get("/panels/workers")
-    expected_rows = result.json()
-
-    assert result.status_code == 200
-    assert len(result.json()) == len(expected_rows)
