@@ -15,7 +15,8 @@ class Settings(BaseSettings):
     ENVIRONMENT: str = "development"
     DEBUG: bool = False
     BASE_URL: str = "http://localhost:8000"
-    PROJECT_NAME: str = "DeliveryWorkersAtlas"
+    PROJECT: str = "DeliveryWorkersAtlas API"
+    VERSION: str = "0.1"
 
     POSTGRES_HOST: str = "localhost"
     POSTGRES_PORT: int = 5432
