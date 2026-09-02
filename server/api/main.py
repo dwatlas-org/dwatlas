@@ -2,9 +2,11 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import HTMLResponse
 from sqlalchemy.ext.asyncio import create_async_engine
 
 from api.config import settings
+from api.panel.routes import router as router_panel
 from api.user.routes import router as router_user
 
 
@@ -23,12 +25,13 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(
-    title=settings.PROJECT_NAME,
+    title=settings.PROJECT,
     debug=settings.DEBUG,
     lifespan=lifespan,
 )
 
 app.include_router(router_user)
+app.include_router(router_panel)
 
 origins = [
     "http://localhost:5173",
@@ -45,9 +48,14 @@ app.add_middleware(
 
 @app.get("/")
 def root():
-    return {"Hello": "World"}
-
-
-@app.get("/panels/{id}")
-def panels(id: str, filters: dict | None = None):
-    return {"id": id, "filters": filters}
+    html_content = """
+    <html>
+        <head>
+            <title>{settings.PROJECT}</title>
+        </head>
+        <body>
+            <pre>{settings.PROJECT} v{settings.VERSION}</pre>
+        </body>
+    </html>
+    """
+    return HTMLResponse(content=html_content, status_code=200)
