@@ -10,6 +10,7 @@ from api.panel.routes import router as router_panel
 from api.user.routes import router as router_user
 
 
+# TODO: setup/use shared resources properly
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     postgres_engine = create_async_engine(str(settings.POSTGRES_URL))
@@ -48,7 +49,7 @@ app.add_middleware(
 
 @app.get("/")
 def root():
-    html_content = """
+    html_content = f"""
     <html>
         <head>
             <title>{settings.PROJECT}</title>
