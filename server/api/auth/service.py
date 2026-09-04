@@ -1,5 +1,5 @@
 from datetime import UTC, datetime, timedelta
-from typing import Annotated
+from typing import Annotated, Any
 
 import jwt
 from fastapi import Depends, HTTPException, status
@@ -17,9 +17,11 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/token")
 
 
 class UnauthorizedError(HTTPException):
-    status_code = status.HTTP_401_UNAUTHORIZED
-    detail = "Could not validate credentials"
-    headers = ({"WWW-Authenticate": "Bearer"},)
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        status_code: int = status.HTTP_401_UNAUTHORIZED
+        detail: str = "Could not validate credentials"
+        headers: dict[str, str] = {"WWW-Authenticate": "Bearer"}
+        super().__init__(status_code=status_code, detail=detail, headers=headers)
 
 
 async def get_current_user(
@@ -46,7 +48,9 @@ async def get_current_active_user(
     current_user: Annotated[User, Depends(get_current_user)],
 ):
     if current_user.disabled:
-        raise HTTPException(status_code=400, detail="Inactive user")
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Inactive user"
+        )
     return current_user
 
 
