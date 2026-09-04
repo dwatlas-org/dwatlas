@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlmodel import Session
 
 from .database import get_session
@@ -32,7 +32,9 @@ def api_delete_user(*, session: Session = Depends(get_session), user_id: int):
     try:
         delete_user(user_id, session)
     except UserNotFoundError:
-        raise HTTPException(status_code=404, detail="User not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
+        )
     return {"ok": True}
 
 
@@ -40,7 +42,9 @@ def api_delete_user(*, session: Session = Depends(get_session), user_id: int):
 def api_read_user(*, session: Session = Depends(get_session), user_id: int):
     user = read_user(user_id, session)
     if not user:
-        raise HTTPException(status_code=404, detail="User not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
+        )
     return user
 
 
@@ -50,5 +54,7 @@ def api_update_user(
 ):
     user = update_user(user_id, user, session)
     if not user:
-        raise HTTPException(status_code=404, detail="User not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
+        )
     return user
