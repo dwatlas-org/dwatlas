@@ -177,7 +177,7 @@ const footerLinks = [
   { title: "Contact", url: "#" },
 ];
 
-export function PanelNav({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function MainNav({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { toggleSidebar, state, isMobile } = useSidebar();
 
   // Only use the collapsed (icon-only) UI on desktop.
@@ -422,7 +422,7 @@ export function PanelNav({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   </span>
                 </a>
 
-                <CollapsibleTrigger asChild>
+                <CollapsibleTrigger>
                   <button
                     type="button"
                     aria-label="Toggle Footer Navigation"

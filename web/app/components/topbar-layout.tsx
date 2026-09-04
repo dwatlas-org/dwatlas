@@ -1,4 +1,5 @@
 import { Outlet, NavLink } from "react-router";
+import { cn } from "@/lib/utils";
 
 export function TopbarLayout() {
   return (
@@ -19,37 +20,55 @@ export function TopbarLayout() {
             <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-[#264370]">
               <NavLink
                 to="/"
-                className={({ isActive }) => (isActive ? "font-bold" : "")}
+                className={cn(
+                  ({ isActive }) => (isActive ? "font-bold" : ""),
+                  "no-underline",
+                )}
               >
                 Home
               </NavLink>
               <NavLink
                 to="/panels"
-                className={({ isActive }) => (isActive ? "font-bold" : "")}
+                className={cn(
+                  ({ isActive }) => (isActive ? "font-bold" : ""),
+                  "no-underline",
+                )}
               >
                 Data Panels
               </NavLink>
               <NavLink
                 to="/about"
-                className={({ isActive }) => (isActive ? "font-bold" : "")}
+                className={cn(
+                  ({ isActive }) => (isActive ? "font-bold" : ""),
+                  "no-underline",
+                )}
               >
                 About
               </NavLink>
               <NavLink
                 to="/register"
-                className={({ isActive }) => (isActive ? "font-bold" : "")}
+                className={cn(
+                  ({ isActive }) => (isActive ? "font-bold" : ""),
+                  "no-underline",
+                )}
               >
                 Register
               </NavLink>
               <NavLink
                 to="/login"
-                className={({ isActive }) => (isActive ? "font-bold" : "")}
+                className={cn(
+                  ({ isActive }) => (isActive ? "font-bold" : ""),
+                  "no-underline",
+                )}
               >
                 Login
               </NavLink>
               <NavLink
                 to="/signup"
-                className={({ isActive }) => (isActive ? "font-bold" : "")}
+                className={cn(
+                  ({ isActive }) => (isActive ? "font-bold" : ""),
+                  "no-underline",
+                )}
               >
                 Sign Up
               </NavLink>
