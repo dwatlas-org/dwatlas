@@ -74,8 +74,9 @@ def verify_password(password_plain: str, password_hashed: str) -> bool:
 def update_user(user_id: int, user: UserUpdate, session: Session):
     db_user = session.get(User, user_id)
     if db_user:
-        user_data = user.model_dump(exclude_unset=True)
-        if user.password:
+        user_data: dict = user.model_dump(exclude_unset=True)
+        cleartext_password: str | None = user_data.pop("password", None)
+        if cleartext_password:
             hashed_password = hash_password(user.password)
             user_data["hashed_password"] = hashed_password
         db_user.sqlmodel_update(user_data)
