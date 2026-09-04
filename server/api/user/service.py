@@ -88,5 +88,3 @@ def update_user(user_id: int, user: UserUpdate, session: Session):
         db_user.sqlmodel_update(user_data)
         session.add(db_user)
         session.commit()
-        session.refresh(db_user)
-    return db_user
