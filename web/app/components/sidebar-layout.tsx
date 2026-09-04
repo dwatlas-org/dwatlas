@@ -1,5 +1,5 @@
 import { Outlet } from "react-router";
-import { PanelNav } from "@/features/panel-nav";
+import { MainNav } from "@/components/main-nav";
 import { Separator } from "@/components/ui/separator";
 import {
   SidebarInset,
@@ -10,7 +10,7 @@ import {
 export function SidebarLayout() {
   return (
     <SidebarProvider>
-      <PanelNav />
+      <MainNav />
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
           <SidebarTrigger className="md:hidden -ml-1" />
