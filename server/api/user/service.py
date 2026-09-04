@@ -5,7 +5,15 @@ from sqlmodel import Session, select
 
 from .models import User, UserCreate, UserUpdate
 
-DUMMY_HASH = PasswordHash.recommended().hash("dummypassword")
+ph = PasswordHash.recommended()
+_dummy_hash: str | None = None
+
+
+def _get_dummy_hash() -> str:
+    global _dummy_hash
+    if _dummy_hash is None:
+        _dummy_hash = ph.hash("dummypassword")
+    return _dummy_hash
 
 
 class UserNotFoundError(Exception):
@@ -21,7 +29,7 @@ def get_user(username: str, session: Session):
 def authenticate_user(*, username: str, password: str, session: Session) -> User | None:
     user = get_user(username, session)
     if not user:
-        verify_password(password, DUMMY_HASH)
+        verify_password(password, _get_dummy_hash())
         user = None
     elif not verify_password(password, user.hashed_password):
         user = None
@@ -61,13 +69,11 @@ def read_user(user_id: int, session: Session):
 
 
 def hash_password(password_plain: str) -> str:
-    ph = PasswordHash.recommended()
     password_hash = ph.hash(password_plain)
     return password_hash
 
 
 def verify_password(password_plain: str, password_hashed: str) -> bool:
-    ph = PasswordHash.recommended()
     return ph.verify(password_plain, password_hashed)
 
 
@@ -75,8 +81,8 @@ def update_user(user_id: int, user: UserUpdate, session: Session):
     db_user = session.get(User, user_id)
     if db_user:
         user_data: dict = user.model_dump(exclude_unset=True)
-        cleartext_password: str | None = user_data.pop("password", None)
-        if cleartext_password:
+        plaintext_password: str | None = user_data.pop("password", None)
+        if plaintext_password:
             hashed_password = hash_password(user.password)
             user_data["hashed_password"] = hashed_password
         db_user.sqlmodel_update(user_data)
