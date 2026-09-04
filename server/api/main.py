@@ -1,28 +1,20 @@
 from contextlib import asynccontextmanager
 
+import asyncpg
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
-from sqlalchemy.ext.asyncio import create_async_engine
 
 from api.config import settings
 from api.panel.routes import router as router_panel
 from api.user.routes import router as router_user
 
 
-# TODO: setup/use shared resources properly
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    postgres_engine = create_async_engine(str(settings.POSTGRES_URL))
-    # sqlite_engine = create_async_engine(
-    #     settings.SQLITE_URL,
-    #     connect_args={"check_same_thread": False},
-    # )
-
+    app.state.pg_pool = await asyncpg.create_pool(str(settings.POSTGRES_URL))
     yield
-
-    await postgres_engine.dispose()
-    # await sqlite_engine.dispose()
+    await app.state.pg_pool.close()
 
 
 app = FastAPI(
@@ -55,8 +47,18 @@ def root():
             <title>{settings.PROJECT}</title>
         </head>
         <body>
-            <pre>{settings.PROJECT} v{settings.VERSION}</pre>
+            <pre>{settings.PROJECT} <sub>v{settings.VERSION}</sub></pre>
         </body>
     </html>
     """
     return HTMLResponse(content=html_content, status_code=200)
+
+
+@app.get("/health")
+async def health_check():
+    try:
+        async with app.state.pg_pool.acquire() as connection:
+            await connection.fetchval("SELECT 1")
+        return {"status": "healthy", "database": "connected"}
+    except (TimeoutError, asyncpg.PostgresError) as error:
+        return {"status": "unhealthy", "database": str(error)}
