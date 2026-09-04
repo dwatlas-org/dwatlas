@@ -35,7 +35,7 @@ class Settings(BaseSettings):
     def build_db_urls(self) -> "Settings":
         if self.POSTGRES_URL is None:
             self.POSTGRES_URL = MultiHostUrl.build(
-                scheme="postgresql+asyncpg",
+                scheme="postgres",
                 username=self.POSTGRES_USER,
                 password=self.POSTGRES_PASSWORD,
                 host=self.POSTGRES_HOST,
