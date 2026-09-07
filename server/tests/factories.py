@@ -9,6 +9,8 @@ faker = FakerFactory.create()
 
 
 @register
+@register(_name="second_user")
+@register(_name="third_user")
 class UserFactory(factory.alchemy.SQLAlchemyModelFactory):
     class Meta:
         model = User
