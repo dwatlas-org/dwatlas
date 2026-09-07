@@ -1,3 +1,4 @@
+import pytest
 from fastapi.testclient import TestClient
 from sqlmodel import Session
 
@@ -5,19 +6,14 @@ from api.user.models import User
 from api.user.service import hash_password
 
 
-def test_api_auth_me(client: TestClient, session: Session):
-    # Create user
-    username = "Banana"
-    password = "supersecurepassword123123!"
-    user = User(username=username, hashed_password=hash_password(password))
-    session.add(user)
-    session.commit()
+@pytest.mark.parametrize("user__hashed_password", [hash_password("supersecure")])
+def test_api_auth_me(client: TestClient, session: Session, user: User):
     # Login
     response = client.post(
         "/auth/token",
         data={
-            "username": username,
-            "password": password,
+            "username": user.username,
+            "password": "supersecure",
         },
         headers={"Content-Type": "application/x-www-form-urlencoded"},
     )
