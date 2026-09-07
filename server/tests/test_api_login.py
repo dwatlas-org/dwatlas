@@ -1,34 +1,20 @@
 import jwt
+import pytest
 from fastapi.testclient import TestClient
 
 from api.config import settings
+from api.user.models import User
+from api.user.service import hash_password
 
 
-def test_api_login(client: TestClient):
-    # Create a user
-    username = "Yolanda"
-    email = "yolanda@example.com"
-    password = "supersecret"
-    full_name = "Yolanda Thaire"
-
-    response = client.post(
-        "/user/",
-        json={
-            "username": username,
-            "email": email,
-            "full_name": full_name,
-            "password": password,
-        },
-    )
-
-    assert response.status_code == 200
-
+@pytest.mark.parametrize("user__hashed_password", [hash_password("supersecure123!")])
+def test_api_login(client: TestClient, user: User):
     # Login
     response = client.post(
         "/auth/token",
         data={
-            "username": username,
-            "password": password,
+            "username": user.username,
+            "password": "supersecure123!",
         },
         headers={"Content-Type": "application/x-www-form-urlencoded"},
     )
@@ -40,64 +26,29 @@ def test_api_login(client: TestClient):
     payload = jwt.decode(
         token, settings.AUTH_SECRET_KEY, algorithms=[settings.AUTH_ALGORITHM]
     )
-    assert payload.get("sub") == username
+    assert payload.get("sub") == user.username
 
 
-def test_api_login_wrong_username(client: TestClient):
-    # Create a user
-    username = "Yolanda"
-    email = "yolanda@example.com"
-    password = "supersecret"
-    full_name = "Yolanda Thaire"
-
-    response = client.post(
-        "/user/",
-        json={
-            "username": username,
-            "email": email,
-            "full_name": full_name,
-            "password": password,
-        },
-    )
-
-    assert response.status_code == 200
-
+@pytest.mark.parametrize("user__hashed_password", [hash_password("supersecure123!")])
+def test_api_login_wrong_username(client: TestClient, user: User):
     # Login
     response = client.post(
         "/auth/token",
         data={
             "username": "Other username",
-            "password": password,
+            "password": "supersecure123!",
         },
         headers={"Content-Type": "application/x-www-form-urlencoded"},
     )
     assert response.status_code == 401
 
 
-def test_api_login_wrong_password(client: TestClient):
-    # Create a user
-    username = "Yolanda"
-    email = "yolanda@example.com"
-    password = "supersecret"
-    full_name = "Yolanda Thaire"
-
-    response = client.post(
-        "/user/",
-        json={
-            "username": username,
-            "email": email,
-            "full_name": full_name,
-            "password": password,
-        },
-    )
-
-    assert response.status_code == 200
-
+def test_api_login_wrong_password(client: TestClient, user: User):
     # Login
     response = client.post(
         "/auth/token",
         data={
-            "username": username,
+            "username": user.username,
             "password": "thisisnotthepassword!",
         },
         headers={"Content-Type": "application/x-www-form-urlencoded"},

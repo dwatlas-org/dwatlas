@@ -1,20 +1,10 @@
 from fastapi import status
 from fastapi.testclient import TestClient
 
+from api.user.models import User
 
-def test_api_delete_user(client: TestClient):
-    # Create user
-    response = client.post(
-        "/user/",
-        json={
-            "username": "Yolanda",
-            "email": "yolanda@example.com",
-            "full_name": "Yolanda Thaire",
-            "password": "supersecret",
-        },
-    )
-    assert response.status_code == status.HTTP_200_OK
 
+def test_api_delete_user(client: TestClient, user: User):
     # Make sure there's a user
     response = client.get("/user/all/")
     assert response.status_code == status.HTTP_200_OK
