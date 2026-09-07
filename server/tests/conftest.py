@@ -36,3 +36,5 @@ def client_fixture(session: Session):
 
 
 register(UserFactory)
+register(UserFactory, "second_user")
+register(UserFactory, "third_user")
