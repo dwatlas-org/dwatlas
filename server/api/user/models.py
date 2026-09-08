@@ -6,14 +6,14 @@ from sqlmodel import Field, SQLModel
 
 
 class UserBase(SQLModel):
-    username: str = Field(index=True)
-    email: EmailStr | None = None
+    username: str | None = Field(index=True)
+    email: EmailStr
     full_name: str | None = None
     disabled: bool | None = None
 
 
 class User(UserBase, table=True):
-    __table_args__ = (UniqueConstraint("username"),)
+    __table_args__ = (UniqueConstraint("email"),)
     id: int | None = Field(default=None, primary_key=True)
     hashed_password: str = Field()
     created: datetime.datetime | None = Field(
