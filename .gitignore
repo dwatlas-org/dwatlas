@@ -37,6 +37,7 @@ htmlcov/
 .tox/
 
 # frontend
+.pnpm-store/
 node_modules/
 dist/
 dist-ssr/
