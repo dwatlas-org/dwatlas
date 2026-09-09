@@ -1,9 +1,10 @@
 import datetime
 
 from pwdlib import PasswordHash
+from sqlalchemy.exc import IntegrityError
 from sqlmodel import Session, select
 
-from .models import User, UserCreate, UserUpdate
+from .models import User, UserCreate, UserSignup, UserUpdate
 
 ph = PasswordHash.recommended()
 _dummy_hash: str | None = None
@@ -17,6 +18,10 @@ def _get_dummy_hash() -> str:
 
 
 class UserNotFoundError(Exception):
+    pass
+
+
+class DuplicateUserEmailError(Exception):
     pass
 
 
@@ -47,10 +52,13 @@ def read_users(session: Session):
 
 
 def create_user(user: UserCreate, session: Session):
-    extra_data = {"hashed_password": hash_password(user.password)}
-    db_user = User.model_validate(user, update=extra_data)
-    session.add(db_user)
-    session.commit()
+    try:
+        extra_data = {"hashed_password": hash_password(user.password)}
+        db_user = User.model_validate(user, update=extra_data)
+        session.add(db_user)
+        session.commit()
+    except IntegrityError:
+        raise DuplicateUserEmailError
     session.refresh(db_user)
     return db_user
 
@@ -89,4 +97,17 @@ def update_user(user_id: int, user: UserUpdate, session: Session):
         session.add(db_user)
         session.commit()
         session.refresh(db_user)
+    return db_user
+
+
+def signup_user(user: UserSignup, session: Session):
+    db_user = create_user(user, session)
+    # try:
+    #    extra_data = {"hashed_password": hash_password(user.password), "username": None}
+    #    db_user = User.model_validate(user, update=extra_data)
+    #    session.add(db_user)
+    #    session.commit()
+    # except IntegrityError:
+    #    raise DuplicateUserEmailError
+    # session.refresh(db_user)
     return db_user
