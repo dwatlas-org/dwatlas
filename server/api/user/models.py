@@ -6,7 +6,7 @@ from sqlmodel import Field, SQLModel
 
 
 class UserBase(SQLModel):
-    username: str | None = Field(index=True)
+    username: str | None = Field(index=True, default=None)
     email: EmailStr
     full_name: str | None = None
     disabled: bool | None = None
@@ -43,3 +43,8 @@ class UserUpdate(SQLModel):
     full_name: str | None = None
     password: str | None = None
     disabled: bool | None = None
+
+
+class UserSignup(SQLModel):
+    email: EmailStr
+    password: str
