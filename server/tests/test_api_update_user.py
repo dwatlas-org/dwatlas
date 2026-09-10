@@ -1,5 +1,6 @@
 import datetime
 
+from fastapi import status
 from fastapi.testclient import TestClient
 from sqlmodel import Session
 
@@ -53,3 +54,10 @@ def test_api_update_user_password_hash(
 
     user = session.get(User, 1)
     assert verify_password(new_password, user.hashed_password)
+
+
+def test_api_update_user_duplicate_email(
+    client: TestClient, user: User, second_user: User
+):
+    response = client.post("/user/update/1", json={"email": second_user.email})
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
