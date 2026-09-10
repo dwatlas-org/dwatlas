@@ -45,6 +45,16 @@ def test_api_signup(
         assert key in data
 
 
+def test_api_signup_random_userdata(user_data: dict[str, str], client: TestClient):
+    response = client.post(
+        "/user/signup",
+        json={"email": user_data["email"], "password": user_data["password"]},
+    )
+    assert response.status_code == status.HTTP_201_CREATED
+    data = response.json()
+    assert data["email"] == user_data["email"]
+
+
 def test_api_signup_duplicate_email(user: User, client: TestClient):
     response = client.post(
         "/user/signup",
