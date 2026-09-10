@@ -25,7 +25,7 @@ def api_read_users(*, session: Annotated[Session, Depends(get_session)]):
     return read_users(session)
 
 
-@router.post("/user/", response_model=UserPublic)
+@router.post("/user/", response_model=UserPublic, status_code=status.HTTP_201_CREATED)
 def api_create_user(*, session: Session = Depends(get_session), user: UserCreate):
     try:
         user = create_user(user, session)
@@ -55,7 +55,9 @@ def api_read_user(*, session: Session = Depends(get_session), user_id: int):
     return user
 
 
-@router.post("/user/signup", response_model=UserPublic)
+@router.post(
+    "/user/signup", response_model=UserPublic, status_code=status.HTTP_201_CREATED
+)
 def api_signup(*, session: Session = Depends(get_session), user: UserSignup):
     try:
         user = signup_user(user, session)
