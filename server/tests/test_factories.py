@@ -1,9 +1,10 @@
 import pytest
+from sqlmodel import Session
 
 from api.user.models import User
 
 
-def test_user_factory(session, user):
+def test_user_factory(session: Session, user):
     assert user
     assert user.username
     assert user.hashed_password.startswith("$argon2id")
@@ -28,7 +29,7 @@ def test_user_factory(session, user):
 @pytest.mark.parametrize("user__username", ["Dandara"])
 @pytest.mark.parametrize("user__email", ["dandara@dwatlas.org"])
 @pytest.mark.parametrize("user__disabled", [True])
-def test_user_factory_parametrized(session, user):
+def test_user_factory_parametrized(user: User):
     assert user.username == "Dandara"
     assert user.email == "dandara@dwatlas.org"
     assert user.disabled is True

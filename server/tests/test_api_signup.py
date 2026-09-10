@@ -3,14 +3,12 @@ from typing import Any
 import pytest
 from fastapi import status
 from fastapi.testclient import TestClient
-from sqlmodel import Session
 
 from api.user.models import User
 
 # TODO make session fixture autouse?
 
 
-# @pytest.mark.parametrize("a, b, expected", ())
 @pytest.mark.parametrize(
     "json, status_code,",
     (
@@ -30,7 +28,7 @@ def test_api_signup(json: dict[str, Any], status_code: int, client: TestClient):
     assert response.status_code == status_code
 
 
-def test_api_signup_duplicate_email(session: Session, user: User, client: TestClient):
+def test_api_signup_duplicate_email(user: User, client: TestClient):
     response = client.post(
         "/user/signup",
         json={"email": user.email, "password": "somepassword"},

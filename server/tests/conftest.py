@@ -11,7 +11,7 @@ from api.user.database import get_session
 from .factories import UserFactory
 
 
-@pytest.fixture(name="session", scope="function")
+@pytest.fixture(name="session", scope="function", autouse=True)
 def session_fixture():
     engine = create_engine(
         "sqlite://", connect_args={"check_same_thread": False}, poolclass=StaticPool
