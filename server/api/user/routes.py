@@ -8,6 +8,7 @@ from .models import UserCreate, UserPublic, UserSignup, UserUpdate
 from .service import (
     DuplicateUserEmailError,
     UserNotFoundError,
+    UserUpdateError,
     create_user,
     delete_user,
     read_user,
@@ -67,7 +68,10 @@ def api_signup(*, session: Session = Depends(get_session), user: UserSignup):
 def api_update_user(
     *, session: Session = Depends(get_session), user_id: int, user: UserUpdate
 ):
-    user = update_user(user_id, user, session)
+    try:
+        user = update_user(user_id, user, session)
+    except UserUpdateError:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="User not found"

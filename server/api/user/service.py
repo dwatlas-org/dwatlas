@@ -25,6 +25,10 @@ class DuplicateUserEmailError(Exception):
     pass
 
 
+class UserUpdateError(Exception):
+    pass
+
+
 def get_user(username: str, session: Session):
     statement = select(User).where(User.username == username)
     user = session.exec(statement).first()
@@ -94,20 +98,15 @@ def update_user(user_id: int, user: UserUpdate, session: Session):
             hashed_password = hash_password(user.password)
             user_data["hashed_password"] = hashed_password
         db_user.sqlmodel_update(user_data)
-        session.add(db_user)
-        session.commit()
-        session.refresh(db_user)
+        try:
+            session.add(db_user)
+            session.commit()
+        except IntegrityError:
+            raise UserUpdateError
+    session.refresh(db_user)
     return db_user
 
 
 def signup_user(user: UserSignup, session: Session):
     db_user = create_user(user, session)
-    # try:
-    #    extra_data = {"hashed_password": hash_password(user.password), "username": None}
-    #    db_user = User.model_validate(user, update=extra_data)
-    #    session.add(db_user)
-    #    session.commit()
-    # except IntegrityError:
-    #    raise DuplicateUserEmailError
-    # session.refresh(db_user)
     return db_user
