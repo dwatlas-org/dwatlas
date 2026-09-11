@@ -28,9 +28,9 @@ def test_api_create_user(client: TestClient, user_data: dict[str, str]):
     assert pre < created < post
 
 
-def test_api_create_user_duplicate_email(user: User, client: TestClient):
+def test_api_create_user_duplicate_email(user: User, password: str, client: TestClient):
     response = client.post(
         "/user/",
-        json={"email": user.email, "password": "somepassword"},
+        json={"email": user.email, "password": password},
     )
     assert response.status_code == status.HTTP_400_BAD_REQUEST

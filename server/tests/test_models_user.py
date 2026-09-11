@@ -3,14 +3,15 @@ from sqlalchemy.exc import IntegrityError
 from sqlmodel import Session
 
 from api.user.models import User
+from api.user.service import hash_password
 
 
-def test_models_user_unique_username(session: Session):
+def test_models_user_unique_username(session: Session, user_data: dict[str, str]):
     """Note: username is not unique."""
-    username: str = "kali"
-    email: str = "kali.wilkinson@mail.com"
-    full_name: str = "Kali Wilkinson"
-    hashed_password: str = "veryhashed"
+    username: str = user_data["username"]
+    email: str = user_data["email"]
+    full_name: str = user_data["full_name"]
+    hashed_password: str = hash_password(user_data["password"])
 
     user_1 = User(
         username=username,
@@ -29,11 +30,11 @@ def test_models_user_unique_username(session: Session):
     session.commit()
 
 
-def test_models_user_unique_email(session: Session):
-    username: str = "kali"
-    email: str = "kali.wilkinson@mail.com"
-    full_name: str = "Kali Wilkinson"
-    hashed_password: str = "veryhashed"
+def test_models_user_unique_email(session: Session, user_data: dict[str, str]):
+    username: str = user_data["username"]
+    email: str = user_data["email"]
+    full_name: str = user_data["full_name"]
+    hashed_password: str = hash_password(user_data["password"])
 
     user_1 = User(
         username=username,
