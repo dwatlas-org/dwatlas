@@ -1,6 +1,5 @@
 import { Outlet } from "react-router";
 import { MainNav } from "@/components/main-nav";
-import { Separator } from "@/components/ui/separator";
 import {
   SidebarInset,
   SidebarProvider,
