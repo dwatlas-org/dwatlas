@@ -1,5 +1,6 @@
 import pytest
 from factory.alchemy import SQLAlchemyModelFactory
+from faker import Faker
 from fastapi.testclient import TestClient
 from pytest_factoryboy import register
 from sqlmodel import Session, SQLModel, create_engine
@@ -10,8 +11,10 @@ from api.user.database import get_session
 
 from .factories import UserFactory
 
+fake = Faker()
 
-@pytest.fixture(name="session", scope="function")
+
+@pytest.fixture(name="session", scope="function", autouse=True)
 def session_fixture():
     engine = create_engine(
         "sqlite://", connect_args={"check_same_thread": False}, poolclass=StaticPool
@@ -33,6 +36,30 @@ def client_fixture(session: Session):
     client = TestClient(app)
     yield client
     app.dependency_overrides.clear()
+
+
+@pytest.fixture(name="user_data", scope="function")
+def user_data_fixture(username: str, password: str) -> dict[str, str]:
+    email = fake.email()
+    full_name = fake.name()
+    return {
+        "username": username,
+        "email": email,
+        "full_name": full_name,
+        "password": password,
+    }
+
+
+@pytest.fixture(name="password", scope="function")
+def password_fixture() -> str:
+    password = fake.password(length=8, special_chars=True)
+    return password
+
+
+@pytest.fixture(name="username", scope="function")
+def username_fixture() -> str:
+    username = fake.first_name()
+    return username
 
 
 register(UserFactory)
