@@ -1,9 +1,10 @@
 import datetime
 
 from pwdlib import PasswordHash
+from sqlalchemy.exc import IntegrityError
 from sqlmodel import Session, select
 
-from .models import User, UserCreate, UserUpdate
+from .models import User, UserCreate, UserSignup, UserUpdate
 
 ph = PasswordHash.recommended()
 _dummy_hash: str | None = None
@@ -20,7 +21,15 @@ class UserNotFoundError(Exception):
     pass
 
 
-def get_user(username: str, session: Session):
+class DuplicateUserEmailError(Exception):
+    pass
+
+
+class UserUpdateError(Exception):
+    pass
+
+
+def get_user(username: str, session: Session) -> User:
     statement = select(User).where(User.username == username)
     user = session.exec(statement).first()
     return user
@@ -40,22 +49,25 @@ def authenticate_user(*, username: str, password: str, session: Session) -> User
     return user
 
 
-def read_users(session: Session):
+def read_users(session: Session) -> list[User]:
     statement = select(User)
     users = session.exec(statement).all()
     return users
 
 
-def create_user(user: UserCreate, session: Session):
-    extra_data = {"hashed_password": hash_password(user.password)}
-    db_user = User.model_validate(user, update=extra_data)
-    session.add(db_user)
-    session.commit()
+def create_user(user: UserCreate, session: Session) -> User:
+    try:
+        extra_data = {"hashed_password": hash_password(user.password)}
+        db_user = User.model_validate(user, update=extra_data)
+        session.add(db_user)
+        session.commit()
+    except IntegrityError:
+        raise DuplicateUserEmailError
     session.refresh(db_user)
     return db_user
 
 
-def delete_user(user_id: int, session: Session):
+def delete_user(user_id: int, session: Session) -> None:
     user = session.get(User, user_id)
     if not user:
         raise UserNotFoundError
@@ -63,7 +75,7 @@ def delete_user(user_id: int, session: Session):
     session.commit()
 
 
-def read_user(user_id: int, session: Session):
+def read_user(user_id: int, session: Session) -> User:
     user = session.get(User, user_id)
     return user
 
@@ -77,7 +89,7 @@ def verify_password(password_plain: str, password_hashed: str) -> bool:
     return ph.verify(password_plain, password_hashed)
 
 
-def update_user(user_id: int, user: UserUpdate, session: Session):
+def update_user(user_id: int, user: UserUpdate, session: Session) -> User:
     db_user = session.get(User, user_id)
     if db_user:
         user_data: dict = user.model_dump(exclude_unset=True)
@@ -86,7 +98,15 @@ def update_user(user_id: int, user: UserUpdate, session: Session):
             hashed_password = hash_password(user.password)
             user_data["hashed_password"] = hashed_password
         db_user.sqlmodel_update(user_data)
-        session.add(db_user)
-        session.commit()
-        session.refresh(db_user)
+        try:
+            session.add(db_user)
+            session.commit()
+        except IntegrityError:
+            raise UserUpdateError
+    session.refresh(db_user)
+    return db_user
+
+
+def signup_user(user: UserSignup, session: Session) -> User:
+    db_user = create_user(user, session)
     return db_user
