@@ -1,3 +1,4 @@
+from pydantic import EmailStr
 from sqlmodel import SQLModel
 
 
@@ -7,4 +8,9 @@ class Token(SQLModel):
 
 
 class TokenData(SQLModel):
-    username: str | None = None
+    email: EmailStr | None = None
+
+
+class LoginData(SQLModel):
+    email: EmailStr
+    password: str

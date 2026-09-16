@@ -9,7 +9,7 @@ from sqlmodel import Session
 from api.config import settings
 from api.user.database import get_session
 from api.user.models import User
-from api.user.service import get_user
+from api.user.service import get_user_email
 
 from .models import TokenData
 
@@ -32,13 +32,13 @@ async def get_current_user(
         payload = jwt.decode(
             token, settings.AUTH_SECRET_KEY, algorithms=[settings.AUTH_ALGORITHM]
         )
-        username = payload.get("sub")
-        if username is None:
+        email = payload.get("sub")
+        if email is None:
             raise UnauthorizedError
-        token_data = TokenData(username=username)
+        token_data = TokenData(email=email)
     except jwt.InvalidTokenError:
         raise UnauthorizedError
-    user = get_user(username=token_data.username, session=session)
+    user = get_user_email(email=token_data.email, session=session)
     if user is None:
         raise UnauthorizedError
     return user
