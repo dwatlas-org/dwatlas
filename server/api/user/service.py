@@ -29,14 +29,20 @@ class UserUpdateError(Exception):
     pass
 
 
-def get_user(username: str, session: Session) -> User:
+def get_user_username(username: str, session: Session):
     statement = select(User).where(User.username == username)
     user = session.exec(statement).first()
     return user
 
 
-def authenticate_user(*, username: str, password: str, session: Session) -> User | None:
-    user = get_user(username, session)
+def get_user_email(email: str, session: Session) -> User:
+    statement = select(User).where(User.email == email)
+    user = session.exec(statement).first()
+    return user
+
+
+def authenticate_user(*, email: str, password: str, session: Session) -> User | None:
+    user = get_user_email(email, session)
     if not user:
         verify_password(password, _get_dummy_hash())
         user = None

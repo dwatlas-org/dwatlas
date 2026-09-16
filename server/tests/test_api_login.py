@@ -12,11 +12,10 @@ def test_api_login(client: TestClient, user: User):
     # Login
     response = client.post(
         "/auth/token",
-        data={
-            "username": user.username,
+        json={
+            "email": user.email,
             "password": "supersecure123!",
         },
-        headers={"Content-Type": "application/x-www-form-urlencoded"},
     )
     assert response.status_code == 200
     data = response.json()
@@ -26,19 +25,18 @@ def test_api_login(client: TestClient, user: User):
     payload = jwt.decode(
         token, settings.AUTH_SECRET_KEY, algorithms=[settings.AUTH_ALGORITHM]
     )
-    assert payload.get("sub") == user.username
+    assert payload.get("sub") == user.email
 
 
 @pytest.mark.parametrize("user__hashed_password", [hash_password("supersecure123!")])
-def test_api_login_wrong_username(client: TestClient, user: User):
+def test_api_login_wrong_email(client: TestClient, user: User):
     # Login
     response = client.post(
         "/auth/token",
-        data={
-            "username": "Other username",
+        json={
+            "email": "test@example.com",
             "password": "supersecure123!",
         },
-        headers={"Content-Type": "application/x-www-form-urlencoded"},
     )
     assert response.status_code == 401
 
@@ -47,10 +45,9 @@ def test_api_login_wrong_password(client: TestClient, user: User):
     # Login
     response = client.post(
         "/auth/token",
-        data={
-            "username": user.username,
+        json={
+            "email": user.email,
             "password": "thisisnotthepassword!",
         },
-        headers={"Content-Type": "application/x-www-form-urlencoded"},
     )
     assert response.status_code == 401

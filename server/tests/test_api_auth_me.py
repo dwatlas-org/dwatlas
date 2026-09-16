@@ -10,11 +10,10 @@ def test_api_auth_me(client: TestClient, user: User):
     # Login
     response = client.post(
         "/auth/token",
-        data={
-            "username": user.username,
+        json={
+            "email": user.email,
             "password": "supersecure",
         },
-        headers={"Content-Type": "application/x-www-form-urlencoded"},
     )
     assert response.status_code == 200
     data = response.json()
