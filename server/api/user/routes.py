@@ -1,10 +1,10 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, BackgroundTasks, Depends, Form, HTTPException, status
 from sqlmodel import Session
 
 from .database import get_session
-from .models import UserCreate, UserPublic, UserSignup, UserUpdate
+from .models import RequestAccessForm, UserCreate, UserPublic, UserSignup, UserUpdate
 from .service import (
     DuplicateUserEmailError,
     UserNotFoundError,
@@ -13,6 +13,7 @@ from .service import (
     delete_user,
     read_user,
     read_users,
+    send_access_request,
     signup_user,
     update_user,
 )
@@ -79,3 +80,10 @@ def api_update_user(
             status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
         )
     return user
+
+
+@router.post("/user/request_access")
+def api_request_access(
+    form_data: Annotated[RequestAccessForm, Form()], background_tasks: BackgroundTasks
+):
+    return send_access_request(form_data, background_tasks)

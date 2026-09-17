@@ -5,6 +5,13 @@ from sqlalchemy import UniqueConstraint
 from sqlmodel import Field, SQLModel
 
 
+class RequestAccessForm(SQLModel):
+    full_name: str
+    email: EmailStr
+    organization: str
+    purpose: str
+
+
 class UserBase(SQLModel):
     username: str | None = Field(index=True, default=None)
     email: EmailStr
