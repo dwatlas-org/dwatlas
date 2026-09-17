@@ -1,11 +1,12 @@
 import datetime
+from email.message import EmailMessage
 
 from fastapi import BackgroundTasks
 from pwdlib import PasswordHash
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import Session, select
 
-from .email import EmailMessage, EmailService
+from .email import EmailService
 from .models import RequestAccessForm, User, UserCreate, UserSignup, UserUpdate
 
 ph = PasswordHash.recommended()
@@ -126,11 +127,12 @@ def signup_user(user: UserSignup, session: Session) -> User:
 def send_access_request(
     form_data: RequestAccessForm, background_tasks: BackgroundTasks
 ):
-    message = EmailMessage(
-        address_to="access@dwatlas.org",
-        address_from=form_data.email,
-        subject=f"Request for access by {form_data.full_name}",
-        body=f"Type of organization / institution: {form_data.organization}\nPurpose of access: {form_data.purpose}",
+    message = EmailMessage()
+    message["To"] = "access@dwatlas.org"
+    message["From"] = (form_data.email,)
+    message["Subject"] = f"Request for access by {form_data.full_name}"
+    message["Content"] = (
+        f"Type of organization / institution: {form_data.organization}\nPurpose of access: {form_data.purpose}"
     )
     background_tasks.add_task(email_service.send, [message])
     return {"message": "Request for access sent"}
