@@ -6,6 +6,8 @@ from pwdlib import PasswordHash
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import Session, select
 
+from api.config import settings
+
 from .email import EmailService
 from .models import RequestAccessForm, User, UserCreate, UserSignup, UserUpdate
 
@@ -128,10 +130,10 @@ def send_access_request(
     form_data: RequestAccessForm, background_tasks: BackgroundTasks
 ):
     message = EmailMessage()
-    message["To"] = "access@dwatlas.org"
-    message["From"] = (form_data.email,)
+    message["To"] = settings.REQUEST_ACCESS_TO
+    message["From"] = settings.REQUEST_ACCESS_FROM
     message["Subject"] = f"Request for access by {form_data.full_name}"
-    message["Content"] = (
+    message.set_content(
         f"Type of organization / institution: {form_data.organization}\nPurpose of access: {form_data.purpose}"
     )
     background_tasks.add_task(email_service.send, [message])

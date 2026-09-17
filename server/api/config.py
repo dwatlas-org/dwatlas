@@ -1,6 +1,6 @@
 from functools import lru_cache
 
-from pydantic import model_validator
+from pydantic import EmailStr, model_validator
 from pydantic_core import MultiHostUrl
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -31,7 +31,15 @@ class Settings(BaseSettings):
     AUTH_ALGORITHM: str = "HS256"
     AUTH_ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
 
-    EMAIL_PROVIDER: str = "console"  # "console" | "mailerlite" | ...
+    REQUEST_ACCESS_TO: EmailStr
+    REQUEST_ACCESS_FROM: EmailStr
+
+    EMAIL_PROVIDER: str = "console"  # "console" | "smtp" | "mailersend" | ...
+    EMAIL_SMTP_USER: str | None = None
+    EMAIL_SMTP_PASSWORD: str | None = None
+    EMAIL_SMTP_HOST: str | None = None
+    EMAIL_SMTP_PORT: int | None = None
+    EMAIL_SMTP_TLS: bool = True
 
     SENDMAIL_API_KEY: str = "secret-access-key"
     SENDMAIL_FROM: str = "noreply@dwatlas.org"
