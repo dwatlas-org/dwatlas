@@ -4,6 +4,7 @@ from sys import stdout
 from typing import IO
 
 import aiosmtplib
+import httpx
 
 from api.config import settings
 
@@ -28,7 +29,24 @@ class EmailService:
             stream.write("\n")
 
     async def send_mailersend(self, messages: Iterable[EmailMessage]) -> None:
-        raise NotImplementedError
+        headers = {"Authorization": f"Bearer {settings.EMAIL_MAILERSEND_TOKEN}"}
+        for message in messages:
+            payload = {
+                "from": {"email": message["From"], "name": "MailerSend"},
+                "to": [
+                    {
+                        "email": message["To"],
+                    }
+                ],
+                "subject": message["Subject"],
+                "text": message.get_content(),
+            }
+            async with httpx.AsyncClient(timeout=10) as client:
+                r = await client.post(
+                    settings.EMAIL_MAILERSEND_ADDRESS, headers=headers, json=payload
+                )
+                r.raise_for_status()
+                return {"status": r.status_code}
 
     async def send_smtp(self, messages: Iterable[EmailMessage]) -> None:
         for message in messages:
