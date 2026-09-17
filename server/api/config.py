@@ -31,6 +31,8 @@ class Settings(BaseSettings):
     AUTH_ALGORITHM: str = "HS256"
     AUTH_ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
 
+    EMAIL_PROVIDER: str = "console"  # "console" | "mailerlite" | ...
+
     SENDMAIL_API_KEY: str = "secret-access-key"
     SENDMAIL_FROM: str = "noreply@dwatlas.org"
 
