@@ -41,6 +41,9 @@ class Settings(BaseSettings):
     EMAIL_SMTP_PORT: int | None = None
     EMAIL_SMTP_TLS: bool = True
 
+    EMAIL_MAILERSEND_ADDRESS: str | None = None
+    EMAIL_MAILERSEND_TOKEN: str | None = None
+
     SENDMAIL_API_KEY: str = "secret-access-key"
     SENDMAIL_FROM: str = "noreply@dwatlas.org"
 
