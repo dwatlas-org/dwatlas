@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
 import {
   MessageSquare,
@@ -25,14 +24,18 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "@/components/ui/chart";
+import { useChart, useMetrics } from "@/hooks/use-panel-data";
+import { cn } from "@/lib/utils";
+import {
+  type PanelChartPoint,
+  type PanelFilters,
+  type PanelMetrics,
+  type PanelView,
+} from "@/lib/api";
 
 export const description = "Temporal Evolution Panel";
 
-import {
-  useLoaderData,
-  useRouteError,
-  isRouteErrorResponse,
-} from "react-router";
+import { useRouteError, isRouteErrorResponse } from "react-router";
 
 type Panel = {
   id: number;
@@ -68,33 +71,8 @@ export async function panelsLoader(): Promise<Panel[]> {
   ];
 }
 
-const chartData = [
-  { date: "2024-06-01", users: 32 },
-  { date: "2024-07-01", users: 22 },
-  { date: "2024-08-01", users: 28 },
-  { date: "2024-09-01", users: 18 },
-  { date: "2024-10-01", users: 17 },
-  { date: "2024-11-01", users: 25 },
-  { date: "2024-12-01", users: 9 },
-  { date: "2025-01-01", users: 15 },
-  { date: "2025-02-01", users: 15 },
-  { date: "2025-03-01", users: 16 },
-  { date: "2025-04-01", users: 8 },
-  { date: "2025-05-01", users: 19 },
-  { date: "2025-06-01", users: 21 },
-  { date: "2025-07-01", users: 43 },
-  { date: "2025-08-01", users: 57 },
-  { date: "2025-09-01", users: 65 },
-  { date: "2025-10-01", users: 53 },
-  { date: "2025-11-01", users: 44 },
-  { date: "2025-12-01", users: 44 },
-  { date: "2026-01-01", users: 55 },
-  { date: "2026-02-01", users: 56 },
-  { date: "2026-03-01", users: 44 },
-  { date: "2026-04-01", users: 51 },
-  { date: "2026-05-01", users: 65 },
-  { date: "2026-06-01", users: 240 },
-];
+const VIEW: PanelView = "temporal_evolution";
+const DEFAULT_FILTERS: PanelFilters = {};
 
 const chartConfig = {
   users: {
@@ -104,14 +82,21 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export function Panel() {
+  const metrics = useMetrics(VIEW, DEFAULT_FILTERS);
+  const chart = useChart(VIEW, DEFAULT_FILTERS);
+
   return (
     <div className="min-h-screen bg-background p-6">
       <div className="mx-auto flex max-w-7xl flex-col gap-6">
         <Head />
-        <Metrics />
+        <Metrics metrics={metrics.data} isLoading={metrics.isLoading} />
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           <div className="flex flex-col gap-6 lg:col-span-2">
-            <Chart />
+            <Chart
+              data={chart.data ?? []}
+              isLoading={chart.isLoading}
+              error={chart.error}
+            />
             <Notes />
           </div>
           <div className="lg:col-span-1">
@@ -155,17 +140,39 @@ export function Head() {
   );
 }
 
-export function Metrics() {
+function formatMetric(value: number | null | undefined): string {
+  return value?.toLocaleString() ?? "0";
+}
+
+export function Metrics({
+  metrics = null,
+  isLoading = false,
+}: {
+  metrics?: PanelMetrics | null;
+  isLoading?: boolean;
+}) {
+  const conversion = ((metrics?.conversion ?? 0) * 100).toFixed(1);
+
   return (
-    <div className="flex flex-col divide-y divide-slate-100 rounded-lg border border-slate-200 bg-white shadow-sm sm:flex-row sm:divide-y-0 sm:divide-x">
+    <div
+      aria-busy={isLoading}
+      className={cn(
+        "flex flex-col divide-y divide-slate-100 rounded-lg border border-slate-200 bg-white shadow-sm transition-opacity sm:flex-row sm:divide-y-0 sm:divide-x",
+        isLoading && "opacity-60",
+      )}
+    >
       <div className="flex flex-1 flex-col items-center justify-center p-6 text-center">
-        <div className="text-4xl font-extrabold text-slate-900">793</div>
+        <div className="text-4xl font-extrabold text-slate-900">
+          {formatMetric(metrics?.total)}
+        </div>
         <div className="mt-1 text-xs font-semibold tracking-wider text-slate-500 uppercase">
           Regular Users
         </div>
       </div>
       <div className="flex flex-1 flex-col items-center justify-center p-6 text-center">
-        <div className="text-4xl font-extrabold text-fuchsia-600">14</div>
+        <div className="text-4xl font-extrabold text-fuchsia-600">
+          {formatMetric(metrics?.average)}
+        </div>
         <div className="mt-1 text-xs font-semibold tracking-wider text-slate-500 uppercase">
           Monthly Average of
           <br />
@@ -173,7 +180,9 @@ export function Metrics() {
         </div>
       </div>
       <div className="flex flex-1 flex-col items-center justify-center p-6 text-center">
-        <div className="text-4xl font-extrabold text-blue-500">16</div>
+        <div className="text-4xl font-extrabold text-blue-500">
+          {formatMetric(metrics?.median)}
+        </div>
         <div className="mt-1 text-xs font-semibold tracking-wider text-slate-500 uppercase">
           Monthly Median of
           <br />
@@ -181,7 +190,9 @@ export function Metrics() {
         </div>
       </div>
       <div className="flex flex-1 flex-col items-center justify-center p-6 text-center">
-        <div className="text-4xl font-extrabold text-orange-500">13.4%</div>
+        <div className="text-4xl font-extrabold text-orange-500">
+          {conversion}%
+        </div>
         <div className="mt-1 text-xs font-semibold tracking-wider text-slate-500 uppercase">
           Conversion Rate to
           <br />
@@ -192,9 +203,23 @@ export function Metrics() {
   );
 }
 
-export function Chart() {
+export function Chart({
+  data = [],
+  isLoading = false,
+  error = null,
+}: {
+  data?: PanelChartPoint[];
+  isLoading?: boolean;
+  error?: string | null;
+}) {
   return (
-    <Card className="border-slate-200 bg-white shadow-sm">
+    <Card
+      aria-busy={isLoading}
+      className={cn(
+        "border-slate-200 bg-white shadow-sm",
+        isLoading && "opacity-60",
+      )}
+    >
       <CardHeader className="pb-2">
         <CardTitle className="text-lg font-bold text-slate-900">
           Evolution by month of regular users
@@ -219,7 +244,7 @@ export function Chart() {
         >
           <LineChart
             accessibilityLayer
-            data={chartData}
+            data={data}
             margin={{
               left: -20,
               right: 12,
@@ -314,6 +339,10 @@ export function Chart() {
             <Maximize className="h-4 w-4" /> Full Screen
           </button>
         </div>
+
+        {error ? (
+          <p className="mt-4 text-center text-sm text-red-600">{error}</p>
+        ) : null}
       </CardContent>
     </Card>
   );
@@ -524,7 +553,7 @@ export function Main() {
   return (
     <div className="min-h-screen bg-slate-50/50 p-4 sm:p-8 font-sans">
       <div className="mx-auto flex max-w-[1400px] flex-col gap-6">
-        <Header />
+        <Head />
         <Metrics />
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start">
           <div className="flex w-full flex-col gap-6 lg:w-3/4">
