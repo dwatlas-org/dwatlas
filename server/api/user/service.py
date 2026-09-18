@@ -9,7 +9,7 @@ from sqlmodel import Session, select
 from api.config import settings
 
 from .email import EmailService
-from .models import RequestAccessForm, User, UserCreate, UserSignup, UserUpdate
+from .models import RequestAccessData, User, UserCreate, UserSignup, UserUpdate
 
 ph = PasswordHash.recommended()
 _dummy_hash: str | None = None
@@ -127,7 +127,7 @@ def signup_user(user: UserSignup, session: Session) -> User:
 
 
 def send_access_request(
-    form_data: RequestAccessForm, background_tasks: BackgroundTasks
+    form_data: RequestAccessData, background_tasks: BackgroundTasks
 ):
     message = EmailMessage()
     message["To"] = settings.REQUEST_ACCESS_TO
