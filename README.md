@@ -1,3 +1,7 @@
+> [!Warning]
+> This project is in its early stages and may undergo major architectural changes, refactorings, and occasional instability.
+
+
 ### `DeliveryWorkerAtlas`
 
 This is the monorepo for the **DeliveryWorkerAtlas** project.
