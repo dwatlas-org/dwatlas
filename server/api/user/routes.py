@@ -1,10 +1,10 @@
 from typing import Annotated
 
-from fastapi import APIRouter, BackgroundTasks, Depends, Form, HTTPException, status
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, status
 from sqlmodel import Session
 
 from .database import get_session
-from .models import RequestAccessForm, UserCreate, UserPublic, UserSignup, UserUpdate
+from .models import RequestAccessData, UserCreate, UserPublic, UserSignup, UserUpdate
 from .service import (
     DuplicateUserEmailError,
     UserNotFoundError,
@@ -83,7 +83,5 @@ def api_update_user(
 
 
 @router.post("/user/request_access")
-def api_request_access(
-    form_data: Annotated[RequestAccessForm, Form()], background_tasks: BackgroundTasks
-):
+def api_request_access(form_data: RequestAccessData, background_tasks: BackgroundTasks):
     return send_access_request(form_data, background_tasks)

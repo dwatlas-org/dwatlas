@@ -5,7 +5,7 @@ from sqlalchemy import UniqueConstraint
 from sqlmodel import Field, SQLModel
 
 
-class RequestAccessForm(SQLModel):
+class RequestAccessData(SQLModel):
     full_name: str
     email: EmailStr
     organization: str
