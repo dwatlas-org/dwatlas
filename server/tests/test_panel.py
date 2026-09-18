@@ -1,3 +1,4 @@
+from datetime import date
 from unittest.mock import AsyncMock, MagicMock
 
 import pytest
@@ -6,7 +7,11 @@ from fastapi import HTTPException
 from httpx import ASGITransport, AsyncClient
 
 from api.main import app
-from api.panel.repository import PanelRepository, get_panel_repository
+from api.panel.repository import (
+    PanelRepository,
+    build_function_call,
+    get_panel_repository,
+)
 from api.panel.schema import AllowedView, PanelFilter
 from api.panel.service import PanelService, get_panel_service
 
@@ -20,13 +25,18 @@ def mock_db():
 def mock_repo():
     repo = MagicMock(spec=PanelRepository)
     repo.fetch_metrics = AsyncMock(
-        return_value={"total_users": 100, "total_cities": 5, "female_workers": 40}
+        return_value={
+            "total": 200,
+            "average": 14.5,
+            "median": 16.0,
+            "conversion": 0.134,
+        }
     )
     repo.fetch_chart = AsyncMock(
-        return_value=[{"label": "2026-09-01", "value": 15, "series": None}]
-    )
-    repo.fetch_choropleth = AsyncMock(
-        return_value={"type": "FeatureCollection", "features": []}
+        return_value=[
+            {"date": date(2024, 6, 1), "users": 32},
+            {"date": date(2024, 7, 1), "users": 22},
+        ]
     )
     return repo
 
@@ -35,47 +45,86 @@ def mock_repo():
 def mock_service():
     service = MagicMock(spec=PanelService)
     service.get_metrics = AsyncMock(
-        return_value={"total_users": 100, "total_cities": 5, "female_workers": 40}
-    )
-    service.get_chart_data = AsyncMock(
         return_value={
-            "chart_type": "line",
-            "data": [{"label": "2026-09-01", "value": 15, "series": None}],
+            "total": 200,
+            "average": 14.5,
+            "median": 16.0,
+            "conversion": 0.134,
         }
     )
-    service.get_choropleth_data = AsyncMock(
-        return_value={"type": "FeatureCollection", "features": []}
+    service.get_chart = AsyncMock(
+        return_value=[
+            {"date": "2024-06-01", "users": 32},
+            {"date": "2024-07-01", "users": 22},
+        ]
     )
     return service
+
+
+def test_build_function_call_only_provided_filters():
+    filters = PanelFilter(start_date="2026-01-01", city="Sao Paulo")
+
+    query, args = build_function_call("temporal_evolution_metrics", filters)
+
+    assert query == (
+        "SELECT * FROM temporal_evolution_metrics(start_date := $1, city := $2)"
+    )
+    assert args == [date(2026, 1, 1), "Sao Paulo"]
+
+
+def test_build_function_call_without_filters():
+    query, args = build_function_call("retention_rate_chart", PanelFilter())
+
+    assert query == "SELECT * FROM retention_rate_chart()"
+    assert args == []
 
 
 @pytest.mark.asyncio
 async def test_repository_fetch_metrics(mock_db):
     mock_db.fetchrow.return_value = {
-        "total_users": 100,
-        "total_cities": 5,
-        "female_workers": 40,
+        "total": 200,
+        "average": 14.5,
+        "median": 16.0,
+        "conversion": 0.134,
     }
     repo = get_panel_repository(db=mock_db)
 
-    filters = PanelFilter(status="active")
-    result = await repo.fetch_metrics(AllowedView.users, filters)
+    filters = PanelFilter(state="SP")
+    result = await repo.fetch_metrics(AllowedView.temporal_evolution, filters)
 
-    assert result["total_users"] == 100
-    mock_db.fetchrow.assert_called_once()
-    call_args = mock_db.fetchrow.call_args[0]
-    assert "active" in call_args
+    assert result["total"] == 200
+    assert (
+        mock_db.fetchrow.call_args[0][0]
+        == "SELECT * FROM temporal_evolution_metrics(state := $1)"
+    )
+    assert mock_db.fetchrow.call_args[0][1] == "SP"
+
+
+@pytest.mark.asyncio
+async def test_repository_fetch_chart(mock_db):
+    mock_db.fetch.return_value = [
+        {"date": date(2024, 6, 1), "users": 32},
+        {"date": date(2024, 7, 1), "users": 22},
+    ]
+    repo = get_panel_repository(db=mock_db)
+
+    result = await repo.fetch_chart(AllowedView.registrations, PanelFilter())
+
+    assert len(result) == 2
+    assert mock_db.fetch.call_args[0][0] == "SELECT * FROM registrations_chart()"
 
 
 @pytest.mark.asyncio
 async def test_service_get_metrics(mock_repo):
     service = get_panel_service(repo=mock_repo)
-    filters = PanelFilter()
 
-    result = await service.get_metrics(AllowedView.users, filters)
+    result = await service.get_metrics(AllowedView.temporal_evolution, PanelFilter())
 
-    assert result["total_cities"] == 5
-    mock_repo.fetch_metrics.assert_called_once_with(AllowedView.users, filters)
+    assert result.total == 200
+    assert result.average == 14.5
+    mock_repo.fetch_metrics.assert_called_once_with(
+        AllowedView.temporal_evolution, PanelFilter()
+    )
 
 
 @pytest.mark.asyncio
@@ -84,9 +133,22 @@ async def test_service_handles_repository_errors(mock_repo):
     service = get_panel_service(repo=mock_repo)
 
     with pytest.raises(HTTPException) as exc:
-        await service.get_metrics(AllowedView.users, PanelFilter())
+        await service.get_metrics(AllowedView.temporal_evolution, PanelFilter())
 
     assert exc.value.status_code == 500
+
+
+@pytest.mark.asyncio
+async def test_service_get_chart(mock_repo):
+    service = get_panel_service(repo=mock_repo)
+
+    result = await service.get_chart(AllowedView.temporal_evolution, PanelFilter())
+
+    assert result[0].date == date(2024, 6, 1)
+    assert result[0].users == 32
+    mock_repo.fetch_chart.assert_called_once_with(
+        AllowedView.temporal_evolution, PanelFilter()
+    )
 
 
 @pytest.mark.asyncio
@@ -96,13 +158,15 @@ async def test_read_metrics_route(mock_service):
     async with AsyncClient(
         transport=ASGITransport(app=app), base_url="http://test"
     ) as client:
-        response = await client.get(
-            "/panels/users/metrics", params={"status": "active"}
+        response = await client.post(
+            "/panels/temporal_evolution/metrics",
+            json={"state": "SP", "start_date": "2026-01-01"},
         )
 
     assert response.status_code == 200
     data = response.json()
-    assert data["total_users"] == 100
+    assert data["total"] == 200
+    assert data["conversion"] == 0.134
     app.dependency_overrides.clear()
 
 
@@ -113,12 +177,13 @@ async def test_read_charts_route(mock_service):
     async with AsyncClient(
         transport=ASGITransport(app=app), base_url="http://test"
     ) as client:
-        response = await client.get(
-            "/panels/users/charts", params={"group_by": "city", "chart_type": "line"}
+        response = await client.post(
+            "/panels/temporal_evolution/charts",
+            json={"start_date": "2024-06-01"},
         )
 
     assert response.status_code == 200
     data = response.json()
-    assert data["chart_type"] == "line"
-    assert len(data["data"]) == 1
+    assert len(data) == 2
+    assert data[0] == {"date": "2024-06-01", "users": 32}
     app.dependency_overrides.clear()
