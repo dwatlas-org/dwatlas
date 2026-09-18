@@ -10,6 +10,7 @@ from api.config import settings
 
 
 class EmailService:
+    # TODO harmonize return values / exception handling across providers
     async def send(self, messages: Iterable[EmailMessage]) -> None:
         if settings.EMAIL_PROVIDER == "console":
             return await self.send_console(messages)
@@ -42,11 +43,12 @@ class EmailService:
                 "text": message.get_content(),
             }
             async with httpx.AsyncClient(timeout=10) as client:
-                r = await client.post(
+                response = await client.post(
                     settings.EMAIL_MAILERSEND_ADDRESS, headers=headers, json=payload
                 )
-                r.raise_for_status()
-                return {"status": r.status_code}
+                # TODO understand what's happening here
+                response.raise_for_status()
+                return {"status": response.status_code}
 
     async def send_smtp(self, messages: Iterable[EmailMessage]) -> None:
         for message in messages:
