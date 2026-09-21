@@ -9,15 +9,12 @@ export type PanelFilters = {
 };
 
 export type PanelMetrics = {
-  total: number;
-  average: number;
-  median: number;
-  conversion: number;
+  metrics: Record<string, number>;
 };
 
 export type PanelChartPoint = {
-  date: string;
-  users: number;
+  label: string;
+  [key: string]: string | number;
 };
 
 const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8000";
