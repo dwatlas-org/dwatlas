@@ -35,6 +35,7 @@ class Settings(BaseSettings):
     REQUEST_ACCESS_FROM: EmailStr
 
     EMAIL_PROVIDER: str = "console"  # "console" | "smtp" | "mailersend" | ...
+
     EMAIL_SMTP_USER: str | None = None
     EMAIL_SMTP_PASSWORD: str | None = None
     EMAIL_SMTP_HOST: str | None = None
@@ -43,9 +44,6 @@ class Settings(BaseSettings):
 
     EMAIL_MAILERSEND_ADDRESS: str | None = None
     EMAIL_MAILERSEND_TOKEN: str | None = None
-
-    SENDMAIL_API_KEY: str = "secret-access-key"
-    SENDMAIL_FROM: str = "noreply@dwatlas.org"
 
     @model_validator(mode="after")
     def build_db_urls(self) -> "Settings":
