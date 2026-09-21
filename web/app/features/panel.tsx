@@ -1,11 +1,12 @@
 "use client";
 
-import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
 import {
   MessageSquare,
   Download,
   Share2,
   LineChart as LineChartIcon,
+  BarChart3,
+  Map,
   Bookmark,
   ChevronDown,
   Play,
@@ -18,12 +19,7 @@ import {
 } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-  type ChartConfig,
-} from "@/components/ui/chart";
+import { PanelChart } from "@/components/panel-chart";
 import { useChart, useMetrics } from "@/hooks/use-panel-data";
 import { cn } from "@/lib/utils";
 import {
@@ -32,67 +28,85 @@ import {
   type PanelMetrics,
   type PanelView,
 } from "@/lib/api";
+import {
+  defaultPanelSlug,
+  getPanelBySlug,
+  type BarSeries,
+  type ChartType,
+} from "@/lib/panels";
 
-export const description = "Temporal Evolution Panel";
+import {
+  useRouteError,
+  isRouteErrorResponse,
+  Navigate,
+  useParams,
+} from "react-router";
 
-import { useRouteError, isRouteErrorResponse } from "react-router";
-
-type Panel = {
-  id: number;
-  topic: string;
-  metrics: {
-    name: string;
-    value: number | string;
-  }[];
-  graph: {};
-};
-
-export async function panelsLoader(): Promise<Panel[]> {
-  return [
-    {
-      id: 1,
-      topic: "sociodemographic profile",
-      metrics: [
-        { name: "total users", value: 200 },
-        { name: "males", value: 100 },
-        { name: "females", value: 100 },
-      ],
-      graph: {},
-    },
-    {
-      id: 2,
-      topic: "vehicles and platforms",
-      metrics: [
-        { name: "scooters", value: 300 },
-        { name: "bikes", value: 200 },
-      ],
-      graph: {},
-    },
-  ];
-}
-
-const VIEW: PanelView = "temporal_evolution";
 const DEFAULT_FILTERS: PanelFilters = {};
 
-const chartConfig = {
-  users: {
-    label: "Regular Users",
-    color: "#1e293b", // Slate 900 to match the dark line
-  },
-} satisfies ChartConfig;
+const CHART_LABELS: Record<
+  ChartType,
+  { label: string; icon: typeof LineChartIcon }
+> = {
+  line: { label: "Lines", icon: LineChartIcon },
+  bar: { label: "Bars", icon: BarChart3 },
+  area: { label: "Area", icon: LineChartIcon },
+  map: { label: "Map", icon: Map },
+};
 
 export function Panel() {
-  const metrics = useMetrics(VIEW, DEFAULT_FILTERS);
-  const chart = useChart(VIEW, DEFAULT_FILTERS);
+  const { slug } = useParams();
+  const panel = getPanelBySlug(slug);
+
+  if (!panel?.view) {
+    return <Navigate to={`/panels/${defaultPanelSlug}`} replace />;
+  }
+
+  return (
+    <PanelContent
+      view={panel.view}
+      title={panel.title}
+      description={panel.description}
+      chartType={panel.chartType ?? "line"}
+      metricLabel={panel.metricLabel ?? panel.title}
+      dataKey={panel.dataKey}
+      barSeries={panel.barSeries}
+    />
+  );
+}
+
+function PanelContent({
+  view,
+  title,
+  description,
+  chartType,
+  metricLabel,
+  dataKey,
+  barSeries,
+}: {
+  view: PanelView;
+  title: string;
+  description: string;
+  chartType: ChartType;
+  metricLabel: string;
+  dataKey?: string;
+  barSeries?: BarSeries[];
+}) {
+  const metrics = useMetrics(view, DEFAULT_FILTERS);
+  const chart = useChart(view, DEFAULT_FILTERS);
 
   return (
     <div className="min-h-screen bg-background p-6">
       <div className="mx-auto flex max-w-7xl flex-col gap-6">
-        <Head />
+        <Head title={title} description={description} />
         <Metrics metrics={metrics.data} isLoading={metrics.isLoading} />
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           <div className="flex flex-col gap-6 lg:col-span-2">
             <Chart
+              kind={chartType}
+              metricLabel={metricLabel}
+              dataKey={dataKey}
+              barSeries={barSeries}
               data={chart.data ?? []}
               isLoading={chart.isLoading}
               error={chart.error}
@@ -108,16 +122,20 @@ export function Panel() {
   );
 }
 
-export function Head() {
+export function Head({
+  title,
+  description,
+}: {
+  title: string;
+  description: string;
+}) {
   return (
     <div className="flex flex-col gap-4 pb-2 sm:flex-row sm:items-start sm:justify-between">
       <div className="flex flex-col gap-1.5">
         <h1 className="text-2xl font-bold tracking-tight text-slate-900">
-          Temporal Evolution
+          {title}
         </h1>
-        <p className="text-sm text-slate-600">
-          Variation in the number of regular users of the app over time.
-        </p>
+        <p className="text-sm text-slate-600">{description}</p>
       </div>
       <div className="flex flex-wrap items-center gap-2">
         <button className="inline-flex items-center gap-2 rounded-md border border-slate-200 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 shadow-sm transition-colors hover:bg-slate-50 focus:outline-hidden focus:ring-2 focus:ring-slate-900 focus:ring-offset-2">
@@ -151,7 +169,8 @@ export function Metrics({
   metrics?: PanelMetrics | null;
   isLoading?: boolean;
 }) {
-  const conversion = ((metrics?.conversion ?? 0) * 100).toFixed(1);
+  const { total, average, median, conversion } = metrics?.metrics ?? {};
+  const conversionRate = ((conversion ?? 0) * 100).toFixed(1);
 
   return (
     <div
@@ -163,7 +182,7 @@ export function Metrics({
     >
       <div className="flex flex-1 flex-col items-center justify-center p-6 text-center">
         <div className="text-4xl font-extrabold text-slate-900">
-          {formatMetric(metrics?.total)}
+          {formatMetric(total)}
         </div>
         <div className="mt-1 text-xs font-semibold tracking-wider text-slate-500 uppercase">
           Regular Users
@@ -171,7 +190,7 @@ export function Metrics({
       </div>
       <div className="flex flex-1 flex-col items-center justify-center p-6 text-center">
         <div className="text-4xl font-extrabold text-fuchsia-600">
-          {formatMetric(metrics?.average)}
+          {formatMetric(average)}
         </div>
         <div className="mt-1 text-xs font-semibold tracking-wider text-slate-500 uppercase">
           Monthly Average of
@@ -181,7 +200,7 @@ export function Metrics({
       </div>
       <div className="flex flex-1 flex-col items-center justify-center p-6 text-center">
         <div className="text-4xl font-extrabold text-blue-500">
-          {formatMetric(metrics?.median)}
+          {formatMetric(median)}
         </div>
         <div className="mt-1 text-xs font-semibold tracking-wider text-slate-500 uppercase">
           Monthly Median of
@@ -191,7 +210,7 @@ export function Metrics({
       </div>
       <div className="flex flex-1 flex-col items-center justify-center p-6 text-center">
         <div className="text-4xl font-extrabold text-orange-500">
-          {conversion}%
+          {conversionRate}%
         </div>
         <div className="mt-1 text-xs font-semibold tracking-wider text-slate-500 uppercase">
           Conversion Rate to
@@ -204,14 +223,25 @@ export function Metrics({
 }
 
 export function Chart({
+  kind = "line",
+  metricLabel = "Value",
+  dataKey,
+  barSeries,
   data = [],
   isLoading = false,
   error = null,
 }: {
+  kind?: ChartType;
+  metricLabel?: string;
+  dataKey?: string;
+  barSeries?: BarSeries[];
   data?: PanelChartPoint[];
   isLoading?: boolean;
   error?: string | null;
 }) {
+  const chartLabel = CHART_LABELS[kind];
+  const ChartKindIcon = chartLabel.icon;
+
   return (
     <Card
       aria-busy={isLoading}
@@ -222,14 +252,14 @@ export function Chart({
     >
       <CardHeader className="pb-2">
         <CardTitle className="text-lg font-bold text-slate-900">
-          Evolution by month of regular users
+          Evolution of {metricLabel.toLowerCase()}
         </CardTitle>
       </CardHeader>
       <CardContent className="px-6 pb-6 pt-2">
         <div className="mb-6 flex items-center justify-between">
           <button className="inline-flex items-center gap-2 rounded-md border border-indigo-200 bg-indigo-50 px-3 py-1.5 text-sm font-medium text-indigo-900">
-            <LineChartIcon className="h-4 w-4" />
-            Lines
+            <ChartKindIcon className="h-4 w-4" />
+            {chartLabel.label}
           </button>
           <button className="inline-flex items-center gap-2 rounded-md border border-slate-200 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50">
             <Bookmark className="h-4 w-4" />
@@ -238,74 +268,15 @@ export function Chart({
           </button>
         </div>
 
-        <ChartContainer
-          config={chartConfig}
-          className="aspect-auto h-[300px] w-full"
-        >
-          <LineChart
-            accessibilityLayer
-            data={data}
-            margin={{
-              left: -20,
-              right: 12,
-              top: 12,
-              bottom: 12,
-            }}
-          >
-            <CartesianGrid vertical={false} stroke="#f1f5f9" />
-            <YAxis
-              tickLine={false}
-              axisLine={false}
-              tickMargin={12}
-              tick={{ fill: "#94a3b8", fontSize: 11 }}
-              label={{
-                value: "Regular Users",
-                angle: -90,
-                position: "insideLeft",
-                style: { fill: "#64748b", fontSize: 12 },
-              }}
-            />
-            <XAxis
-              dataKey="date"
-              tickLine={false}
-              axisLine={false}
-              tickMargin={12}
-              minTickGap={20}
-              tick={{ fill: "#94a3b8", fontSize: 11 }}
-              tickFormatter={(value) => {
-                const date = new Date(value);
-                return date
-                  .toLocaleDateString("en-US", {
-                    month: "short",
-                    year: "numeric",
-                  })
-                  .toLowerCase();
-              }}
-            />
-            <ChartTooltip
-              content={
-                <ChartTooltipContent
-                  className="w-[150px] bg-white text-slate-900 shadow-md border-slate-200"
-                  nameKey="users"
-                  labelFormatter={(value) => {
-                    return new Date(value).toLocaleDateString("en-US", {
-                      month: "short",
-                      year: "numeric",
-                    });
-                  }}
-                />
-              }
-            />
-            <Line
-              dataKey="users"
-              type="linear"
-              stroke="var(--color-users)"
-              strokeWidth={2}
-              dot={{ fill: "var(--color-users)", strokeWidth: 0, r: 4 }}
-              activeDot={{ r: 6 }}
-            />
-          </LineChart>
-        </ChartContainer>
+        <PanelChart
+          kind={kind}
+          data={data}
+          metricLabel={metricLabel}
+          dataKey={dataKey}
+          barSeries={barSeries}
+          isLoading={isLoading}
+          error={error}
+        />
 
         {/* Timeline Slider Mock */}
         <div className="mt-8 flex items-center gap-4 text-sm text-slate-600 font-medium">
@@ -339,10 +310,6 @@ export function Chart({
             <Maximize className="h-4 w-4" /> Full Screen
           </button>
         </div>
-
-        {error ? (
-          <p className="mt-4 text-center text-sm text-red-600">{error}</p>
-        ) : null}
       </CardContent>
     </Card>
   );
@@ -546,26 +513,6 @@ export function Notes() {
         </div>
       </CardContent>
     </Card>
-  );
-}
-
-export function Main() {
-  return (
-    <div className="min-h-screen bg-slate-50/50 p-4 sm:p-8 font-sans">
-      <div className="mx-auto flex max-w-[1400px] flex-col gap-6">
-        <Head />
-        <Metrics />
-        <div className="flex flex-col gap-6 lg:flex-row lg:items-start">
-          <div className="flex w-full flex-col gap-6 lg:w-3/4">
-            <Chart />
-            <Notes />
-          </div>
-          <div className="w-full shrink-0 lg:w-[320px]">
-            <Filters />
-          </div>
-        </div>
-      </div>
-    </div>
   );
 }
 
