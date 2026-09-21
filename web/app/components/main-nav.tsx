@@ -7,15 +7,6 @@ import {
   LayoutGrid,
   Bell,
   Bookmark,
-  Users,
-  Briefcase,
-  Clock,
-  PieChart,
-  Smartphone,
-  DollarSign,
-  Target,
-  MapPin,
-  Globe,
   CircleUser,
   ChevronDown,
   ChevronRight,
@@ -43,128 +34,8 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-
-function BrazilIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-    >
-      <path d="M7.5 4c2.2-.8 4.2-.4 6 .5 1.8 1 3 .6 4.5 1.8 1.2 1 2 2.8 1.5 4.5-.4 1.4-1.2 2.2-2 3.5-.8 1.3-1 2.8-.5 4.2.4 1.2-.6 2.5-1.8 3-1.2.5-2.2 0-3-.5-1-.6-1.8-1.5-2.5-2.6-.8-1.2-1.5-2-2.8-2.6-1.2-.6-2-1.5-2.4-2.8-.4-1.3 0-2.8-.2-4.2-.2-1.4-1-2.5-.5-3.8.5-1.2 1.8-1.8 3.7-2z" />
-    </svg>
-  );
-}
-
-type NavSubItem = {
-  title: string;
-  url: string;
-};
-
-type PanelItem = {
-  title: string;
-  icon: React.ComponentType<{ className?: string }>;
-  defaultOpen?: boolean;
-  items: NavSubItem[];
-};
-
-const panelItems: PanelItem[] = [
-  {
-    title: "Participant Sample",
-    icon: Users,
-    defaultOpen: true,
-    items: [
-      { title: "Temporal Evolution", url: "#" },
-      { title: "Length of Stay", url: "#" },
-      { title: "Registration Activities", url: "#" },
-    ],
-  },
-  {
-    title: "Sociodemographic Profile",
-    icon: BrazilIcon,
-    items: [
-      { title: "Age & Demographics", url: "#" },
-      { title: "Gender & Identity", url: "#" },
-      { title: "Education Level", url: "#" },
-    ],
-  },
-  {
-    title: "Work Characteristics",
-    icon: Briefcase,
-    items: [
-      { title: "App Platforms", url: "#" },
-      { title: "Vehicle Types", url: "#" },
-      { title: "Employment Modality", url: "#" },
-    ],
-  },
-  {
-    title: "Working Hours",
-    icon: Clock,
-    items: [
-      { title: "Daily Hours", url: "#" },
-      { title: "Weekly Schedule", url: "#" },
-      { title: "Peak Shifts", url: "#" },
-    ],
-  },
-  {
-    title: "Expense Breakdown",
-    icon: PieChart,
-    items: [
-      { title: "Fuel & Energy", url: "#" },
-      { title: "Maintenance & Repairs", url: "#" },
-      { title: "Gear & Telecom", url: "#" },
-    ],
-  },
-  {
-    title: "Earnings Breakdown",
-    icon: Smartphone,
-    items: [
-      { title: "Base Delivery Fares", url: "#" },
-      { title: "Platform Surge & Bonuses", url: "#" },
-      { title: "Customer Tips", url: "#" },
-    ],
-  },
-  {
-    title: "Net Earnings",
-    icon: DollarSign,
-    items: [
-      { title: "Hourly Rate", url: "#" },
-      { title: "Weekly Net Margins", url: "#" },
-      { title: "Tax & Deductions", url: "#" },
-    ],
-  },
-  {
-    title: "Goals & Targets",
-    icon: Target,
-    items: [
-      { title: "Daily Revenue Goals", url: "#" },
-      { title: "Trip Milestones", url: "#" },
-      { title: "Achievement Progress", url: "#" },
-    ],
-  },
-  {
-    title: "Urban Circulation",
-    icon: MapPin,
-    items: [
-      { title: "Route Hotspots", url: "#" },
-      { title: "Coverage & Zones", url: "#" },
-      { title: "Distance Traveled", url: "#" },
-    ],
-  },
-  {
-    title: "Countries (Beta)",
-    icon: Globe,
-    items: [
-      { title: "Brazil", url: "#" },
-      { title: "Mexico", url: "#" },
-      { title: "Colombia", url: "#" },
-    ],
-  },
-];
+import { cn } from "@/lib/utils";
+import { getGroupFirstPanelSlug, panelGroups } from "@/lib/panels";
 
 const footerLinks = [
   { title: "About Us", url: "#" },
@@ -274,22 +145,39 @@ export function MainNav({ ...props }: React.ComponentProps<typeof Sidebar>) {
               <TooltipContent side="right">Saved Views (1)</TooltipContent>
             </Tooltip>
 
-            {panelItems.map((item) => (
-              <Tooltip key={item.title}>
-                <TooltipTrigger
-                  render={
-                    <NavLink
-                      to="#"
-                      aria-label={item.title}
-                      className="flex size-10 items-center justify-center rounded-lg text-blue-600 transition-colors hover:bg-blue-50"
-                    >
-                      <item.icon className="size-6" />
-                    </NavLink>
+            {panelGroups.map((item) => {
+              const firstPanelSlug = getGroupFirstPanelSlug(item);
+              const icon = firstPanelSlug ? (
+                <NavLink
+                  to={`/panels/${firstPanelSlug}`}
+                  aria-label={item.title}
+                  className={({ isActive }) =>
+                    cn(
+                      "flex size-10 items-center justify-center rounded-lg transition-colors",
+                      isActive
+                        ? "bg-blue-50 text-blue-600"
+                        : "text-blue-600 hover:bg-blue-50",
+                    )
                   }
-                />
-                <TooltipContent side="right">{item.title}</TooltipContent>
-              </Tooltip>
-            ))}
+                >
+                  <item.icon className="size-6" />
+                </NavLink>
+              ) : (
+                <span
+                  aria-label={item.title}
+                  className="flex size-10 cursor-not-allowed items-center justify-center rounded-lg text-slate-300"
+                >
+                  <item.icon className="size-6" />
+                </span>
+              );
+
+              return (
+                <Tooltip key={item.title}>
+                  <TooltipTrigger render={icon} />
+                  <TooltipContent side="right">{item.title}</TooltipContent>
+                </Tooltip>
+              );
+            })}
           </SidebarContent>
 
           <SidebarFooter className="flex items-center justify-center bg-white p-3">
@@ -375,7 +263,7 @@ export function MainNav({ ...props }: React.ComponentProps<typeof Sidebar>) {
             </div>
 
             <SidebarMenu className="gap-0.5">
-              {panelItems.map((item) => (
+              {panelGroups.map((item) => (
                 <Collapsible
                   key={item.title}
                   defaultOpen={item.defaultOpen}
@@ -395,16 +283,34 @@ export function MainNav({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   </CollapsibleTrigger>
                   <CollapsibleContent>
                     <div className="flex flex-col py-1 pl-7 pr-2">
-                      {item.items.map((subItem) => (
-                        <a
-                          key={subItem.title}
-                          href={subItem.url}
-                          className="flex items-center gap-2 py-1.5 text-sm font-medium text-slate-600 transition-colors hover:text-blue-600"
-                        >
-                          <span className="text-slate-400">↳</span>
-                          <span>{subItem.title}</span>
-                        </a>
-                      ))}
+                      {item.items.map((subItem) =>
+                        subItem.view ? (
+                          <NavLink
+                            key={subItem.slug}
+                            to={`/panels/${subItem.slug}`}
+                            className={({ isActive }) =>
+                              cn(
+                                "flex items-center gap-2 rounded-md py-1.5 text-sm font-medium transition-colors",
+                                isActive
+                                  ? "bg-blue-50 text-blue-600"
+                                  : "text-slate-600 hover:text-blue-600",
+                              )
+                            }
+                          >
+                            <span className="text-slate-400">↳</span>
+                            <span>{subItem.title}</span>
+                          </NavLink>
+                        ) : (
+                          <span
+                            key={subItem.slug}
+                            aria-disabled="true"
+                            className="flex cursor-not-allowed items-center gap-2 py-1.5 text-sm font-medium text-slate-300"
+                          >
+                            <span className="text-slate-300">↳</span>
+                            <span>{subItem.title}</span>
+                          </span>
+                        ),
+                      )}
                     </div>
                   </CollapsibleContent>
                 </Collapsible>
