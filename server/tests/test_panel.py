@@ -34,8 +34,8 @@ def mock_repo():
     )
     repo.fetch_chart = AsyncMock(
         return_value=[
-            {"date": date(2024, 6, 1), "users": 32},
-            {"date": date(2024, 7, 1), "users": 22},
+            {"label": date(2024, 6, 1), "value": 32},
+            {"label": date(2024, 7, 1), "value": 22},
         ]
     )
     return repo
@@ -46,16 +46,18 @@ def mock_service():
     service = MagicMock(spec=PanelService)
     service.get_metrics = AsyncMock(
         return_value={
-            "total": 200,
-            "average": 14.5,
-            "median": 16.0,
-            "conversion": 0.134,
+            "metrics": {
+                "total": 200,
+                "average": 14.5,
+                "median": 16.0,
+                "conversion": 0.134,
+            }
         }
     )
     service.get_chart = AsyncMock(
         return_value=[
-            {"date": "2024-06-01", "users": 32},
-            {"date": "2024-07-01", "users": 22},
+            {"label": "2024-06-01", "value": 32},
+            {"label": "2024-07-01", "value": 22},
         ]
     )
     return service
@@ -67,7 +69,7 @@ def test_build_function_call_only_provided_filters():
     query, args = build_function_call("temporal_evolution_metrics", filters)
 
     assert query == (
-        "SELECT * FROM temporal_evolution_metrics(start_date := $1, city := $2)"
+        "SELECT * FROM temporal_evolution_metrics(start_date => $1, city => $2)"
     )
     assert args == [date(2026, 1, 1), "Sao Paulo"]
 
@@ -95,7 +97,7 @@ async def test_repository_fetch_metrics(mock_db):
     assert result["total"] == 200
     assert (
         mock_db.fetchrow.call_args[0][0]
-        == "SELECT * FROM temporal_evolution_metrics(state := $1)"
+        == "SELECT * FROM temporal_evolution_metrics(state => $1)"
     )
     assert mock_db.fetchrow.call_args[0][1] == "SP"
 
@@ -120,8 +122,8 @@ async def test_service_get_metrics(mock_repo):
 
     result = await service.get_metrics(AllowedView.temporal_evolution, PanelFilter())
 
-    assert result.total == 200
-    assert result.average == 14.5
+    assert result.metrics["total"] == 200
+    assert result.metrics["average"] == 14.5
     mock_repo.fetch_metrics.assert_called_once_with(
         AllowedView.temporal_evolution, PanelFilter()
     )
@@ -144,8 +146,8 @@ async def test_service_get_chart(mock_repo):
 
     result = await service.get_chart(AllowedView.temporal_evolution, PanelFilter())
 
-    assert result[0].date == date(2024, 6, 1)
-    assert result[0].users == 32
+    assert result[0].label == date(2024, 6, 1)
+    assert result[0].value == 32
     mock_repo.fetch_chart.assert_called_once_with(
         AllowedView.temporal_evolution, PanelFilter()
     )
@@ -165,8 +167,8 @@ async def test_read_metrics_route(mock_service):
 
     assert response.status_code == 200
     data = response.json()
-    assert data["total"] == 200
-    assert data["conversion"] == 0.134
+    assert data["metrics"]["total"] == 200
+    assert data["metrics"]["conversion"] == 0.134
     app.dependency_overrides.clear()
 
 
@@ -185,5 +187,5 @@ async def test_read_charts_route(mock_service):
     assert response.status_code == 200
     data = response.json()
     assert len(data) == 2
-    assert data[0] == {"date": "2024-06-01", "users": 32}
+    assert data[0] == {"label": "2024-06-01", "value": 32}
     app.dependency_overrides.clear()
