@@ -13,13 +13,16 @@ class EmailService:
     """Service class grouping different providers for sending emails
     The EMAIL_PROVIDER setting controls which of the private methods is called.
 
+    Currently uses async methods which, if run as background tasks, will be
+    executed as part of the event loop. We could also use synchronous methods,
+    in which case fastapi background tasks will run them in separate threads.
+
     To add a provider:
         1. Add a private :py:meth:`_send_<new_provider>`
         2. Add the required settings values
         3. Add another if case to the :py:meth:`send` method
     """
 
-    # TODO decide on async vs. sync (threaded) background tasks
     async def send(self, messages: Iterable[EmailMessage]) -> None:
         if settings.EMAIL_PROVIDER == "console":
             await self._send_console(messages)
