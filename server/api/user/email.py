@@ -10,18 +10,27 @@ from api.config import settings
 
 
 class EmailService:
-    # TODO harmonize return values / exception handling across providers
+    """Service class grouping different providers for sending emails
+    The EMAIL_PROVIDER setting controls which of the private methods is called.
+
+    To add a provider:
+        1. Add a private :py:meth:`_send_<new_provider>`
+        2. Add the required settings values
+        3. Add another if case to the :py:meth:`send` method
+    """
+
+    # TODO decide on async vs. sync (threaded) background tasks
     async def send(self, messages: Iterable[EmailMessage]) -> None:
         if settings.EMAIL_PROVIDER == "console":
-            return await self.send_console(messages)
+            await self._send_console(messages)
         elif settings.EMAIL_PROVIDER == "smtp":
-            return await self.send_smtp(messages)
+            await self._send_smtp(messages)
         elif settings.EMAIL_PROVIDER == "mailersend":
-            return await self.send_mailersend(messages)
+            await self._send_mailersend(messages)
         else:
             raise NotImplementedError("Provider not implemented")
 
-    async def send_console(
+    async def _send_console(
         self, messages: Iterable[EmailMessage], stream: IO | None = stdout
     ) -> None:
         for message in messages:
@@ -29,7 +38,7 @@ class EmailService:
             stream.write("-" * 79)
             stream.write("\n")
 
-    async def send_mailersend(self, messages: Iterable[EmailMessage]) -> None:
+    async def _send_mailersend(self, messages: Iterable[EmailMessage]) -> None:
         headers = {"Authorization": f"Bearer {settings.EMAIL_MAILERSEND_TOKEN}"}
         for message in messages:
             payload = {
@@ -46,11 +55,9 @@ class EmailService:
                 response = await client.post(
                     settings.EMAIL_MAILERSEND_ADDRESS, headers=headers, json=payload
                 )
-                # TODO understand what's happening here
                 response.raise_for_status()
-                return {"status": response.status_code}
 
-    async def send_smtp(self, messages: Iterable[EmailMessage]) -> None:
+    async def _send_smtp(self, messages: Iterable[EmailMessage]) -> None:
         for message in messages:
             await aiosmtplib.send(
                 message,
