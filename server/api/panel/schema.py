@@ -1,5 +1,6 @@
 from datetime import date
 from enum import Enum
+from typing import Any
 
 from pydantic import BaseModel
 
@@ -18,25 +19,23 @@ class PanelFilter(BaseModel):
 
 
 class MetricsResponse(BaseModel):
-    total: int
-    average: float
-    median: float
-    conversion: float
+    metrics: dict[str, Any]
 
 
 class TemporalEvolutionChartData(BaseModel):
-    date: date
-    users: int
+    label: Any
+    value: Any
 
 
 class RetentionRateChartData(BaseModel):
-    date: date
-    rate: float
+    label: Any
+    average_days: Any
 
 
 class RegistrationsChartData(BaseModel):
-    date: date
-    registrations: int
+    label: Any
+    expenses: Any
+    earnings: Any
 
 
 ChartData = TemporalEvolutionChartData | RetentionRateChartData | RegistrationsChartData

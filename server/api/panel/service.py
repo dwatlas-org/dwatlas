@@ -38,7 +38,7 @@ def get_panel_service(
 
     async def get_metrics(view: AllowedView, filters: PanelFilter) -> MetricsResponse:
         try:
-            return MetricsResponse(**await repo.fetch_metrics(view, filters))
+            return MetricsResponse(metrics=await repo.fetch_metrics(view, filters))
         except PostgresError as err:
             logger.error(
                 "Error fetching metrics for view %s, details %s", view.value, str(err)
