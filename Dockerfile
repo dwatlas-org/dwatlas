@@ -15,7 +15,7 @@ WORKDIR /app
 FROM base AS deps
 
 # TODO: let pnpm handle node (ref: https://pnpm.io/docker#installing-nodejs)
-COPY --from=node:26-slim /usr/local/bin/ /usr/local/bin/
+COPY --from=node:26-slim /usr/local/ /usr/local/
 RUN npm install -g pnpm
 
 COPY server/pyproject.toml server/uv.lock /app/server/
