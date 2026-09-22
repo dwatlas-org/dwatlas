@@ -5,7 +5,7 @@ import babel from "@rolldown/plugin-babel";
 import tailwindcss from "@tailwindcss/vite";
 
 // https://vite.dev/config/
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [
     react(),
     tailwindcss(),
@@ -17,6 +17,6 @@ export default defineConfig({
     },
   },
   devtools: {
-    enabled: true,
+    enabled: mode === "development",
   },
-});
+}));

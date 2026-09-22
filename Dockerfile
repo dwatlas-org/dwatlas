@@ -4,25 +4,28 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
     curl \
     git \
-    && rm -rf /var/lib/apt/lists/*
+    nginx \
+    && rm -rf /var/lib/apt/lists/* \
+    && rm -f /etc/nginx/sites-enabled/default
 
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /usr/local/bin/
-
-COPY --from=node:22-slim /usr/local/bin/ /usr/local/bin/
-COPY --from=node:22-slim /usr/local/lib/node_modules /usr/local/lib/node_modules
-
-RUN corepack enable pnpm
 
 WORKDIR /app
 
 FROM base AS deps
+COPY --from=node:22-slim /usr/local/bin/ /usr/local/bin/
+COPY --from=node:22-slim /usr/local/lib/node_modules /usr/local/lib/node_modules
+RUN corepack enable pnpm
 
 COPY server/pyproject.toml server/uv.lock /app/server/
 COPY web/package.json web/pnpm-lock.yaml /app/web/
 
 RUN uv sync --directory /app/server --frozen
-
 RUN pnpm --dir /app/web install --frozen-lockfile
+
+FROM deps AS build
+COPY web /app/web
+RUN pnpm --dir /app/web build
 
 FROM deps AS source
 COPY . /app
@@ -35,3 +38,15 @@ CMD ["sh", "-c", "uv run --directory /app/server fastapi dev --host 0.0.0.0 & pn
 FROM source AS testing
 RUN uv run --directory /app/server pytest
 RUN pnpm --dir /app/web lint
+
+FROM base AS preview
+ENV PATH="/app/server/.venv/bin:$PATH"
+COPY --from=deps /app/server/.venv /app/server/.venv
+COPY server /app/server
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /app/web/dist /app/public
+COPY entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
+
+EXPOSE 8080
+ENTRYPOINT ["/app/entrypoint.sh"]

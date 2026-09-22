@@ -21,7 +21,8 @@ export function TopbarLayout() {
               <NavLink
                 to="/"
                 className={cn(
-                  ({ isActive }) => (isActive ? "font-bold" : ""),
+                  ({ isActive }: { isActive: boolean }) =>
+                    isActive ? "font-bold" : "",
                   "no-underline",
                 )}
               >
@@ -30,7 +31,8 @@ export function TopbarLayout() {
               <NavLink
                 to="/panels"
                 className={cn(
-                  ({ isActive }) => (isActive ? "font-bold" : ""),
+                  ({ isActive }: { isActive: boolean }) =>
+                    isActive ? "font-bold" : "",
                   "no-underline",
                 )}
               >
@@ -39,7 +41,8 @@ export function TopbarLayout() {
               <NavLink
                 to="/about"
                 className={cn(
-                  ({ isActive }) => (isActive ? "font-bold" : ""),
+                  ({ isActive }: { isActive: boolean }) =>
+                    isActive ? "font-bold" : "",
                   "no-underline",
                 )}
               >
@@ -48,7 +51,8 @@ export function TopbarLayout() {
               <NavLink
                 to="/register"
                 className={cn(
-                  ({ isActive }) => (isActive ? "font-bold" : ""),
+                  ({ isActive }: { isActive: boolean }) =>
+                    isActive ? "font-bold" : "",
                   "no-underline",
                 )}
               >
@@ -57,7 +61,8 @@ export function TopbarLayout() {
               <NavLink
                 to="/login"
                 className={cn(
-                  ({ isActive }) => (isActive ? "font-bold" : ""),
+                  ({ isActive }: { isActive: boolean }) =>
+                    isActive ? "font-bold" : "",
                   "no-underline",
                 )}
               >
@@ -66,7 +71,8 @@ export function TopbarLayout() {
               <NavLink
                 to="/signup"
                 className={cn(
-                  ({ isActive }) => (isActive ? "font-bold" : ""),
+                  ({ isActive }: { isActive: boolean }) =>
+                    isActive ? "font-bold" : "",
                   "no-underline",
                 )}
               >

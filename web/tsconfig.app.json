@@ -23,6 +23,7 @@
     "noFallthroughCasesInSwitch": true,
 
     /* Resolve import */
+    "ignoreDeprecations": "6.0",
     "baseUrl": ".",
     "paths": {
       "@/*": ["./app/*"]
