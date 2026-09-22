@@ -13,8 +13,8 @@ COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /usr/local/bin/
 WORKDIR /app
 
 FROM base AS deps
-COPY --from=node:22-slim /usr/local/bin/ /usr/local/bin/
-COPY --from=node:22-slim /usr/local/lib/node_modules /usr/local/lib/node_modules
+COPY --from=node:26-slim /usr/local/bin/ /usr/local/bin/
+COPY --from=node:26-slim /usr/local/lib/node_modules /usr/local/lib/node_modules
 RUN corepack enable pnpm
 
 COPY server/pyproject.toml server/uv.lock /app/server/
