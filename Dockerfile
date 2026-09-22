@@ -5,7 +5,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     git \
     nginx \
-    libatomic1 \
     && rm -rf /var/lib/apt/lists/* \
     && rm -f /etc/nginx/sites-enabled/default
 
@@ -14,10 +13,10 @@ COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /usr/local/bin/
 WORKDIR /app
 
 FROM base AS deps
-
 # TODO: let pnpm handle node (ref: https://pnpm.io/docker#installing-nodejs)
-COPY --from=node:26-slim /usr/local/ /usr/local/
-RUN npm install -g pnpm
+COPY --from=node:24-slim /usr/local/bin/ /usr/local/bin/
+COPY --from=node:24-slim /usr/local/lib/node_modules /usr/local/lib/node_modules
+RUN corepack enable pnpm
 
 COPY server/pyproject.toml server/uv.lock /app/server/
 COPY web/package.json web/pnpm-lock.yaml /app/web/
