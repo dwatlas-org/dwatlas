@@ -16,6 +16,9 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(import.meta.dirname, "./app"),
     },
   },
+  server: {
+    allowedHosts: ["app.dwatlas.org"],
+  },
   devtools: {
     enabled: mode === "development",
   },

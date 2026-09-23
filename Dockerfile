@@ -41,6 +41,8 @@ RUN uv run --directory /app/server pytest
 RUN pnpm --dir /app/web lint
 
 FROM base AS preview
+ARG VITE_API_URL
+ENV VITE_API_URL=$VITE_API_URL
 ENV PATH="/app/server/.venv/bin:$PATH"
 COPY --from=deps /app/server/.venv /app/server/.venv
 COPY server /app/server

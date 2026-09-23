@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends
 from api.panel.schema import AllowedView, ChartData, MetricsResponse, PanelFilter
 from api.panel.service import PanelService, get_panel_service
 
-router = APIRouter(prefix="/panels", tags=["panels"])
+router = APIRouter(prefix="/api/panels", tags=["panels"])
 
 
 @router.post("/{view_name}/metrics", response_model=MetricsResponse)
