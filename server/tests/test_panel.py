@@ -161,7 +161,7 @@ async def test_read_metrics_route(mock_service):
         transport=ASGITransport(app=app), base_url="http://test"
     ) as client:
         response = await client.post(
-            "/panels/temporal_evolution/metrics",
+            "/api/panels/temporal_evolution/metrics",
             json={"state": "SP", "start_date": "2026-01-01"},
         )
 
@@ -180,7 +180,7 @@ async def test_read_charts_route(mock_service):
         transport=ASGITransport(app=app), base_url="http://test"
     ) as client:
         response = await client.post(
-            "/panels/temporal_evolution/charts",
+            "/api/panels/temporal_evolution/charts",
             json={"start_date": "2024-06-01"},
         )
 
