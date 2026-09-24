@@ -52,7 +52,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args: |
-            VITE_API_URL=http://app.dwatlas.org:8080
+            VITE_API_URL=https://app.dwatlas.org
 
       - name: Deploy to VPS via SSH
         uses: appleboy/ssh-action@v1.0.3
