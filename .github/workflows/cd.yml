@@ -34,7 +34,7 @@ jobs:
 
       - name: Extract Docker metadata
         id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
@@ -42,7 +42,7 @@ jobs:
             type=raw,value=latest
 
       - name: Build and push self-contained image
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v7
         with:
           context: .
           target: preview
@@ -52,7 +52,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args: |
-            VITE_API_URL=https://app.dwatlas.org
+            VITE_API_URL=https://app.dwatlas.org/api
 
       - name: Deploy to VPS via SSH
         uses: appleboy/ssh-action@v1.0.3

@@ -17,9 +17,14 @@ pnpm --dir dwatlas/web install
 uv sync --directory dwatlas/server
 ```
 
-Test the environment by running `pnpm dev` from the _web folder_ and `uv run fastapi dev` from the _server folder_.
 
-### Docker
+Test the environment by running:
+```
+pnpm --dir dwatlas/web/ dev
+uv --directory dwatlas/server run fastapi dev
+```
+
+#### Docker
 
 Build the image and run the dev stage.
 
@@ -34,6 +39,8 @@ docker run --rm -p 5173:5173 -p 8000:8000 \
   -v /app/web/node_modules \
   -v /app/server/.venv \
   --env-file server/.env.local \
+  -e UV_LINK_MODE=copy \
+  -e CI=true \
   dwatlas:dev
 ```
 
@@ -46,7 +53,7 @@ docker build --target testing -t dwatlas:testing .
 Drop into a shell in any built stage with `--entrypoint`.
 
 ```bash
-docker run --rm -it --entrypoint sh dwatlas:dev
+docker run --rm -it --entrypoint bash dwatlas:dev
 ```
 
 
