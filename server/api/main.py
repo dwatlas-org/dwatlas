@@ -28,7 +28,7 @@ app.include_router(router_user)
 app.include_router(router_panel)
 app.include_router(router_auth)
 
-origins = ["http://localhost:5173", "http://app.dwatlas.org:8080"]
+origins = ["http://localhost:5173"]
 
 app.add_middleware(
     CORSMiddleware,

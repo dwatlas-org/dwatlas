@@ -9,7 +9,7 @@ This is the monorepo for the **DeliveryWorkerAtlas** project.
 ### Getting started
 First, ensure you have [node](https://nodejs.org/), [pnpm](https://pnpm.io/), and [uv](https://github.com/astral-sh/uv) installed.
 
-Then clone the repository and install the dependencies:
+Then clone the repository and install the dependencies.
 
 ```bash
 git clone git@github.com:dwatlas-org/dwatlas.git
@@ -18,7 +18,7 @@ uv sync --directory dwatlas/server
 ```
 
 
-Test the environment by running:
+Test the environment.
 ```
 pnpm --dir dwatlas/web/ dev
 uv --directory dwatlas/server run fastapi dev
@@ -26,7 +26,7 @@ uv --directory dwatlas/server run fastapi dev
 
 #### Docker
 
-Build the image and run the dev stage.
+Build the image and run the dev container.
 
 ```bash
 docker build --target dev -t dwatlas:dev .
