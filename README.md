@@ -1,10 +1,9 @@
+## `DeliveryWorkerAtlas`
+
 > [!Warning]
-> This project is in its early stages and may undergo major architectural changes, refactorings, and occasional instability.
+> This project is under active development and may undergo major architectural changes and occasional instability.
 
-
-### `DeliveryWorkerAtlas`
-
-This is the monorepo for the **DeliveryWorkerAtlas** project.
+This is the monorepo for the [**DeliveryWorkerAtlas**](https://www.prototypefund.de/en/projects/delivery-worker-atlas) project.
 
 ### Getting started
 First, ensure you have [node](https://nodejs.org/), [pnpm](https://pnpm.io/), and [uv](https://github.com/astral-sh/uv) installed.
