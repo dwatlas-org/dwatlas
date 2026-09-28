@@ -3,7 +3,8 @@ import { RootLayout } from "./components/root-layout";
 import { TopbarLayout } from "./components/topbar-layout";
 import { SidebarLayout } from "./components/sidebar-layout";
 import { Index } from "./features/index";
-// import { About } from "./routes/about"
+import { NetworkPage } from "./features/institutional/pages/NetworkPage";
+import { ResearchPage } from "./features/institutional/pages/ResearchPage";
 import { ErrorBoundary } from "./features/error";
 import { Panel } from "./features/panel";
 import { Signup, signupAction } from "./features/signup";
@@ -23,10 +24,14 @@ export const router = createBrowserRouter([
             index: true,
             Component: Index,
           },
-          // {
-          //   path: "about",
-          //   Component: About,
-          // },
+          {
+            path: "about",
+            Component: NetworkPage,
+          },
+          {
+            path: "research",
+            element: <ResearchPage />,
+          },
           {
             path: "signup",
             Component: Signup,
