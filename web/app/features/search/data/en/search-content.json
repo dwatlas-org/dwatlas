@@ -1,0 +1,400 @@
+[
+  {
+    "id": "temporal-evolution",
+    "type": "dashboard",
+    "section": "Participant Sample",
+    "title": "Temporal Evolution",
+    "description": "Charts showing how participation in Delivery Worker Atlas evolves over time.",
+    "url": "/dashboard#temporal-evolution",
+    "keywords": [
+      "temporal",
+      "time",
+      "evolution",
+      "trend",
+      "participants",
+      "sample",
+      "users"
+    ]
+  },
+  {
+    "id": "length-of-stay",
+    "type": "dashboard",
+    "section": "Participant Sample",
+    "title": "Length of Stay",
+    "description": "Indicators showing how long users remain active in the Delivery Worker Atlas dataset.",
+    "url": "/dashboard#length-of-stay",
+    "keywords": [
+      "retention",
+      "length of stay",
+      "duration",
+      "users",
+      "participants",
+      "sample"
+    ]
+  },
+  {
+    "id": "registration-activities",
+    "type": "dashboard",
+    "section": "Participant Sample",
+    "title": "Registration Activities",
+    "description": "Charts showing account creation and registration activity across the dataset.",
+    "url": "/dashboard#registration-activities",
+    "keywords": [
+      "registration",
+      "accounts",
+      "users",
+      "signups",
+      "participants",
+      "sample"
+    ]
+  },
+  {
+    "id": "age-demographics",
+    "type": "dashboard",
+    "section": "Sociodemographic Profile",
+    "title": "Age & Demographics",
+    "description": "Demographic indicators describing the age profile of delivery workers in the dataset.",
+    "url": "/dashboard#age-demographics",
+    "keywords": [
+      "age",
+      "demographics",
+      "profile",
+      "workers",
+      "population",
+      "sociodemographic"
+    ]
+  },
+  {
+    "id": "gender-identity",
+    "type": "dashboard",
+    "section": "Sociodemographic Profile",
+    "title": "Gender & Identity",
+    "description": "Charts describing gender and identity characteristics among delivery workers in the dataset.",
+    "url": "/dashboard#gender-identity",
+    "keywords": [
+      "gender",
+      "identity",
+      "women",
+      "men",
+      "profile",
+      "sociodemographic"
+    ]
+  },
+  {
+    "id": "education-level",
+    "type": "dashboard",
+    "section": "Sociodemographic Profile",
+    "title": "Education Level",
+    "description": "Indicators describing the educational profile of delivery workers in the dataset.",
+    "url": "/dashboard#education-level",
+    "keywords": ["education", "schooling", "profile", "demographics", "workers"]
+  },
+  {
+    "id": "app-platforms",
+    "type": "dashboard",
+    "section": "Work Characteristics",
+    "title": "App Platforms",
+    "description": "Charts showing which digital platforms delivery workers use for their work.",
+    "url": "/dashboard#app-platforms",
+    "keywords": [
+      "platforms",
+      "apps",
+      "ifood",
+      "rappi",
+      "uber",
+      "99",
+      "work characteristics"
+    ]
+  },
+  {
+    "id": "vehicle-types",
+    "type": "dashboard",
+    "section": "Work Characteristics",
+    "title": "Vehicle Types",
+    "description": "Distribution of the vehicles used by delivery workers, including motorcycles, bicycles, and cars.",
+    "url": "/dashboard#vehicle-types",
+    "keywords": [
+      "vehicle",
+      "vehicles",
+      "motorcycle",
+      "bicycle",
+      "car",
+      "transport",
+      "work characteristics"
+    ]
+  },
+  {
+    "id": "employment-modality",
+    "type": "dashboard",
+    "section": "Work Characteristics",
+    "title": "Employment Modality",
+    "description": "Indicators describing different forms of work and employment arrangements among delivery workers.",
+    "url": "/dashboard#employment-modality",
+    "keywords": [
+      "employment",
+      "work modality",
+      "contract",
+      "independent",
+      "worker status"
+    ]
+  },
+  {
+    "id": "daily-hours",
+    "type": "dashboard",
+    "section": "Working Hours",
+    "title": "Daily Hours",
+    "description": "Charts showing the number of hours delivery workers spend working per day.",
+    "url": "/dashboard#daily-hours",
+    "keywords": ["daily hours", "working time", "hours", "workday", "shift"]
+  },
+  {
+    "id": "weekly-schedule",
+    "type": "dashboard",
+    "section": "Working Hours",
+    "title": "Weekly Schedule",
+    "description": "Charts showing how delivery work is distributed across the days of the week.",
+    "url": "/dashboard#weekly-schedule",
+    "keywords": ["weekly", "schedule", "days", "working time", "week", "hours"]
+  },
+  {
+    "id": "peak-shifts",
+    "type": "dashboard",
+    "section": "Working Hours",
+    "title": "Peak Shifts",
+    "description": "Indicators showing the periods of the day and week when delivery activity is most concentrated.",
+    "url": "/dashboard#peak-shifts",
+    "keywords": [
+      "peak shifts",
+      "peak hours",
+      "working time",
+      "schedule",
+      "activity"
+    ]
+  },
+  {
+    "id": "fuel-energy",
+    "type": "dashboard",
+    "section": "Expense Breakdown",
+    "title": "Fuel & Energy",
+    "description": "Charts showing fuel and energy expenses associated with delivery work.",
+    "url": "/dashboard#fuel-energy",
+    "keywords": [
+      "fuel",
+      "energy",
+      "gasoline",
+      "expenses",
+      "costs",
+      "expense breakdown"
+    ]
+  },
+  {
+    "id": "maintenance-repairs",
+    "type": "dashboard",
+    "section": "Expense Breakdown",
+    "title": "Maintenance & Repairs",
+    "description": "Indicators showing maintenance and repair costs associated with delivery work.",
+    "url": "/dashboard#maintenance-repairs",
+    "keywords": [
+      "maintenance",
+      "repairs",
+      "expenses",
+      "costs",
+      "vehicle",
+      "expense breakdown"
+    ]
+  },
+  {
+    "id": "gear-telecom",
+    "type": "dashboard",
+    "section": "Expense Breakdown",
+    "title": "Gear & Telecom",
+    "description": "Charts showing expenses related to work equipment, mobile phones, internet, and telecommunications.",
+    "url": "/dashboard#gear-telecom",
+    "keywords": [
+      "gear",
+      "telecom",
+      "phone",
+      "internet",
+      "equipment",
+      "expenses",
+      "costs"
+    ]
+  },
+  {
+    "id": "base-delivery-fares",
+    "type": "dashboard",
+    "section": "Earnings Breakdown",
+    "title": "Base Delivery Fares",
+    "description": "Charts showing the base payments delivery workers receive for completed deliveries.",
+    "url": "/dashboard#base-delivery-fares",
+    "keywords": ["base fare", "delivery fare", "earnings", "income", "payments"]
+  },
+  {
+    "id": "platform-surge-bonuses",
+    "type": "dashboard",
+    "section": "Earnings Breakdown",
+    "title": "Platform Surge & Bonuses",
+    "description": "Indicators showing surge payments, incentives, and bonuses offered by delivery platforms.",
+    "url": "/dashboard#platform-surge-bonuses",
+    "keywords": [
+      "surge",
+      "bonus",
+      "bonuses",
+      "incentives",
+      "platform",
+      "earnings",
+      "income"
+    ]
+  },
+  {
+    "id": "customer-tips",
+    "type": "dashboard",
+    "section": "Earnings Breakdown",
+    "title": "Customer Tips",
+    "description": "Charts showing tips received from customers as part of delivery workers' earnings.",
+    "url": "/dashboard#customer-tips",
+    "keywords": ["tips", "customers", "earnings", "income", "payments"]
+  },
+  {
+    "id": "hourly-rate",
+    "type": "dashboard",
+    "section": "Net Earnings",
+    "title": "Hourly Rate",
+    "description": "Indicators showing net earnings per hour of delivery work.",
+    "url": "/dashboard#hourly-rate",
+    "keywords": [
+      "hourly rate",
+      "hourly earnings",
+      "net earnings",
+      "income",
+      "wage",
+      "remuneration"
+    ]
+  },
+  {
+    "id": "our-network",
+    "type": "institutional",
+    "section": "About",
+    "title": "Our Network",
+    "description": "Information about the people, institutions, partners, and funders involved in Delivery Worker Atlas.",
+    "url": "/network",
+    "keywords": [
+      "about",
+      "network",
+      "team",
+      "contributors",
+      "people",
+      "partners",
+      "institutions",
+      "funding"
+    ]
+  },
+  {
+    "id": "research",
+    "type": "institutional",
+    "section": "Research",
+    "title": "Research",
+    "description": "Research projects and outputs produced through Delivery Worker Atlas and its partner network.",
+    "url": "/research",
+    "keywords": [
+      "research",
+      "projects",
+      "publications",
+      "outputs",
+      "studies",
+      "academic"
+    ]
+  },
+  {
+    "id": "methodology",
+    "type": "institutional",
+    "section": "About the Data",
+    "title": "Methodology",
+    "description": "How Delivery Worker Atlas data are produced, processed, analyzed, and interpreted.",
+    "url": "/methodology",
+    "keywords": [
+      "methodology",
+      "methods",
+      "data",
+      "sample",
+      "regular user",
+      "processing",
+      "quality",
+      "limitations"
+    ]
+  },
+  {
+    "id": "data-tree",
+    "type": "institutional",
+    "section": "About the Data",
+    "title": "Data Tree",
+    "description": "A visual overview of how data move from worker records to processing, indicators, and public outputs.",
+    "url": "/data-tree",
+    "keywords": [
+      "data tree",
+      "data flow",
+      "provenance",
+      "processing",
+      "indicators",
+      "sources"
+    ]
+  },
+  {
+    "id": "analyses",
+    "type": "institutional",
+    "section": "Analyses",
+    "title": "Analyses",
+    "description": "Interpretive texts based on Delivery Worker Atlas data, research, and dialogue with workers.",
+    "url": "/analyses",
+    "keywords": [
+      "analyses",
+      "articles",
+      "interpretation",
+      "research",
+      "findings",
+      "results"
+    ]
+  },
+  {
+    "id": "glossary",
+    "type": "institutional",
+    "section": "Glossary",
+    "title": "Glossary",
+    "description": "Definitions of key concepts, indicators, and terms used throughout Delivery Worker Atlas.",
+    "url": "/glossary",
+    "keywords": ["glossary", "terms", "definitions", "concepts", "indicators"]
+  },
+  {
+    "id": "faq",
+    "type": "institutional",
+    "section": "FAQ",
+    "title": "FAQ",
+    "description": "Frequently asked questions about Delivery Worker Atlas, its data, methodology, privacy, and use.",
+    "url": "/faq",
+    "keywords": [
+      "faq",
+      "questions",
+      "answers",
+      "help",
+      "data",
+      "privacy",
+      "methodology"
+    ]
+  },
+  {
+    "id": "contact",
+    "type": "institutional",
+    "section": "Contact",
+    "title": "Contact",
+    "description": "Contact the Delivery Worker Atlas team about questions, data, research, partnerships, or collaboration.",
+    "url": "/contact",
+    "keywords": [
+      "contact",
+      "email",
+      "message",
+      "partnership",
+      "collaboration",
+      "support"
+    ]
+  }
+]
