@@ -2,6 +2,7 @@ import { useFetcher, useRouteError, isRouteErrorResponse } from "react-router";
 import { Card, CardContent } from "@/components/ui/card";
 import { LoginForm } from "@/components/login-form";
 import { RequestForm } from "@/components/request-form";
+import { requestAccess } from "@/lib/api";
 
 export async function requestAction({ request }: { request: Request }) {
   const formData = await request.formData();
@@ -26,6 +27,7 @@ export async function requestAction({ request }: { request: Request }) {
     return { error: "Tell us what you intend to do with the data" };
   }
 
+  await requestAccess(name, email, organization, bio);
   return { success: true, name, email };
 }
 
