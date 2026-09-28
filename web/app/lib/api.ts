@@ -17,7 +17,7 @@ export type PanelChartPoint = {
   [key: string]: string | number;
 };
 
-const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8000";
+const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8000/api";
 
 async function postPanel<T>(
   path: string,
@@ -65,10 +65,10 @@ export async function requestAccess(
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      full_name: name,
+      name: name,
       email: email,
       organization: organization,
-      purpose: bio,
+      bio: bio,
     }),
   });
 
