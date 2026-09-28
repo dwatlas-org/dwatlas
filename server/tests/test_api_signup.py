@@ -33,10 +33,14 @@ from api.user.models import User
     ),
 )
 def test_api_signup(
-    json: dict[str, Any], status_code: int, keys: list[str], client: TestClient
+    json: dict[str, Any],
+    status_code: int,
+    keys: list[str],
+    client: TestClient,
+    basepath: str,
 ):
     response = client.post(
-        "/user/signup",
+        f"{basepath}/user/signup",
         json=json,
     )
     assert response.status_code == status_code
@@ -45,9 +49,11 @@ def test_api_signup(
         assert key in data
 
 
-def test_api_signup_random_userdata(user_data: dict[str, str], client: TestClient):
+def test_api_signup_random_userdata(
+    user_data: dict[str, str], client: TestClient, basepath: str
+):
     response = client.post(
-        "/user/signup",
+        f"{basepath}/user/signup",
         json={"email": user_data["email"], "password": user_data["password"]},
     )
     assert response.status_code == status.HTTP_201_CREATED
@@ -55,9 +61,9 @@ def test_api_signup_random_userdata(user_data: dict[str, str], client: TestClien
     assert data["email"] == user_data["email"]
 
 
-def test_api_signup_duplicate_email(user: User, client: TestClient):
+def test_api_signup_duplicate_email(user: User, client: TestClient, basepath: str):
     response = client.post(
-        "/user/signup",
+        f"{basepath}/user/signup",
         json={"email": user.email, "password": "somepassword"},
     )
     assert response.status_code == status.HTTP_400_BAD_REQUEST

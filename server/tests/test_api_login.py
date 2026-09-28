@@ -8,10 +8,10 @@ from api.user.service import hash_password
 
 
 @pytest.mark.parametrize("user__hashed_password", [hash_password("supersecure123!")])
-def test_api_login(client: TestClient, user: User):
+def test_api_login(client: TestClient, user: User, basepath: str):
     # Login
     response = client.post(
-        "/auth/token",
+        f"{basepath}/auth/token",
         json={
             "email": user.email,
             "password": "supersecure123!",
@@ -29,10 +29,10 @@ def test_api_login(client: TestClient, user: User):
 
 
 @pytest.mark.parametrize("user__hashed_password", [hash_password("supersecure123!")])
-def test_api_login_wrong_email(client: TestClient, user: User):
+def test_api_login_wrong_email(client: TestClient, user: User, basepath: str):
     # Login
     response = client.post(
-        "/auth/token",
+        f"{basepath}/auth/token",
         json={
             "email": "test@example.com",
             "password": "supersecure123!",
@@ -41,10 +41,10 @@ def test_api_login_wrong_email(client: TestClient, user: User):
     assert response.status_code == 401
 
 
-def test_api_login_wrong_password(client: TestClient, user: User):
+def test_api_login_wrong_password(client: TestClient, user: User, basepath: str):
     # Login
     response = client.post(
-        "/auth/token",
+        f"{basepath}/auth/token",
         json={
             "email": user.email,
             "password": "thisisnotthepassword!",

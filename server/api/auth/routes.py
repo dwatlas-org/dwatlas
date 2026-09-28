@@ -12,10 +12,10 @@ from api.user.service import authenticate_user
 from .models import LoginData, Token
 from .service import create_access_token, get_current_active_user
 
-router = APIRouter()
+router = APIRouter(prefix="/api/auth", tags=["auth"])
 
 
-@router.post("/auth/token")
+@router.post("/token")
 async def api_login(
     login_data: LoginData,
     session: Annotated[Session, Depends(get_session)],
@@ -36,7 +36,7 @@ async def api_login(
     return Token(access_token=access_token, token_type="bearer")
 
 
-@router.get("/auth/me/")
+@router.get("/me/")
 async def api_auth_me(
     current_user: Annotated[User, Depends(get_current_active_user)],
 ) -> User:
