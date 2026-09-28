@@ -53,3 +53,27 @@ export function fetchPanelChart(
 ): Promise<PanelChartPoint[]> {
   return postPanel(`/panels/${view}/charts`, filters, signal);
 }
+
+export async function requestAccess(
+  name: string,
+  email: string,
+  organization: string,
+  bio: string,
+): Promise<T> {
+  const path = "/user/request_access";
+  const response = await fetch(`${API_URL}${path}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      full_name: name,
+      email: email,
+      organization: organization,
+      purpose: bio,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Access request failed with status ${response.status}`);
+  }
+  return response.json() as Promise<T>;
+}
