@@ -13,6 +13,8 @@ from .factories import UserFactory
 
 fake = Faker()
 
+BASE_PATH: str = "/api"
+
 
 @pytest.fixture(name="session", scope="function", autouse=True)
 def session_fixture():
@@ -60,6 +62,11 @@ def password_fixture() -> str:
 def username_fixture() -> str:
     username = fake.first_name()
     return username
+
+
+@pytest.fixture(name="basepath", scope="function")
+def basepath() -> str:
+    return BASE_PATH
 
 
 register(UserFactory)

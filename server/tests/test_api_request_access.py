@@ -2,9 +2,11 @@ from fastapi import status
 from fastapi.testclient import TestClient
 
 
-def test_api_request_access(client: TestClient, user_data: dict[str, str]) -> None:
+def test_api_request_access(
+    client: TestClient, user_data: dict[str, str], basepath: str
+) -> None:
     response = client.post(
-        "/user/request_access/",
+        f"{basepath}/user/request_access/",
         json={
             "name": user_data["full_name"],
             "email": user_data["email"],

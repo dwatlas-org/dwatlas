@@ -1,10 +1,12 @@
 from fastapi.testclient import TestClient
 
 
-def test_api_read_users(client: TestClient, user, second_user, third_user):
+def test_api_read_users(
+    client: TestClient, user, second_user, third_user, basepath: str
+):
     # Create 3 users
     response = client.get(
-        "/user/all/",
+        f"{basepath}/user/all/",
     )
     data = response.json()
 

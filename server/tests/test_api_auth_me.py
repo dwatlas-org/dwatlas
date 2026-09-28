@@ -6,10 +6,10 @@ from api.user.service import hash_password
 
 
 @pytest.mark.parametrize("user__hashed_password", [hash_password("supersecure")])
-def test_api_auth_me(client: TestClient, user: User):
+def test_api_auth_me(client: TestClient, user: User, basepath: str):
     # Login
     response = client.post(
-        "/auth/token",
+        f"{basepath}/auth/token",
         json={
             "email": user.email,
             "password": "supersecure",
@@ -21,26 +21,26 @@ def test_api_auth_me(client: TestClient, user: User):
 
     # Assert success on access
     response = client.get(
-        "/auth/me",
+        f"{basepath}/auth/me",
         headers={"Authorization": f"Bearer {token}"},
     )
 
     assert response.status_code == 200
 
 
-def test_api_auth_me_no_token(client: TestClient):
+def test_api_auth_me_no_token(client: TestClient, basepath: str):
     # Assert failure on access
     response = client.get(
-        "/auth/me",
+        f"{basepath}/auth/me",
     )
     assert response.status_code == 401
 
 
-def test_api_auth_me_invalid_token(client: TestClient):
+def test_api_auth_me_invalid_token(client: TestClient, basepath: str):
     # Assert failure on access
     token = "notarealtoken"
     response = client.get(
-        "/auth/me",
+        f"{basepath}/auth/me",
         headers={"Authorization": f"Bearer {token}"},
     )
 
