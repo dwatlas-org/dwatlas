@@ -17,7 +17,7 @@ async def test_emailservice_send_console(tmpdir, user_data: dict[str, str]):
     )
     filepath = tmpdir / "message"
     with open(filepath, "w") as stream:  # noqa
-        await e.send_console([message], stream)
+        await e._send_console([message], stream)
     with open(filepath, "r") as f:  # noqa
         assert f.readlines() == [
             "To: access@dwatlas.org\n",

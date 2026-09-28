@@ -6,10 +6,10 @@ from sqlmodel import Field, SQLModel
 
 
 class RequestAccessData(SQLModel):
-    full_name: str
+    name: str
     email: EmailStr
     organization: str
-    purpose: str
+    bio: str
 
 
 class UserBase(SQLModel):
