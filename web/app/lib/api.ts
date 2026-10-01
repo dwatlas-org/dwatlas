@@ -77,3 +77,15 @@ export async function requestAccess(
   }
   return response.json() as Promise<T>;
 }
+
+export async function login(email: string, password: string): Promise<T> {
+  const path = "/auth/token";
+  return fetch(`${API_URL}${path}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      email: email,
+      password: password,
+    }),
+  }).then((data) => data.json());
+}

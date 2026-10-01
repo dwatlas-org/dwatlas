@@ -8,14 +8,17 @@ import { ArrowRight } from "lucide-react";
 const inputClass =
   "h-10 w-full rounded-lg border border-slate-200 bg-white px-3.5 text-sm outline-none transition-all placeholder:text-slate-400 focus-visible:border-slate-400 focus-visible:ring-2 focus-visible:ring-slate-200";
 
-function LoginFormBody({ className }: { className?: string }) {
+function LoginFormBody({ className, Form }: { className?: string }) {
   return (
-    <form
+    <Form
+      id="login"
+      method="post"
       className={cn(
         "flex flex-col justify-between gap-6 p-8 lg:p-12",
         className,
       )}
     >
+      <input name="form_type" hidden defaultValue="login" />
       <div className="flex flex-col gap-6">
         <div className="flex flex-col items-start gap-1 text-left">
           <div className="text-[11px] font-bold uppercase tracking-wider text-[#13315C]">
@@ -81,29 +84,31 @@ function LoginFormBody({ className }: { className?: string }) {
         </div>
         <Button
           type="submit"
+          form="login"
           className="flex h-10 w-full items-center justify-center gap-2 rounded-lg bg-[#13315C] font-semibold text-white transition-all hover:bg-[#0E2545] active:scale-[0.98]"
         >
           <span>Log in</span>
           <ArrowRight className="size-4 shrink-0" />
         </Button>
       </div>
-    </form>
+    </Form>
   );
 }
 
 export function LoginForm({
   className,
   bare = false,
+  Form = "form",
   ...props
 }: React.ComponentProps<"div"> & { bare?: boolean }) {
   if (bare) {
-    return <LoginFormBody className={className} />;
+    return <LoginFormBody Form={Form} className={className} />;
   }
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card className="overflow-hidden p-0">
         <CardContent className="grid p-0 md:grid-cols-2">
-          <LoginFormBody />
+          <LoginFormBody Form={Form} />
         </CardContent>
       </Card>
       <FieldDescription className="px-6 text-center">

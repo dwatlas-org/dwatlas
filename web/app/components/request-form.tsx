@@ -39,6 +39,7 @@ function RequestFormBody({
       {success ? <div className="text-sm text-green-600">{success}</div> : null}
       {error ? <div className="text-sm text-red-600">{error}</div> : null}
       <Form id="profile" method="post">
+        <input name="form_type" hidden defaultValue="request" />
         <FieldGroup className="flex flex-col gap-4">
           <Field className="flex flex-col gap-1.5">
             <FieldLabel

@@ -4,12 +4,16 @@ import { LoginForm } from "@/components/login-form";
 import { RequestForm } from "@/components/request-form";
 import { requestAccess } from "@/lib/api";
 
-export async function requestAction({ request }: { request: Request }) {
-  const formData = await request.formData();
+async function requestAction(formData) {
+  console.log("hello from requestAction");
+  console.log(formData);
   const name = formData.get("name");
   const email = formData.get("email");
   const organization = formData.get("organization");
   const bio = formData.get("bio");
+  console.log(
+    `name: ${name} email: ${email} organization: ${organization} bio: ${bio}`,
+  );
 
   if (typeof name !== "string" || !name.trim()) {
     return { error: "Name is required" };
@@ -27,12 +31,38 @@ export async function requestAction({ request }: { request: Request }) {
     return { error: "Tell us what you intend to do with the data" };
   }
 
-  await requestAccess(name, email, organization, bio);
+  requestAccess(name, email, organization, bio);
   return { success: true, name, email };
 }
 
+async function loginAction(formData) {
+  console.log("hello from loginAction");
+  console.log(formData);
+  const name = formData.get("name");
+  const password = formData.get("password");
+  console.log(`name: ${name} password: ${password}`);
+  // login(name, password)
+  return { success: true };
+}
+
+export async function requestOrLoginAction({ request }: { request: Request }) {
+  const formData = await request.formData();
+  console.log(formData);
+  const formType = formData.get("form_type");
+  // this is very hacky (and not working), not sure if this is the way to proceed
+  console.log("Hello from requestOrLoginAction");
+  if (formType == "request") {
+    console.log("form_type is request");
+    return await requestAction(formData);
+  } else if (formType == "login") {
+    console.log("form_type is login");
+    return await loginAction(formData);
+  }
+  return { success: true };
+}
+
 export function Registration() {
-  const fetcher = useFetcher<typeof requestAction>();
+  const fetcher = useFetcher<typeof requestOrLoginAction>();
   const isSubmitting = fetcher.state === "submitting";
 
   return (
@@ -46,11 +76,11 @@ export function Registration() {
       <div className="w-full max-w-4xl">
         <Card className="overflow-hidden rounded-2xl bg-white p-0 shadow-sm ring-1 ring-slate-200/70">
           <CardContent className="grid p-0 lg:grid-cols-2 lg:divide-x lg:divide-slate-100">
-            <LoginForm bare />
+            <LoginForm bare Form={fetcher.Form} />
             <RequestForm
               bare
               Form={fetcher.Form}
-              isSubmitting={isSubmitting}
+              requestIsSubmitting={isSubmitting}
               error={fetcher.data?.error}
               success={
                 fetcher.data?.success
