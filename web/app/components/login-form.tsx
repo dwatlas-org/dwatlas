@@ -11,11 +11,13 @@ const inputClass =
 function LoginFormBody({
   className,
   Form,
+  isSubmitting,
   error,
   success,
 }: {
   className?: string;
   Form?: React.ElementType;
+  isSubmitting?: boolean;
   success?: string;
   error?: string;
 }) {
@@ -103,6 +105,7 @@ function LoginFormBody({
           <Button
             type="submit"
             form="login"
+            disabled={isSubmitting}
             className="flex h-10 w-full items-center justify-center gap-2 rounded-lg bg-[#13315C] font-semibold text-white transition-all hover:bg-[#0E2545] active:scale-[0.98]"
           >
             <span>Log in</span>
@@ -118,20 +121,22 @@ export function LoginForm({
   className,
   bare = false,
   Form = "form",
+  isSubmitting = false,
   error,
   success,
   ...props
 }: React.ComponentProps<"div"> & {
   bare?: boolean;
   Form?: React.ElementType;
+  isSubmitting?: boolean;
   error?: string;
   success?: string;
-  bare?: boolean;
 }) {
   if (bare) {
     return (
       <LoginFormBody
         Form={Form}
+        isSubmitting={isSubmitting}
         className={className}
         error={error}
         success={success}

@@ -4,7 +4,6 @@ import { LoginForm } from "@/components/login-form";
 import { RequestForm } from "@/components/request-form";
 import { requestAccess, login } from "@/lib/api";
 
-// TODO typing in function signatures
 async function requestAction(formData) {
   const name = formData.get("name");
   const email = formData.get("email");
@@ -70,8 +69,6 @@ export async function requestOrLoginAction({ request }: { request: Request }) {
   } else if (formType == "login") {
     return await loginAction(formData);
   }
-
-  return { success: true };
 }
 
 export function Registration() {
@@ -92,6 +89,7 @@ export function Registration() {
             <LoginForm
               bare
               Form={fetcher.Form}
+              isSubmitting={isSubmitting}
               error={fetcher.data?.errorLogin}
               success={
                 fetcher.data?.successLogin ? "Login successful" : undefined
@@ -100,7 +98,7 @@ export function Registration() {
             <RequestForm
               bare
               Form={fetcher.Form}
-              requestIsSubmitting={isSubmitting}
+              isSubmitting={isSubmitting}
               error={fetcher.data?.error}
               success={
                 fetcher.data?.successRequest
