@@ -81,12 +81,14 @@ export async function requestAccess(
 export async function login(email: string, password: string): Promise<T> {
   const path = "/auth/token";
   console.log("hello from login");
-  return fetch(`${API_URL}${path}`, {
+  const response = await fetch(`${API_URL}${path}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       email: email,
       password: password,
     }),
-  }).then((data) => console.log(data.json()));
+  });
+
+  return response as Promise<T>;
 }
