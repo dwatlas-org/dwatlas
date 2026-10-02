@@ -42,6 +42,7 @@ function LoginFormBody({ className, Form }: { className?: string }) {
             </FieldLabel>
             <Input
               id="email"
+              name="email"
               type="email"
               placeholder="you@organisation.org"
               required
@@ -58,6 +59,7 @@ function LoginFormBody({ className, Form }: { className?: string }) {
             </FieldLabel>
             <Input
               id="password"
+              name="password"
               type="password"
               placeholder="••••••••••••"
               required

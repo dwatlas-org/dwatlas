@@ -80,6 +80,7 @@ export async function requestAccess(
 
 export async function login(email: string, password: string): Promise<T> {
   const path = "/auth/token";
+  console.log("hello from login");
   return fetch(`${API_URL}${path}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -87,5 +88,5 @@ export async function login(email: string, password: string): Promise<T> {
       email: email,
       password: password,
     }),
-  }).then((data) => data.json());
+  }).then((data) => console.log(data.json()));
 }

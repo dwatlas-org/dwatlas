@@ -2,8 +2,11 @@ import { useFetcher, useRouteError, isRouteErrorResponse } from "react-router";
 import { Card, CardContent } from "@/components/ui/card";
 import { LoginForm } from "@/components/login-form";
 import { RequestForm } from "@/components/request-form";
-import { requestAccess } from "@/lib/api";
+import { requestAccess, login } from "@/lib/api";
 
+// TODO typing in function signatures
+// TODO store token somewhere
+// TODO fix status between two forms
 async function requestAction(formData) {
   console.log("hello from requestAction");
   console.log(formData);
@@ -38,10 +41,16 @@ async function requestAction(formData) {
 async function loginAction(formData) {
   console.log("hello from loginAction");
   console.log(formData);
-  const name = formData.get("name");
+  const email = formData.get("email");
   const password = formData.get("password");
-  console.log(`name: ${name} password: ${password}`);
-  // login(name, password)
+  if (typeof email !== "string" || !email.includes("@")) {
+    return { error: "Valid email is required" };
+  }
+  if (typeof password !== "string" || !password.trim()) {
+    return { error: "Tell us what you intend to do with the data" };
+  }
+  console.log(`email: ${email} password: ${password}`);
+  login(email, password);
   return { success: true };
 }
 
