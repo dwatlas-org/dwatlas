@@ -6,15 +6,10 @@ import { requestAccess, login } from "@/lib/api";
 
 // TODO typing in function signatures
 async function requestAction(formData) {
-  console.log("hello from requestAction");
-  console.log(formData);
   const name = formData.get("name");
   const email = formData.get("email");
   const organization = formData.get("organization");
   const bio = formData.get("bio");
-  console.log(
-    `name: ${name} email: ${email} organization: ${organization} bio: ${bio}`,
-  );
 
   if (typeof name !== "string" || !name.trim()) {
     return { error: "Name is required" };
@@ -68,17 +63,14 @@ async function loginAction(formData) {
 
 export async function requestOrLoginAction({ request }: { request: Request }) {
   const formData = await request.formData();
-  console.log(formData);
   const formType = formData.get("form_type");
-  // this is very hacky (and not working), not sure if this is the way to proceed
-  console.log("Hello from requestOrLoginAction");
+
   if (formType == "request") {
-    console.log("form_type is request");
     return await requestAction(formData);
   } else if (formType == "login") {
-    console.log("form_type is login");
     return await loginAction(formData);
   }
+
   return { success: true };
 }
 
