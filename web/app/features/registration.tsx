@@ -7,6 +7,7 @@ import { requestAccess, login } from "@/lib/api";
 // TODO typing in function signatures
 // TODO store token somewhere
 // TODO fix status between two forms
+// TODO implement remember me
 async function requestAction(formData) {
   console.log("hello from requestAction");
   console.log(formData);
@@ -47,14 +48,16 @@ async function loginAction(formData) {
     return { errorLogin: "Valid email is required" };
   }
   if (typeof password !== "string" || !password.trim()) {
-    return { errorLogin: "Tell us what you intend to do with the data" };
+    return { errorLogin: "Password is required" };
   }
   console.log(`email: ${email} password: ${password}`);
   const response = await login(email, password);
   if (!response.ok) {
     return { errorLogin: "Incorrect email or password" };
   }
-  console.log(response);
+  const data = await response.json();
+  const token = data.access_token;
+  sessionStorage.setItem("token", JSON.stringify(token));
   return { successLogin: true };
 }
 
