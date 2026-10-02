@@ -8,7 +8,6 @@ import { ArrowRight } from "lucide-react";
 const inputClass =
   "h-10 w-full rounded-lg border border-slate-200 bg-white px-3.5 text-sm outline-none transition-all placeholder:text-slate-400 focus-visible:border-slate-400 focus-visible:ring-2 focus-visible:ring-slate-200";
 
-// TODO fix typing in function signatures
 function LoginFormBody({
   className,
   Form,
@@ -17,6 +16,8 @@ function LoginFormBody({
 }: {
   className?: string;
   Form?: React.ElementType;
+  success?: string;
+  error?: string;
 }) {
   return (
     <>
@@ -120,7 +121,13 @@ export function LoginForm({
   error,
   success,
   ...props
-}: React.ComponentProps<"div"> & { bare?: boolean }) {
+}: React.ComponentProps<"div"> & {
+  bare?: boolean;
+  Form?: React.ElementType;
+  error?: string;
+  success?: string;
+  bare?: boolean;
+}) {
   if (bare) {
     return (
       <LoginFormBody
