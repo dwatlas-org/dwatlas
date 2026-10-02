@@ -5,9 +5,6 @@ import { RequestForm } from "@/components/request-form";
 import { requestAccess, login } from "@/lib/api";
 
 // TODO typing in function signatures
-// TODO store token somewhere
-// TODO fix status between two forms
-// TODO implement remember me
 async function requestAction(formData) {
   console.log("hello from requestAction");
   console.log(formData);
@@ -40,24 +37,32 @@ async function requestAction(formData) {
 }
 
 async function loginAction(formData) {
-  console.log("hello from loginAction");
-  console.log(formData);
   const email = formData.get("email");
   const password = formData.get("password");
+  const remember = formData.get("remember");
+
   if (typeof email !== "string" || !email.includes("@")) {
     return { errorLogin: "Valid email is required" };
   }
   if (typeof password !== "string" || !password.trim()) {
     return { errorLogin: "Password is required" };
   }
-  console.log(`email: ${email} password: ${password}`);
+
   const response = await login(email, password);
+
   if (!response.ok) {
     return { errorLogin: "Incorrect email or password" };
   }
+
   const data = await response.json();
   const token = data.access_token;
-  sessionStorage.setItem("token", JSON.stringify(token));
+
+  if (remember === "on") {
+    localStorage.setItem("token", JSON.stringify(token));
+  } else if (remember === null) {
+    sessionStorage.setItem("token", JSON.stringify(token));
+  }
+
   return { successLogin: true };
 }
 

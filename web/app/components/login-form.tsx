@@ -86,6 +86,7 @@ function LoginFormBody({
                 <input
                   type="checkbox"
                   id="remember"
+                  name="remember"
                   className="size-4 cursor-pointer rounded border-slate-300 text-[#13315C] focus:ring-[#13315C]"
                 />
                 <span>Remember me</span>
