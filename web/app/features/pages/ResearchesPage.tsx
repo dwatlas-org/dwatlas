@@ -1,10 +1,13 @@
-import { InstitutionalHero } from "../components/InstitutionalHero";
-import { ResearchCard, type ResearchProject } from "../components/ResearchCard";
-import researchData from "../data/en/research.json";
+import { InstitutionalHero } from "../../components/pages/InstitutionalHero";
+import {
+  ResearchCard,
+  type ResearchProject,
+} from "../../components/pages/ResearchCard";
+import researchesContent from "./content/researches.json";
 
-const { hero, projects } = researchData;
+const { hero, projects } = researchesContent;
 
-export function ResearchPage() {
+export function ResearchesPage() {
   return (
     <main className="w-full bg-white font-sans">
       <InstitutionalHero

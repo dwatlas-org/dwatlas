@@ -1,9 +1,9 @@
-import { InstitutionalHero } from "../components/InstitutionalHero";
-import { OrganizationLogoCard } from "../components/OrganizationLogoCard";
-import { PersonCard } from "../components/PersonCard";
-import networkData from "../data/en/network.json";
+import { InstitutionalHero } from "../../components/pages/InstitutionalHero";
+import { OrganizationLogoCard } from "../../components/pages/OrganizationLogoCard";
+import { PersonCard } from "../../components/pages/PersonCard";
+import aboutContent from "./content/about.json";
 
-const { hero, sections } = networkData;
+const { hero, sections } = aboutContent;
 
 function SectionHeading({ title }: { title: string }) {
   return (
@@ -13,7 +13,7 @@ function SectionHeading({ title }: { title: string }) {
   );
 }
 
-function InstitutionGrid({
+function OrganizationGrid({
   items,
 }: {
   items: Array<{
@@ -36,7 +36,7 @@ function InstitutionGrid({
   );
 }
 
-export function NetworkPage() {
+export function AboutPage() {
   return (
     <main className="w-full bg-white font-sans">
       <InstitutionalHero
@@ -76,16 +76,14 @@ export function NetworkPage() {
       <section className="w-full border-t border-[#e3e7ef] py-12 md:py-14">
         <div className="mx-auto max-w-6xl px-6 md:px-8">
           <SectionHeading title={sections.institutions.title} />
-
-          <InstitutionGrid items={sections.institutions.items} />
+          <OrganizationGrid items={sections.institutions.items} />
         </div>
       </section>
 
       <section className="w-full pb-16 pt-4 md:pb-20 md:pt-6">
         <div className="mx-auto max-w-6xl px-6 md:px-8">
           <SectionHeading title={sections.funding.title} />
-
-          <InstitutionGrid items={sections.funding.items} />
+          <OrganizationGrid items={sections.funding.items} />
         </div>
       </section>
     </main>
