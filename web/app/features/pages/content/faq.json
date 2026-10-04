@@ -1,0 +1,119 @@
+{
+  "hero": {
+    "kicker": "Frequently Asked Questions",
+    "title": "FAQ",
+    "description": "This section brings together answers to the most common questions about Delivery Worker Atlas, covering the project, the data, the methodology, privacy, and the ways the information produced can be used."
+  },
+  "categories": [
+    {
+      "id": "about-dwa",
+      "title": "About DWA",
+      "questions": [
+        {
+          "question": "What is Delivery Worker Atlas?",
+          "answer": [
+            "Delivery Worker Atlas (DWA) is an open research, data, and visualization infrastructure on delivery platform work in Brazil. The project brings together, analyzes, and makes available data produced in collaboration with workers, seeking to contribute to public debate on mobility, working conditions, remuneration, territorial inequalities, and the rights of platform workers.",
+            "Its goal is to produce knowledge about working time, earnings, expenses, urban circulation, and other dimensions of platform work, while preserving participants' privacy and making analytical methods transparent and accessible to workers, researchers, and partner organizations."
+          ],
+          "link": {
+            "label": "Learn more about the project",
+            "target": "about"
+          }
+        },
+        {
+          "question": "Why was the project created?",
+          "answer": null
+        },
+        {
+          "question": "Who develops and maintains the project?",
+          "answer": null
+        },
+        {
+          "question": "How is Delivery Worker Atlas funded?",
+          "answer": null
+        }
+      ]
+    },
+    {
+      "id": "about-data",
+      "title": "About the data",
+      "questions": [
+        {
+          "question": "Where do the data presented in the Atlas come from?",
+          "answer": null
+        },
+        {
+          "question": "Are the data produced by the workers themselves?",
+          "answer": null
+        },
+        {
+          "question": "Who is included in the data?",
+          "answer": null
+        },
+        {
+          "question": "How often are the data updated?",
+          "answer": null
+        },
+        {
+          "question": "Are the data representative of all delivery workers?",
+          "answer": null
+        }
+      ]
+    },
+    {
+      "id": "methodology",
+      "title": "Methodology",
+      "questions": [
+        {
+          "question": "How are the data collected and analyzed?",
+          "answer": null
+        },
+        {
+          "question": "What analysis methods are used?",
+          "answer": null
+        },
+        {
+          "question": "How are Atlas metrics and indicators defined?",
+          "answer": null
+        }
+      ]
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy and worker protection",
+      "questions": [
+        {
+          "question": "How is workers' privacy protected?",
+          "answer": null
+        },
+        {
+          "question": "What are the risks and limitations of the data?",
+          "answer": null
+        }
+      ]
+    },
+    {
+      "id": "data-use",
+      "title": "Using the data",
+      "questions": [
+        {
+          "question": "How can I use Atlas data?",
+          "answer": null
+        },
+        {
+          "question": "Do I need to cite Delivery Worker Atlas when using the data?",
+          "answer": null
+        }
+      ]
+    }
+  ],
+  "cta": {
+    "title": "Still have a question?",
+    "description": "If you did not find the answer you were looking for, contact the Delivery Worker Atlas team. We will be happy to help.",
+    "actionLabel": "Contact us",
+    "actionTarget": "contact"
+  },
+  "sourceNotes": {
+    "answersNotShown": "Only the answer to 'What is Delivery Worker Atlas?' is visible in the supplied FAQ design. The remaining answers are left null rather than inferred."
+  }
+}

@@ -2,9 +2,18 @@ import { createBrowserRouter, Navigate } from "react-router";
 import { RootLayout } from "./components/root-layout";
 import { TopbarLayout } from "./components/topbar-layout";
 import { SidebarLayout } from "./components/sidebar-layout";
+
+import { AboutPage } from "./features/pages/AboutPage";
+import { AnalysesPage } from "./features/pages/AnalysesPage";
+import { AnalysisArticlePage } from "./features/pages/AnalysisArticlePage";
+import { ContactPage } from "./features/pages/ContactPage";
+import { DataTreePage } from "./features/pages/DataTreePage";
+import { FAQPage } from "./features/pages/FAQPage";
+import { GlossaryPage } from "./features/pages/GlossaryPage";
+import { MethodologyPage } from "./features/pages/MethodologyPage";
+import { ResearchesPage } from "./features/pages/ResearchesPage";
+
 import { Index } from "./features/index";
-import { NetworkPage } from "./features/institutional/pages/NetworkPage";
-import { ResearchPage } from "./features/institutional/pages/ResearchPage";
 import { ErrorBoundary } from "./features/error";
 import { Panel } from "./features/panel";
 import { Signup, signupAction } from "./features/signup";
@@ -25,12 +34,45 @@ export const router = createBrowserRouter([
             Component: Index,
           },
           {
-            path: "about",
-            Component: NetworkPage,
-          },
-          {
-            path: "research",
-            element: <ResearchPage />,
+            path: "pages",
+            children: [
+              {
+                path: "about",
+                Component: AboutPage,
+              },
+              {
+                path: "methodology",
+                Component: MethodologyPage,
+              },
+              {
+                path: "researches",
+                Component: ResearchesPage,
+              },
+              {
+                path: "data-tree",
+                Component: DataTreePage,
+              },
+              {
+                path: "analyses",
+                Component: AnalysesPage,
+              },
+              {
+                path: "analyses/:analysisId",
+                Component: AnalysisArticlePage,
+              },
+              {
+                path: "glossary",
+                Component: GlossaryPage,
+              },
+              {
+                path: "faq",
+                Component: FAQPage,
+              },
+              {
+                path: "contact",
+                Component: ContactPage,
+              },
+            ],
           },
           {
             path: "signup",

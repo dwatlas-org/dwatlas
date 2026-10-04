@@ -1,0 +1,173 @@
+{
+  "hero": {
+    "kicker": "Interpretation and debate",
+    "title": "Analyses",
+    "description": "Texts produced from Delivery Worker Atlas data, bringing together interpretation of results, dialogue with workers, research, and reflection on platform work."
+  },
+  "filters": [
+    "All",
+    "Earnings",
+    "Working time",
+    "Expenses",
+    "Mobility",
+    "Worker profile",
+    "Platforms",
+    "Methodology"
+  ],
+  "sort": {
+    "label": "Sort by",
+    "default": "Most recent"
+  },
+  "items": [
+    {
+      "id": "analysis-05",
+      "date": "2026-09-16",
+      "dateLabel": "16 Sep 2026",
+      "number": "Analysis 05",
+      "title": "How much is one hour of a delivery worker's labor worth?",
+      "summary": "An analysis of hourly earnings considering expenses, idle time, and effective working time. The results show how costs and variability in demand affect delivery workers' real remuneration.",
+      "authors": ["Igor Dalla Vecchia", "L. Kraus"],
+      "categories": ["Earnings", "Working time", "Remuneration"],
+      "imageRef": "analysis-05-list",
+      "actionLabel": "Read analysis"
+    },
+    {
+      "id": "analysis-04",
+      "date": "2026-09-02",
+      "dateLabel": "02 Sep 2026",
+      "number": "Analysis 04",
+      "title": "Does working more mean earning more?",
+      "summary": "An examination of the relationship between working-time duration, waiting time, and delivery workers' net income. The results show that more hours do not always translate into higher earnings because of idle time and activity costs.",
+      "authors": ["Igor Dalla Vecchia", "Marina Lopes"],
+      "categories": ["Earnings", "Working time"],
+      "imageRef": "analysis-04-list",
+      "actionLabel": "Read analysis"
+    },
+    {
+      "id": "analysis-03",
+      "date": "2026-08-21",
+      "dateLabel": "21 Aug 2026",
+      "number": "Analysis 03",
+      "title": "The weight of expenses in app-based work",
+      "summary": "A look at everyday costs such as fuel, food, maintenance, and internet in the budgets of platform workers. The analysis shows how expenses affect final income and the sustainability of the activity.",
+      "authors": ["Igor Dalla Vecchia", "Paula Mendes"],
+      "categories": ["Expenses", "Earnings"],
+      "imageRef": "analysis-03-list",
+      "actionLabel": "Read analysis"
+    },
+    {
+      "id": "analysis-02",
+      "date": "2026-08-08",
+      "dateLabel": "08 Aug 2026",
+      "number": "Analysis 02",
+      "title": "Maps of circulation: mobility, territory, and platforms",
+      "summary": "An interpretation of urban movements, areas of concentration, and territorial inequalities based on geolocation data. The results point to an unequal distribution of opportunities among different parts of the city.",
+      "authors": ["Igor Dalla Vecchia", "Ariel Perez"],
+      "categories": ["Mobility", "Platforms"],
+      "imageRef": "analysis-02-list",
+      "actionLabel": "Read analysis"
+    },
+    {
+      "id": "analysis-01",
+      "date": "2026-07-25",
+      "dateLabel": "25 Jul 2026",
+      "number": "Analysis 01",
+      "title": "Who are the workers represented in the Atlas?",
+      "summary": "A reading of participants' demographic profile and the differences observed among cities, vehicles, and platforms. The analysis reveals the diversity of profiles and the inequalities that shape platform work in Brazil.",
+      "authors": ["Igor Dalla Vecchia", "Camila Nunes"],
+      "categories": ["Worker profile"],
+      "imageRef": "analysis-01-list",
+      "actionLabel": "Read analysis"
+    }
+  ],
+  "loadMoreLabel": "Load more analyses",
+  "article": {
+    "id": "analysis-05",
+    "breadcrumb": [
+      "Home",
+      "Analyses",
+      "How much is one hour of a delivery worker's labor worth?"
+    ],
+    "number": "Analysis 05",
+    "date": "2026-09-16",
+    "dateLabel": "16 September 2026",
+    "title": "How much is one hour of a delivery worker's labor worth?",
+    "subtitle": "Hourly earnings change significantly when expenses, idle time, and effective working time are taken into account.",
+    "authors": ["Igor Dalla Vecchia", "L. Kraus"],
+    "contributors": ["Rafael Silva", "Joana Santos", "Carlos Lima"],
+    "categories": ["Earnings", "Working time", "Remuneration"],
+    "actions": [
+      {
+        "id": "cite",
+        "label": "Cite"
+      },
+      {
+        "id": "download",
+        "label": "Download"
+      },
+      {
+        "id": "share",
+        "label": "Share"
+      }
+    ],
+    "heroImage": {
+      "imageRef": "analysis-05-hero",
+      "alt": "Delivery worker riding through a city at sunset",
+      "credit": "Davi Augusto",
+      "workTitle": "Work moves cities",
+      "year": 2026,
+      "technique": "Mixed digital technique"
+    },
+    "introParagraphs": [
+      "Digital platform delivery workers are a central part of the contemporary urban economy. They connect restaurants, businesses, and consumers, ensuring the operation of a system that has expanded rapidly in recent years. Yet the earnings obtained by these workers are still not very transparent and are often analyzed only in terms of gross values, without considering expenses, idle time, and the effective duration of the working day.",
+      "In this analysis, we use data collected by Delivery Worker Atlas between 2024 and 2026 to estimate how much delivery workers really earn per hour, considering different vehicle types, cities, and platforms. The results show that net hourly remuneration is significantly lower than gross figures suggest and varies according to vehicle type, city, and platform."
+    ],
+    "sections": [
+      {
+        "id": "hourly-earnings",
+        "title": "How much do delivery workers earn per hour?",
+        "paragraphs": [
+          "Average hourly remuneration varies according to the type of vehicle used. When we consider only gross earnings, the values appear higher. However, after deducting expenses and idle time, net hourly remuneration is significantly lower."
+        ],
+        "chart": {
+          "title": "Hourly remuneration by vehicle type",
+          "subtitle": "Mean and median values (R$), considering net earnings.",
+          "series": ["Mean", "Median"],
+          "data": [
+            {
+              "vehicle": "Bicycle",
+              "mean": 18.6,
+              "median": 14.2
+            },
+            {
+              "vehicle": "Motorcycle",
+              "mean": 26.7,
+              "median": 19.4
+            },
+            {
+              "vehicle": "Automobile",
+              "mean": 34.1,
+              "median": 22.8
+            }
+          ],
+          "source": "Delivery Worker Atlas. Data from Jan/2024 – Jul/2026."
+        },
+        "afterChartParagraphs": [
+          "The difference between mean and median values also indicates substantial heterogeneity among workers, with some receiving amounts far below the average. These results reinforce the importance of analyzing remuneration by considering the full set of factors that make up the working day."
+        ]
+      }
+    ],
+    "publicationInformation": {
+      "authors": ["Igor Dalla Vecchia", "L. Kraus"],
+      "contributors": ["Rafael Silva", "Joana Santos", "Carlos Lima"],
+      "submitted": "2026-09-08",
+      "published": "2026-09-16",
+      "lastUpdated": "2026-09-16",
+      "version": "1.0",
+      "doi": "10.xxxx/dwa.analysis.05",
+      "issn": "XXXX-XXXX",
+      "language": "Portuguese",
+      "recommendedCitation": "Vecchia, I. D.; Kraus, L. (2026). How much is one hour of a delivery worker's labor worth? Delivery Worker Atlas, Analysis 05."
+    }
+  }
+}

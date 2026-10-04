@@ -1,0 +1,361 @@
+{
+  "hero": {
+    "kicker": "Methodology",
+    "title": "How we work with data",
+    "description": "Learn how Delivery Worker Atlas data are produced, processed, and transformed into indicators, and which precautions guide their interpretation and use."
+  },
+  "search": {
+    "placeholder": "Search the methodology... E.g.: regular user, earnings, geolocation..."
+  },
+  "navigation": [
+    {
+      "number": "01",
+      "id": "introduction",
+      "title": "Introduction",
+      "contentAvailable": true
+    },
+    {
+      "number": "02",
+      "id": "data-provenance",
+      "title": "Data provenance",
+      "contentAvailable": true
+    },
+    {
+      "number": "03",
+      "id": "treatment-quality",
+      "title": "Treatment and quality",
+      "contentAvailable": true
+    },
+    {
+      "number": "04",
+      "id": "sample-scope-biases",
+      "title": "Sample, scope, and biases",
+      "contentAvailable": true
+    },
+    {
+      "number": "05",
+      "id": "regular-user",
+      "title": "Construction of the regular user",
+      "contentAvailable": true
+    },
+    {
+      "number": "06",
+      "id": "interpretation",
+      "title": "How to interpret the data",
+      "contentAvailable": true
+    },
+    {
+      "number": "07",
+      "id": "sociodemographic-profile",
+      "title": "Sociodemographic profile",
+      "contentAvailable": false
+    },
+    {
+      "number": "08",
+      "id": "work-characteristics",
+      "title": "Work characteristics",
+      "contentAvailable": false
+    },
+    {
+      "number": "09",
+      "id": "working-time",
+      "title": "Working time",
+      "contentAvailable": false
+    },
+    {
+      "number": "10",
+      "id": "expenses",
+      "title": "Expenses",
+      "contentAvailable": false
+    },
+    {
+      "number": "11",
+      "id": "gross-earnings",
+      "title": "Gross earnings",
+      "contentAvailable": false
+    },
+    {
+      "number": "12",
+      "id": "net-earnings",
+      "title": "Net earnings",
+      "contentAvailable": false
+    },
+    {
+      "number": "13",
+      "id": "goals",
+      "title": "Goals",
+      "contentAvailable": false
+    },
+    {
+      "number": "14",
+      "id": "urban-circulation",
+      "title": "Urban circulation",
+      "contentAvailable": false
+    },
+    {
+      "number": "15",
+      "id": "limitations",
+      "title": "Limitations",
+      "contentAvailable": false
+    },
+    {
+      "number": "16",
+      "id": "privacy-aggregation",
+      "title": "Privacy and aggregation",
+      "contentAvailable": false
+    },
+    {
+      "number": "17",
+      "id": "comparability",
+      "title": "Comparability",
+      "contentAvailable": false
+    },
+    {
+      "number": "18",
+      "id": "technical-documentation",
+      "title": "Technical documentation",
+      "contentAvailable": false
+    }
+  ],
+  "sections": [
+    {
+      "number": "01",
+      "id": "introduction",
+      "title": "Introduction",
+      "paragraphs": [
+        "Delivery Worker Atlas transforms data produced through the use of the Meu Corre App into collective information about app-based delivery work in Brazil. The project's methodology seeks to make transparent where the data come from, how they are processed, who is included in the analyzed base, how indicators are constructed, and what their limitations are.",
+        "Our goal is to produce reliable, useful, and accessible knowledge for workers, researchers, civil-society organizations, journalists, and public-policy makers, contributing to debate on platform work, urban mobility, and data justice.",
+        "Throughout this section, you will find detailed explanations of each stage of the process, the main concepts used in the analyses, and the methodological precautions adopted. Important terms such as regular user, net earnings, and working time are defined in the Glossary and can be consulted whenever necessary."
+      ],
+      "conceptCards": [
+        {
+          "title": "Where the data come from",
+          "description": "What the sources are and how they are collected."
+        },
+        {
+          "title": "How they are processed",
+          "description": "Cleaning, validation, and construction of variables."
+        },
+        {
+          "title": "Who makes up the analyzed base",
+          "description": "Inclusion criteria and worker characteristics."
+        },
+        {
+          "title": "How indicators are constructed",
+          "description": "Concepts, formulas, and aggregations."
+        },
+        {
+          "title": "What their limitations are",
+          "description": "Scope, biases, and precautions in interpretation."
+        }
+      ]
+    },
+    {
+      "number": "02",
+      "id": "data-provenance",
+      "title": "Data provenance",
+      "paragraphs": [
+        "Delivery Worker Atlas data are produced in different ways, always starting from workers' interaction with the Meu Corre App. This production includes information provided during registration, records made by workers themselves during their activity, geolocation data, data generated by use of the tool, and finally derived data created through calculations and processing.",
+        "These different sources of information are combined to form a robust and diversified analytical base, allowing platform work to be analyzed from multiple perspectives, from working time and urban circulation to earnings, expenses, and delivery workers' sociodemographic profile."
+      ],
+      "flow": {
+        "title": "From workers to collective knowledge",
+        "subtitle": "The path of data from Meu Corre App to Delivery Worker Atlas indicators.",
+        "steps": [
+          {
+            "title": "Worker",
+            "description": "Creates an account and records their activity in Meu Corre."
+          },
+          {
+            "title": "Meu Corre App",
+            "description": "Collects and stores data on use, working time, expenses, earnings, and geolocation."
+          },
+          {
+            "title": "Database",
+            "description": "Raw data stored securely."
+          },
+          {
+            "title": "Processing",
+            "description": "Organization, standardization, validation, and generation of variables."
+          },
+          {
+            "title": "Analytical base",
+            "description": "Data ready for analysis."
+          },
+          {
+            "title": "Indicators",
+            "description": "Calculation of metrics and aggregations."
+          },
+          {
+            "title": "Delivery Worker Atlas",
+            "description": "Visualizations, analyses, and collective knowledge."
+          }
+        ],
+        "actionLabel": "Explore the Data Tree",
+        "actionTarget": "data-tree"
+      }
+    },
+    {
+      "number": "03",
+      "id": "treatment-quality",
+      "title": "Treatment and quality",
+      "intro": "Delivery Worker Atlas data go through a rigorous treatment process to ensure quality, consistency, and reliability. This process includes extraction, organization, standardization, validation, human review of information, as well as the treatment of incomplete data, atypical values, and open-text fields.",
+      "cards": [
+        {
+          "title": "Extraction and organization",
+          "description": "Data are extracted from records produced by workers themselves in Meu Corre. The information is then organized and standardized, harmonizing formats, units of measurement, and categories to allow comparisons across periods, territories, and delivery-worker profiles."
+        },
+        {
+          "title": "Incomplete data and atypical values",
+          "description": "Incomplete data are treated using specific criteria, which may include excluding records, imputing values, or reclassifying categories, depending on the type of information. Atypical values are identified through statistical analysis and contextual review and may be retained, adjusted, or excluded according to their nature and impact on the analysis."
+        },
+        {
+          "title": "Open text and human review",
+          "description": "Open-text fields, such as descriptions of places or workers' observations, are processed with language-processing techniques to standardize terms and categories, alongside human review of the information."
+        },
+        {
+          "title": "Quality control",
+          "description": "Finally, systematic quality control is carried out, combining automated checks and human review to ensure the integrity of the analytical base used in research."
+        }
+      ],
+      "flow": [
+        {
+          "title": "Original data",
+          "subtitle": "Raw records"
+        },
+        {
+          "title": "Verification",
+          "subtitle": "Checks and filters"
+        },
+        {
+          "title": "Standardization",
+          "subtitle": "Data structuring"
+        },
+        {
+          "title": "Validation",
+          "subtitle": "Review and control"
+        },
+        {
+          "title": "Analytical base",
+          "subtitle": "Reliable data"
+        }
+      ]
+    },
+    {
+      "number": "04",
+      "id": "sample-scope-biases",
+      "title": "Sample, scope, and biases",
+      "paragraphs": [
+        "The Delivery Worker Atlas database is non-probabilistic and is formed through workers' voluntary adoption of the Meu Corre app. This means the sample is subject to self-selection biases and does not statistically represent the universe of platform delivery workers in Brazil.",
+        "Meu Corre users are not distributed uniformly across territories and delivery-worker profiles. There is a higher concentration of users in some regions, modes of transport, and activity ranges, which can influence analysis results.",
+        "Among the main identified biases are differences in users' professional profile and trajectories, variations in activity intensity, predominance of certain transport modes, and greater participation by workers who already have an interest in financial organization."
+      ],
+      "sampleComparison": {
+        "title": "Sample origin and universe of delivery workers",
+        "sample": {
+          "value": "11,000+",
+          "label": "registered Meu Corre App users (DWA base)"
+        },
+        "universe": {
+          "value": "~1.6 million",
+          "label": "platform workers in Brazil (PNAD-C 2024)"
+        },
+        "note": "The DWA sample is not representative of the total universe."
+      },
+      "biases": [
+        {
+          "title": "Professional profile and trajectory",
+          "description": "Greater presence of younger workers and those more familiar with technology."
+        },
+        {
+          "title": "Activity intensity",
+          "description": "More active users tend to record more data."
+        },
+        {
+          "title": "Mode of transport",
+          "description": "Greater participation of motorcycle riders and cyclists relative to other modes."
+        },
+        {
+          "title": "Prior interest",
+          "description": "Workers with greater interest in financial organization may be overrepresented."
+        }
+      ]
+    },
+    {
+      "number": "05",
+      "id": "regular-user",
+      "title": "Construction of the regular user",
+      "paragraphs": [
+        "For many Delivery Worker Atlas analyses, we use the category of regular user, which identifies workers with continuous and minimally consistent participation in the database. This definition seeks to ensure greater temporal comparability and reduce the impact of sporadic records that can distort analyses of earnings, expenses, working time, and mobility patterns.",
+        "The regular-user category is constructed month by month using objective activity criteria in the app. As a result, the same worker may be considered regular in one month and not in another, depending on their level of activity during the period."
+      ],
+      "classificationSteps": [
+        {
+          "title": "Registered user",
+          "description": "Created an account in Meu Corre App."
+        },
+        {
+          "title": "Active user",
+          "description": "Recorded at least one earning or expense in the period."
+        },
+        {
+          "title": "Regular user",
+          "description": "Meets the three activity criteria in the reference month."
+        }
+      ],
+      "criteria": [
+        {
+          "number": 1,
+          "title": "Registration before the reference month",
+          "description": "The user must already have been registered in the app before the month being analyzed."
+        },
+        {
+          "number": 2,
+          "title": "At least 5 earning and/or expense records",
+          "description": "At least five earning or expense entries must have been recorded during the month."
+        },
+        {
+          "number": 3,
+          "title": "Activity on at least 2 different days",
+          "description": "Records must have occurred on two or more different days during the month."
+        }
+      ],
+      "note": {
+        "title": "Classification is monthly",
+        "description": "The same user may be considered regular in one month and not in another, depending on their level of activity during the period."
+      }
+    },
+    {
+      "number": "06",
+      "id": "interpretation",
+      "title": "How to interpret the data",
+      "paragraphs": [
+        "Delivery Worker Atlas data make it possible to observe characteristics, patterns, and changes in users' working conditions over time. The analyses can be used to understand trends, compare territories, modes of transport, and worker profiles, and identify differences across periods.",
+        "However, the DWA database was not constructed as a probabilistic sample and therefore does not allow estimation of the total number of delivery workers in Brazil or statistical generalizations for the entire category. It is important to consider methodological limitations and the context in which the data were produced when interpreting the results."
+      ],
+      "whatDataAllow": {
+        "title": "What the data allow",
+        "items": [
+          "Analyze profiles and trajectories of Meu Corre App users.",
+          "Identify patterns and trends over time.",
+          "Compare indicators across territories, transport modes, and periods.",
+          "Explore relationships among earnings, expenses, working time, and urban circulation.",
+          "Support debates on working conditions, mobility, and public policy."
+        ]
+      },
+      "whatNotToInfer": {
+        "title": "What should not be inferred directly",
+        "items": [
+          "The total number of delivery workers in Brazil.",
+          "Statistical representativeness of the sample for the entire category.",
+          "Causal relationships between variables.",
+          "Direct comparisons with other studies without considering methodological differences.",
+          "Indicators for very small groups, which may not be stable or reliable."
+        ]
+      }
+    }
+  ],
+  "sourceNotes": {
+    "sectionsNotShown": "The supplied methodology mockups provide content for sections 01–06. Sections 07–18 appear in the navigation only and are marked contentAvailable=false rather than filled by inference."
+  }
+}
