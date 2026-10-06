@@ -17,7 +17,7 @@ export type PanelChartPoint = {
   [key: string]: string | number;
 };
 
-const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8000";
+const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8000/api";
 
 async function postPanel<T>(
   path: string,
@@ -52,4 +52,43 @@ export function fetchPanelChart(
   signal?: AbortSignal,
 ): Promise<PanelChartPoint[]> {
   return postPanel(`/panels/${view}/charts`, filters, signal);
+}
+
+export async function requestAccess<T>(
+  name: string,
+  email: string,
+  organization: string,
+  bio: string,
+): Promise<T> {
+  const path = "/user/request_access";
+  const response = await fetch(`${API_URL}${path}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      name: name,
+      email: email,
+      organization: organization,
+      bio: bio,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Access request failed with status ${response.status}`);
+  }
+  return response.json() as Promise<T>;
+}
+
+export async function login(email: string, password: string): Promise<T> {
+  const path = "/auth/token";
+  console.log("hello from login");
+  const response = await fetch(`${API_URL}${path}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      email: email,
+      password: password,
+    }),
+  });
+
+  return response as Promise<T>;
 }

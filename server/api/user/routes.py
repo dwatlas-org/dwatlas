@@ -18,15 +18,15 @@ from .service import (
     update_user,
 )
 
-router = APIRouter()
+router = APIRouter(prefix="/api/user", tags=["user"])
 
 
-@router.get("/user/all")
+@router.get("/all")
 def api_read_users(*, session: Annotated[Session, Depends(get_session)]):
     return read_users(session)
 
 
-@router.post("/user/", response_model=UserPublic, status_code=status.HTTP_201_CREATED)
+@router.post("/", response_model=UserPublic, status_code=status.HTTP_201_CREATED)
 def api_create_user(*, session: Session = Depends(get_session), user: UserCreate):
     try:
         user = create_user(user, session)
@@ -35,7 +35,7 @@ def api_create_user(*, session: Session = Depends(get_session), user: UserCreate
     return user
 
 
-@router.delete("/user/{user_id}")
+@router.delete("/{user_id}")
 def api_delete_user(*, session: Session = Depends(get_session), user_id: int):
     try:
         delete_user(user_id, session)
@@ -46,7 +46,7 @@ def api_delete_user(*, session: Session = Depends(get_session), user_id: int):
     return {"ok": True}
 
 
-@router.get("/user/{user_id}", response_model=UserPublic)
+@router.get("/{user_id}", response_model=UserPublic)
 def api_read_user(*, session: Session = Depends(get_session), user_id: int):
     user = read_user(user_id, session)
     if not user:
@@ -56,9 +56,7 @@ def api_read_user(*, session: Session = Depends(get_session), user_id: int):
     return user
 
 
-@router.post(
-    "/user/signup", response_model=UserPublic, status_code=status.HTTP_201_CREATED
-)
+@router.post("/signup", response_model=UserPublic, status_code=status.HTTP_201_CREATED)
 def api_signup(*, session: Session = Depends(get_session), user: UserSignup):
     try:
         user = signup_user(user, session)
@@ -67,7 +65,7 @@ def api_signup(*, session: Session = Depends(get_session), user: UserSignup):
     return user
 
 
-@router.post("/user/update/{user_id}", response_model=UserPublic)
+@router.post("/update/{user_id}", response_model=UserPublic)
 def api_update_user(
     *, session: Session = Depends(get_session), user_id: int, user: UserUpdate
 ):
@@ -82,6 +80,6 @@ def api_update_user(
     return user
 
 
-@router.post("/user/request_access")
+@router.post("/request_access")
 def api_request_access(form_data: RequestAccessData, background_tasks: BackgroundTasks):
     return send_access_request(form_data, background_tasks)

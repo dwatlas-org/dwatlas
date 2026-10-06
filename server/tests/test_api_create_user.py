@@ -7,10 +7,10 @@ from api.main import app
 from api.user.models import User
 
 
-def test_api_create_user(client: TestClient, user_data: dict[str, str]):
+def test_api_create_user(client: TestClient, user_data: dict[str, str], basepath: str):
     pre = datetime.datetime.now(datetime.UTC)
     response = client.post(
-        "/user/",
+        f"{basepath}/user/",
         json=user_data,
     )
     app.dependency_overrides.clear()
@@ -28,9 +28,11 @@ def test_api_create_user(client: TestClient, user_data: dict[str, str]):
     assert pre < created < post
 
 
-def test_api_create_user_duplicate_email(user: User, password: str, client: TestClient):
+def test_api_create_user_duplicate_email(
+    user: User, password: str, client: TestClient, basepath: str
+):
     response = client.post(
-        "/user/",
+        f"{basepath}/user/",
         json={"email": user.email, "password": password},
     )
     assert response.status_code == status.HTTP_400_BAD_REQUEST

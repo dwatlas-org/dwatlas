@@ -132,9 +132,9 @@ def send_access_request(
     message = EmailMessage()
     message["To"] = settings.REQUEST_ACCESS_TO
     message["From"] = settings.REQUEST_ACCESS_FROM
-    message["Subject"] = f"Request for access by {form_data.full_name}"
+    message["Subject"] = f"Request for access by {form_data.name}"
     message.set_content(
-        f"E-Mail: {form_data.email}\nType of organization / institution: {form_data.organization}\nPurpose of access: {form_data.purpose}"
+        f"E-Mail: {form_data.email}\nType of organization / institution: {form_data.organization}\nPurpose of access: {form_data.bio}"
     )
     background_tasks.add_task(email_service.send, [message])
     return {"message": "Request for access sent"}
