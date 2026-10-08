@@ -33,6 +33,7 @@ const CHART_COLORS: Record<ChartType, string> = {
 
 function formatAxisLabel(value: ReactNode): string {
   if (value == null) return "";
+  if (typeof value === "number") return String(value);
   const text = String(value);
   const date = new Date(text);
   if (Number.isNaN(date.getTime())) {
@@ -43,11 +44,41 @@ function formatAxisLabel(value: ReactNode): string {
     .toLowerCase();
 }
 
+function makeTooltipLabelFormatter(
+  tooltipLabelKey?: string,
+): (value: ReactNode, payload?: readonly unknown[]) => ReactNode {
+  if (!tooltipLabelKey) {
+    return formatAxisLabel;
+  }
+
+  return (value, payload) => {
+    const [item] = payload ?? [];
+    const row =
+      item && typeof item === "object" && "payload" in item
+        ? (item as { payload: unknown }).payload
+        : undefined;
+    const raw =
+      row && typeof row === "object" && tooltipLabelKey in row
+        ? (row as Record<string, unknown>)[tooltipLabelKey]
+        : undefined;
+    return raw != null ? String(raw) : formatAxisLabel(value);
+  };
+}
+
+function coerceNumber(raw: string | number): string | number {
+  if (typeof raw === "number") return raw;
+  if (raw.trim() === "") return raw;
+  const value = Number(raw);
+  return Number.isNaN(value) ? raw : value;
+}
+
 export function PanelChart({
   kind,
   data,
   metricLabel,
   dataKey,
+  xKey = "label",
+  tooltipLabelKey,
   barSeries,
   isLoading = false,
   error = null,
@@ -56,6 +87,8 @@ export function PanelChart({
   data: PanelChartPoint[];
   metricLabel: string;
   dataKey?: string;
+  xKey?: string;
+  tooltipLabelKey?: string;
   barSeries?: BarSeries[];
   isLoading?: boolean;
   error?: string | null;
@@ -70,7 +103,7 @@ export function PanelChart({
           ]),
         )
       : {
-          value: {
+          [valueKey]: {
             label: metricLabel,
             color: CHART_COLORS[kind],
           },
@@ -82,11 +115,18 @@ export function PanelChart({
       ? barSeries.map((series) => series.dataKey)
       : [valueKey];
 
+  const tooltipLabelFormatter = makeTooltipLabelFormatter(tooltipLabelKey);
+
   const chartData = data.map((point) => {
     const next: Record<string, string | number> = { ...point };
     for (const key of seriesKeys) {
       const raw = next[key];
-      next[key] = typeof raw === "number" ? raw : Number(raw);
+      if (raw !== undefined) {
+        next[key] = typeof raw === "number" ? raw : Number(raw);
+      }
+    }
+    if (xKey in next && next[xKey] !== undefined) {
+      next[xKey] = coerceNumber(next[xKey]);
     }
     return next;
   });
@@ -125,7 +165,7 @@ export function PanelChart({
   );
   const xAxis = (
     <XAxis
-      dataKey="label"
+      dataKey={xKey}
       tickLine={false}
       axisLine={false}
       tickMargin={12}
@@ -154,17 +194,17 @@ export function PanelChart({
               content={
                 <ChartTooltipContent
                   className="w-[150px] bg-white text-slate-900 shadow-md border-slate-200"
-                  nameKey="value"
-                  labelFormatter={formatAxisLabel}
+                  nameKey={valueKey}
+                  labelFormatter={tooltipLabelFormatter}
                 />
               }
             />
             <Line
               dataKey={valueKey}
               type="linear"
-              stroke="var(--color-value)"
+              stroke={`var(--color-${valueKey})`}
               strokeWidth={2}
-              dot={{ fill: "var(--color-value)", strokeWidth: 0, r: 4 }}
+              dot={{ fill: `var(--color-${valueKey})`, strokeWidth: 0, r: 4 }}
               activeDot={{ r: 6 }}
             />
           </LineChart>
@@ -185,9 +225,9 @@ export function PanelChart({
                 <ChartTooltipContent
                   className="w-[150px] bg-white text-slate-900 shadow-md border-slate-200"
                   nameKey={
-                    barSeries && barSeries.length > 0 ? undefined : "value"
+                    barSeries && barSeries.length > 0 ? undefined : valueKey
                   }
-                  labelFormatter={formatAxisLabel}
+                  labelFormatter={tooltipLabelFormatter}
                 />
               }
             />
@@ -206,7 +246,7 @@ export function PanelChart({
             ) : (
               <Bar
                 dataKey={valueKey}
-                fill="var(--color-value)"
+                fill={`var(--color-${valueKey})`}
                 radius={[4, 4, 0, 0]}
               />
             )}
@@ -223,12 +263,12 @@ export function PanelChart({
               <linearGradient id="fillValue" x1="0" y1="0" x2="0" y2="1">
                 <stop
                   offset="5%"
-                  stopColor="var(--color-value)"
+                  stopColor={`var(--color-${valueKey})`}
                   stopOpacity={0.8}
                 />
                 <stop
                   offset="95%"
-                  stopColor="var(--color-value)"
+                  stopColor={`var(--color-${valueKey})`}
                   stopOpacity={0.1}
                 />
               </linearGradient>
@@ -242,7 +282,7 @@ export function PanelChart({
                 <ChartTooltipContent
                   className="w-[150px] bg-white text-slate-900 shadow-md border-slate-200"
                   indicator="dot"
-                  labelFormatter={formatAxisLabel}
+                  labelFormatter={tooltipLabelFormatter}
                 />
               }
             />
@@ -250,7 +290,7 @@ export function PanelChart({
               dataKey={valueKey}
               type="natural"
               fill="url(#fillValue)"
-              stroke="var(--color-value)"
+              stroke={`var(--color-${valueKey})`}
             />
             <ChartLegend content={<ChartLegendContent />} />
           </AreaChart>
