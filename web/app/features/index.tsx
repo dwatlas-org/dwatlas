@@ -1,5 +1,4 @@
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { NavLink } from "react-router";
 import {
   ArrowRight,
   Smartphone,
@@ -9,7 +8,7 @@ import {
   LineChart,
   Globe,
 } from "lucide-react";
-import placeholder from "../assets/placeholder.svg";
+import heroWorkers from "../assets/hero-workers.png";
 
 const steps = [
   {
@@ -55,123 +54,146 @@ const steps = [
 export function Index() {
   return (
     <div className="flex min-h-screen w-full flex-col bg-white font-sans">
-      <section className="mx-auto grid grid-cols-1 items-center gap-12 px-20 py-16 lg:grid-cols-2">
-        <div className="flex flex-col gap-6">
-          <span className="text-sm font-bold uppercase tracking-wide text-blue-900">
+      {/* Hero Section */}
+      <section className="mx-auto max-w-7xl w-full px-6 sm:px-8 lg:px-12 py-12 lg:py-16 grid grid-cols-1 items-center gap-10 lg:grid-cols-2">
+        <div className="flex flex-col gap-5">
+          <span className="text-xs font-bold uppercase tracking-wider text-[#1e3a8a]">
             Research dashboard
           </span>
-          <h1 className="font-serif text-5xl font-extrabold leading-tight text-black">
+          <h1 className="font-serif text-4xl sm:text-5xl font-extrabold leading-[1.15] text-slate-900">
             Data and research on app-based delivery workers
           </h1>
-          <p className="text-lg leading-relaxed text-gray-700">
+          <p className="text-base sm:text-lg leading-relaxed text-slate-600">
             Delivery Worker Atlas is a management and research platform for
             app-based delivery workers. This dashboard shows longitudinal data
-            collected directly from workers, from April 2024 to the present.
+            collected directly from workers—from April 2024 to the present.
           </p>
-          <div className="flex gap-4 pt-2">
-            <Button
-              variant="outline"
-              className="border-gray-300 px-6 py-6 font-semibold text-black hover:bg-gray-50"
+          <div className="flex flex-wrap items-center gap-4 pt-2">
+            <NavLink
+              to="/pages/about"
+              className="inline-flex items-center justify-center rounded-md border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-900 shadow-none hover:bg-slate-50 transition-colors no-underline"
             >
               About the research
-            </Button>
-            <Button className="bg-orange-600 px-6 py-6 font-semibold text-white hover:bg-orange-700">
-              View the data <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
+            </NavLink>
+            <NavLink
+              to="/panels"
+              className="inline-flex items-center justify-center gap-2 rounded-md bg-orange-600 px-5 py-2.5 text-sm font-semibold text-white shadow-none hover:bg-orange-700 transition-colors no-underline"
+            >
+              View the data <ArrowRight className="h-4 w-4" />
+            </NavLink>
           </div>
         </div>
 
         <div className="flex w-full items-center justify-center">
           <img
-            src={placeholder}
-            alt="Placeholder image"
-            className="h-auto w-full"
+            src={heroWorkers}
+            alt="Delivery workers"
+            className="h-auto w-full max-w-xl object-contain"
           />
         </div>
       </section>
 
+      {/* KPI Section */}
       <section className="w-full">
-        <Card className="w-full overflow-hidden rounded-none shadow-none">
-          <div className="flex w-full flex-col">
-            <div className="grid w-full grid-cols-1 items-start gap-8 bg-[#112040] px-6 py-8 text-white md:px-12 lg:grid-cols-6">
-              <div className="col-span-1 pt-1 text-sm font-semibold uppercase tracking-widest opacity-90">
-                Sample overview
+        <div className="flex w-full flex-col">
+          {/* Sample Overview */}
+          <div className="w-full bg-[#10203f] text-white">
+            <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12 py-8 flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-10">
+              <div className="w-44 shrink-0 text-xs font-bold uppercase tracking-widest text-slate-300/80 leading-tight">
+                Sample
+                <br />
+                overview
               </div>
-              <div className="col-span-5 grid grid-cols-2 gap-8 md:grid-cols-4">
+              <div className="flex-1 grid grid-cols-2 gap-6 sm:grid-cols-4 lg:gap-8 w-full">
                 <div className="flex flex-col gap-1">
-                  <span className="text-3xl font-bold">366</span>
-                  <span className="text-sm opacity-90">
+                  <span className="text-2xl sm:text-3xl font-bold leading-tight">
+                    366
+                  </span>
+                  <span className="text-xs sm:text-sm text-slate-300 font-normal">
                     Participating workers
                   </span>
                 </div>
                 <div className="flex flex-col gap-1">
-                  <span className="text-3xl font-bold">
-                    Apr 2024 - Jul 2026
+                  <span className="text-2xl sm:text-3xl font-bold leading-tight">
+                    Apr 2024 –<br className="hidden sm:inline" /> Jul 2026
                   </span>
-                  <span className="text-sm opacity-90">Sample period</span>
+                  <span className="text-xs sm:text-sm text-slate-300 font-normal">
+                    Sample period
+                  </span>
                 </div>
                 <div className="flex flex-col gap-1">
-                  <span className="text-3xl font-bold">156</span>
-                  <span className="text-sm opacity-90">Cities</span>
+                  <span className="text-2xl sm:text-3xl font-bold leading-tight">
+                    156
+                  </span>
+                  <span className="text-xs sm:text-sm text-slate-300 font-normal">
+                    Cities
+                  </span>
                 </div>
                 <div className="flex flex-col gap-1">
-                  <span className="text-3xl font-bold">34</span>
-                  <span className="text-sm opacity-90">
+                  <span className="text-2xl sm:text-3xl font-bold leading-tight">
+                    34
+                  </span>
+                  <span className="text-xs sm:text-sm text-slate-300 font-normal">
                     Monitored companies
                   </span>
                 </div>
               </div>
             </div>
+          </div>
 
-            <div className="grid w-full grid-cols-1 items-start gap-8 border-t border-blue-900/50 bg-[#1a365d] px-6 py-8 text-white md:px-12 lg:grid-cols-6">
-              <div className="col-span-1 pt-1 text-sm font-semibold uppercase tracking-widest opacity-90">
-                Work characteristics
+          {/* Work Characteristics */}
+          <div className="w-full border-t border-blue-900/40 bg-[#0c1830] text-white">
+            <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12 py-8 flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-10">
+              <div className="w-44 shrink-0 text-xs font-bold uppercase tracking-widest text-slate-300/80 leading-tight">
+                Work
+                <br />
+                characteristics
               </div>
-              <div className="col-span-5 grid grid-cols-2 gap-8 md:grid-cols-5">
+              <div className="flex-1 grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-5 lg:gap-6 w-full">
                 <div className="flex flex-col gap-1">
-                  <span className="text-3xl font-bold text-yellow-500">
+                  <span className="text-2xl sm:text-3xl font-bold text-[#F5A623] leading-tight">
                     R$915.10
                   </span>
-                  <span className="text-sm opacity-90">
+                  <span className="text-xs sm:text-sm text-slate-300 font-normal">
                     Monthly average net earnings
                   </span>
                 </div>
                 <div className="flex flex-col gap-1">
-                  <span className="text-3xl font-bold text-red-400">
+                  <span className="text-2xl sm:text-3xl font-bold text-[#FF6B6B] leading-tight">
                     R$306.50
                   </span>
-                  <span className="text-sm opacity-90">
+                  <span className="text-xs sm:text-sm text-slate-300 font-normal">
                     Monthly average expenses
                   </span>
                 </div>
                 <div className="flex flex-col gap-1">
-                  <span className="text-3xl font-bold text-violet-400">
+                  <span className="text-2xl sm:text-3xl font-bold text-[#A78BFA] leading-tight">
                     94.7%
                   </span>
-                  <span className="text-sm opacity-90">
+                  <span className="text-xs sm:text-sm text-slate-300 font-normal">
                     Monthly average active days
                   </span>
                 </div>
                 <div className="flex flex-col gap-1">
-                  <span className="text-3xl font-bold text-green-400">
+                  <span className="text-2xl sm:text-3xl font-bold text-[#4EBA6F] leading-tight">
                     77.7%
                   </span>
-                  <span className="text-sm opacity-90">
+                  <span className="text-xs sm:text-sm text-slate-300 font-normal">
                     Monthly average trips
                   </span>
                 </div>
                 <div className="flex flex-col gap-1">
-                  <span className="text-3xl font-bold text-orange-400">
+                  <span className="text-2xl sm:text-3xl font-bold text-[#F2994A] leading-tight">
                     66.2%
                   </span>
-                  <span className="text-sm opacity-90">
+                  <span className="text-xs sm:text-sm text-slate-300 font-normal">
                     Share of monthly gross earnings
                   </span>
                 </div>
               </div>
             </div>
           </div>
-        </Card>
+        </div>
       </section>
 
       <MethodologySection />
@@ -181,13 +203,13 @@ export function Index() {
 
 export function MethodologySection() {
   return (
-    <section className="w-full bg-white px-4 py-16 font-sans md:px-8">
+    <section className="w-full bg-white px-6 sm:px-8 lg:px-12 py-16 font-sans">
       <div className="mx-auto flex max-w-5xl flex-col">
         <div className="mb-12">
-          <h2 className="mb-4 font-serif text-4xl font-extrabold text-black">
+          <h2 className="mb-4 font-serif text-4xl font-extrabold text-slate-900">
             Understand how the data is produced
           </h2>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-slate-600">
             From the worker's record to the public dashboard, this is the
             journey each data point takes.
           </p>
@@ -222,9 +244,12 @@ export function MethodologySection() {
         </div>
 
         <div className="mt-12 flex justify-end">
-          <Button className="rounded-md bg-orange-600 px-6 py-5 text-base font-semibold text-white hover:bg-orange-700">
-            View Methodology <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
+          <NavLink
+            to="/pages/methodology"
+            className="inline-flex items-center justify-center gap-2 rounded-md bg-orange-600 px-6 py-2.5 text-sm font-semibold text-white shadow-none hover:bg-orange-700 transition-colors no-underline"
+          >
+            View Methodology <ArrowRight className="h-4 w-4" />
+          </NavLink>
         </div>
       </div>
     </section>
