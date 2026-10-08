@@ -69,7 +69,10 @@ export function Panel() {
       description={panel.description}
       chartType={panel.chartType ?? "line"}
       metricLabel={panel.metricLabel ?? panel.title}
+      chartTitle={panel.chartTitle}
       dataKey={panel.dataKey}
+      xKey={panel.xKey}
+      tooltipLabelKey={panel.tooltipLabelKey}
       barSeries={panel.barSeries}
     />
   );
@@ -81,7 +84,10 @@ function PanelContent({
   description,
   chartType,
   metricLabel,
+  chartTitle,
   dataKey,
+  xKey,
+  tooltipLabelKey,
   barSeries,
 }: {
   view: PanelView;
@@ -89,7 +95,10 @@ function PanelContent({
   description: string;
   chartType: ChartType;
   metricLabel: string;
+  chartTitle?: string;
   dataKey?: string;
+  xKey?: string;
+  tooltipLabelKey?: string;
   barSeries?: BarSeries[];
 }) {
   const metrics = useMetrics(view, DEFAULT_FILTERS);
@@ -105,7 +114,10 @@ function PanelContent({
             <Chart
               kind={chartType}
               metricLabel={metricLabel}
+              chartTitle={chartTitle}
               dataKey={dataKey}
+              xKey={xKey}
+              tooltipLabelKey={tooltipLabelKey}
               barSeries={barSeries}
               data={chart.data ?? []}
               isLoading={chart.isLoading}
@@ -225,7 +237,10 @@ export function Metrics({
 export function Chart({
   kind = "line",
   metricLabel = "Value",
+  chartTitle,
   dataKey,
+  xKey,
+  tooltipLabelKey,
   barSeries,
   data = [],
   isLoading = false,
@@ -233,7 +248,10 @@ export function Chart({
 }: {
   kind?: ChartType;
   metricLabel?: string;
+  chartTitle?: string;
   dataKey?: string;
+  xKey?: string;
+  tooltipLabelKey?: string;
   barSeries?: BarSeries[];
   data?: PanelChartPoint[];
   isLoading?: boolean;
@@ -252,7 +270,7 @@ export function Chart({
     >
       <CardHeader className="pb-2">
         <CardTitle className="text-lg font-bold text-slate-900">
-          Evolution of {metricLabel.toLowerCase()}
+          {chartTitle ?? `Evolution of ${metricLabel.toLowerCase()}`}
         </CardTitle>
       </CardHeader>
       <CardContent className="px-6 pb-6 pt-2">
@@ -273,6 +291,8 @@ export function Chart({
           data={data}
           metricLabel={metricLabel}
           dataKey={dataKey}
+          xKey={xKey}
+          tooltipLabelKey={tooltipLabelKey}
           barSeries={barSeries}
           isLoading={isLoading}
           error={error}

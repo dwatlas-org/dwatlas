@@ -44,7 +44,10 @@ export type PanelSubItem = {
   view?: PanelView;
   chartType?: ChartType;
   metricLabel?: string;
+  chartTitle?: string;
   dataKey?: string;
+  xKey?: string;
+  tooltipLabelKey?: string;
   barSeries?: BarSeries[];
 };
 
@@ -76,8 +79,11 @@ export const panelGroups: PanelGroup[] = [
         description: "How long delivery workers stay active on the platforms.",
         view: "retention_rate",
         chartType: "bar",
-        metricLabel: "Average Days",
-        dataKey: "average_days",
+        metricLabel: "Users",
+        chartTitle: "Distribution of users by length of stay",
+        dataKey: "user_count",
+        xKey: "upper_limit",
+        tooltipLabelKey: "retention_range",
       },
       {
         slug: "registration-activities",
