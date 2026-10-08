@@ -8,7 +8,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-heading: 'Georgia, Times, "Times New Roman", serif';
+  --font-heading: "DM Sans Variable", sans-serif;
   --font-sans: "DM Sans Variable", sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -75,7 +75,7 @@
   --chart-4: oklch(0.488 0.243 264.376);
   --chart-5: oklch(0.424 0.199 265.638);
   --radius: 0.45rem;
-  --sidebar: oklch(0.985 0 0);
+  --sidebar: oklch(1 0 0);
   --sidebar-foreground: oklch(0.145 0.008 326);
   --sidebar-primary: oklch(0.511 0.262 276.966);
   --sidebar-primary-foreground: oklch(0.962 0.018 272.314);

@@ -1,13 +1,13 @@
 import type { ComponentType } from "react";
 import {
   Briefcase,
+  CheckCircle2,
   Clock,
   DollarSign,
   Globe,
   MapPin,
-  PieChart,
+  Moon,
   Smartphone,
-  Target,
   Users,
 } from "lucide-react";
 
@@ -24,15 +24,18 @@ export type BarSeries = {
 function BrazilIcon({ className }: { className?: string }) {
   return (
     <svg
-      viewBox="0 0 24 24"
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
       fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      xmlns="http://www.w3.org/2000/svg"
       className={className}
     >
-      <path d="M7.5 4c2.2-.8 4.2-.4 6 .5 1.8 1 3 .6 4.5 1.8 1.2 1 2 2.8 1.5 4.5-.4 1.4-1.2 2.2-2 3.5-.8 1.3-1 2.8-.5 4.2.4 1.2-.6 2.5-1.8 3-1.2.5-2.2 0-3-.5-1-.6-1.8-1.5-2.5-2.6-.8-1.2-1.5-2-2.8-2.6-1.2-.6-2-1.5-2.4-2.8-.4-1.3 0-2.8-.2-4.2-.2-1.4-1-2.5-.5-3.8.5-1.2 1.8-1.8 3.7-2z" />
+      <path
+        d="M7.91667 17.1817L9.91667 18.874L12.25 16.5663V15.1817L13.75 14.1048H15.25L16.9167 11.6433V9.64325L18.75 8.10479L18.5833 6.10479L17.25 4.87402H15.25L14.25 3.95095L12.9167 3.64325L11.75 3.95095V3.02787V2.25864L10.9167 1.48941L8.91667 2.25864H7.75V0.874023L5.75 1.18172L5.41667 2.72018L4.08333 2.25864L2.91667 2.56633V4.87402L1.41667 5.33556L0.75 6.41249V7.7971L2.91667 8.41249L3.75 7.7971H4.58333V8.72018L6.09375 10.5663L7.91667 11.3356V13.3356L9.41667 14.1048V15.6433L7.91667 17.1817Z"
+        stroke="currentColor"
+        strokeWidth="1.5"
+      />
     </svg>
   );
 }
@@ -66,7 +69,7 @@ export const panelGroups: PanelGroup[] = [
     items: [
       {
         slug: "temporal-evolution",
-        title: "Temporal Evolution",
+        title: "Temporal evolution",
         description:
           "Variation in the number of regular users of the app over time.",
         view: "temporal_evolution",
@@ -75,7 +78,7 @@ export const panelGroups: PanelGroup[] = [
       },
       {
         slug: "length-of-stay",
-        title: "Length of Stay",
+        title: "Length of stay",
         description: "How long delivery workers stay active on the platforms.",
         view: "retention_rate",
         chartType: "bar",
@@ -87,7 +90,7 @@ export const panelGroups: PanelGroup[] = [
       },
       {
         slug: "registration-activities",
-        title: "Registration Activities",
+        title: "Registration activity",
         description: "Expenses and earnings registered by workers over time.",
         view: "registrations",
         chartType: "bar",
@@ -121,7 +124,7 @@ export const panelGroups: PanelGroup[] = [
     ],
   },
   {
-    title: "Work Characteristics",
+    title: "Work characteristics",
     icon: Briefcase,
     items: [
       {
@@ -142,7 +145,7 @@ export const panelGroups: PanelGroup[] = [
     ],
   },
   {
-    title: "Working Hours",
+    title: "Workday",
     icon: Clock,
     items: [
       {
@@ -163,8 +166,8 @@ export const panelGroups: PanelGroup[] = [
     ],
   },
   {
-    title: "Expense Breakdown",
-    icon: PieChart,
+    title: "Expense breakdown",
+    icon: Moon,
     items: [
       {
         slug: "fuel-energy",
@@ -184,7 +187,7 @@ export const panelGroups: PanelGroup[] = [
     ],
   },
   {
-    title: "Earnings Breakdown",
+    title: "Earnings breakdown",
     icon: Smartphone,
     items: [
       {
@@ -205,7 +208,7 @@ export const panelGroups: PanelGroup[] = [
     ],
   },
   {
-    title: "Net Earnings",
+    title: "Net earnings",
     icon: DollarSign,
     items: [
       {
@@ -226,8 +229,8 @@ export const panelGroups: PanelGroup[] = [
     ],
   },
   {
-    title: "Goals & Targets",
-    icon: Target,
+    title: "Goals",
+    icon: CheckCircle2,
     items: [
       {
         slug: "daily-revenue-goals",
@@ -247,7 +250,7 @@ export const panelGroups: PanelGroup[] = [
     ],
   },
   {
-    title: "Urban Circulation",
+    title: "Urban circulation",
     icon: MapPin,
     items: [
       {
