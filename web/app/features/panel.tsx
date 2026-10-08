@@ -21,6 +21,7 @@ import { useCallback, useState } from "react";
 import { type DateRange } from "react-day-picker";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Spinner } from "@/components/ui/spinner";
 import { PanelChart } from "@/components/panel-chart";
 import { RangeDatePicker } from "@/components/range-date-picker";
 import { useChart, useMetrics } from "@/hooks/use-panel-data";
@@ -224,39 +225,53 @@ export function Metrics({
   }
 
   return (
-    <div
-      aria-busy={isLoading}
-      className={cn(
-        "flex flex-col divide-y divide-slate-100 rounded-lg border border-slate-200 bg-white shadow-sm transition-opacity sm:flex-row sm:divide-y-0 sm:divide-x",
-        isLoading && "opacity-60",
+    <div className="relative">
+      {isLoading && items.length > 0 && (
+        <div
+          aria-busy="true"
+          className="absolute inset-0 z-10 flex items-center justify-center rounded-lg bg-white/60 backdrop-blur-[1px] transition-all"
+        >
+          <div className="flex items-center gap-2 rounded-full bg-white/95 px-3.5 py-1.5 shadow-sm border border-slate-200">
+            <Spinner size="default" className="text-slate-700" />
+            <span className="text-xs font-medium text-slate-600">
+              Updating metrics…
+            </span>
+          </div>
+        </div>
       )}
-    >
-      {isLoading && items.length === 0
-        ? Array.from({ length: 3 }).map((_, i) => (
-            <div
-              key={i}
-              className="flex flex-1 flex-col items-center justify-center p-6 text-center animate-pulse"
-            >
-              <div className="h-10 w-24 rounded bg-slate-200" />
-              <div className="mt-2 h-4 w-32 rounded bg-slate-100" />
-            </div>
-          ))
-        : items.map((item, index) => {
-            const colorClass = METRIC_COLORS[index % METRIC_COLORS.length];
-            return (
+      <div
+        aria-busy={isLoading}
+        className="flex flex-col divide-y divide-slate-100 rounded-lg border border-slate-200 bg-white shadow-sm transition-opacity sm:flex-row sm:divide-y-0 sm:divide-x"
+      >
+        {isLoading && items.length === 0
+          ? Array.from({ length: 4 }).map((_, i) => (
               <div
-                key={item.label || index}
-                className="flex flex-1 flex-col items-center justify-center p-6 text-center"
+                key={i}
+                className="flex flex-1 flex-col items-center justify-center p-6 text-center gap-2"
               >
-                <div className={cn("text-4xl font-extrabold", colorClass)}>
-                  {formatMetricValue(item.label, item.value)}
-                </div>
-                <div className="mt-1 text-xs font-semibold tracking-wider text-slate-500 uppercase">
-                  {item.label}
-                </div>
+                <Spinner size="lg" className="text-slate-400" />
+                <span className="text-xs font-semibold tracking-wider text-slate-400 uppercase">
+                  Loading…
+                </span>
               </div>
-            );
-          })}
+            ))
+          : items.map((item, index) => {
+              const colorClass = METRIC_COLORS[index % METRIC_COLORS.length];
+              return (
+                <div
+                  key={item.label || index}
+                  className="flex flex-1 flex-col items-center justify-center p-6 text-center"
+                >
+                  <div className={cn("text-4xl font-extrabold", colorClass)}>
+                    {formatMetricValue(item.label, item.value)}
+                  </div>
+                  <div className="mt-1 text-xs font-semibold tracking-wider text-slate-500 uppercase">
+                    {item.label}
+                  </div>
+                </div>
+              );
+            })}
+      </div>
     </div>
   );
 }
@@ -288,17 +303,19 @@ export function Chart({
   const ChartKindIcon = chartLabel.icon;
 
   return (
-    <Card
-      aria-busy={isLoading}
-      className={cn(
-        "border-slate-200 bg-white shadow-sm",
-        isLoading && "opacity-60",
-      )}
-    >
+    <Card aria-busy={isLoading} className="border-slate-200 bg-white shadow-sm">
       <CardHeader className="pb-2">
-        <CardTitle className="text-lg font-bold text-slate-900">
-          {chartTitle ?? `Evolution of ${metricLabel.toLowerCase()}`}
-        </CardTitle>
+        <div className="flex items-center justify-between">
+          <CardTitle className="text-lg font-bold text-slate-900">
+            {chartTitle ?? `Evolution of ${metricLabel.toLowerCase()}`}
+          </CardTitle>
+          {isLoading && (
+            <div className="flex items-center gap-1.5 text-xs text-slate-500 font-medium">
+              <Spinner size="sm" className="text-slate-500" />
+              <span>Loading</span>
+            </div>
+          )}
+        </div>
       </CardHeader>
       <CardContent className="px-6 pb-6 pt-2">
         <div className="mb-6 flex items-center justify-between">

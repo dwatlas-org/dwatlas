@@ -21,6 +21,7 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "@/components/ui/chart";
+import { Spinner } from "@/components/ui/spinner";
 import type { PanelChartPoint } from "@/lib/api";
 import type { BarSeries, ChartType } from "@/lib/panels";
 
@@ -133,8 +134,26 @@ export function PanelChart({
 
   if (kind === "map") {
     return (
-      <div className="flex aspect-auto h-[300px] w-full items-center justify-center rounded-lg border border-dashed border-slate-200 bg-slate-50/50 text-sm text-slate-400">
-        {isLoading ? "Loading…" : "Map chart not yet implemented"}
+      <div className="flex aspect-auto h-[300px] w-full flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-slate-200 bg-slate-50/50 text-sm text-slate-500">
+        {isLoading ? (
+          <>
+            <Spinner size="lg" className="text-slate-600" />
+            <span className="text-xs text-slate-400">Loading map data…</span>
+          </>
+        ) : (
+          "Map chart not yet implemented"
+        )}
+      </div>
+    );
+  }
+
+  if (isLoading && data.length === 0) {
+    return (
+      <div className="flex aspect-auto h-[300px] w-full flex-col items-center justify-center gap-3 rounded-lg border border-slate-100 bg-slate-50/50 text-slate-500">
+        <Spinner size="xl" className="text-slate-600" />
+        <span className="text-xs font-medium text-slate-400">
+          Loading chart data…
+        </span>
       </div>
     );
   }
@@ -176,7 +195,18 @@ export function PanelChart({
   );
 
   return (
-    <>
+    <div className="relative">
+      {isLoading && (
+        <div
+          aria-busy="true"
+          className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 rounded-lg bg-white/70 backdrop-blur-[1px] transition-all"
+        >
+          <Spinner size="xl" className="text-slate-700" />
+          <span className="text-xs font-medium text-slate-500">
+            Updating chart…
+          </span>
+        </div>
+      )}
       <ChartContainer
         config={chartConfig}
         className="aspect-auto h-[300px] w-full"
@@ -299,6 +329,6 @@ export function PanelChart({
       {error ? (
         <p className="mt-4 text-center text-sm text-red-600">{error}</p>
       ) : null}
-    </>
+    </div>
   );
 }
