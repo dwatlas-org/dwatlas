@@ -16,7 +16,7 @@ import {
   Info,
   FileText,
 } from "lucide-react";
-import { format } from "date-fns";
+import { endOfDay, format, startOfDay, subMonths } from "date-fns";
 import { useCallback, useState } from "react";
 import { type DateRange } from "react-day-picker";
 
@@ -47,6 +47,20 @@ import {
 } from "react-router";
 
 const DEFAULT_FILTERS: PanelFilters = {};
+
+const DEFAULT_RANGE_MONTHS = 4;
+
+const DEFAULT_RANGE = {
+  from: startOfDay(subMonths(new Date(), DEFAULT_RANGE_MONTHS)),
+  to: endOfDay(new Date()),
+} satisfies { from: Date; to: Date };
+
+function filtersFromRange(range: { from: Date; to: Date }): PanelFilters {
+  return {
+    start_date: format(range.from, "yyyy-MM-dd"),
+    end_date: format(range.to, "yyyy-MM-dd"),
+  };
+}
 
 const CHART_LABELS: Record<
   ChartType,
@@ -105,16 +119,15 @@ function PanelContent({
   tooltipLabelKey?: string;
   barSeries?: BarSeries[];
 }) {
-  const [range, setRange] = useState<DateRange | undefined>(undefined);
-  const [filters, setFilters] = useState<PanelFilters>(DEFAULT_FILTERS);
+  const [range, setRange] = useState<DateRange | undefined>(DEFAULT_RANGE);
+  const [filters, setFilters] = useState<PanelFilters>(() =>
+    filtersFromRange(DEFAULT_RANGE),
+  );
 
   const handleRangeChange = useCallback((next?: DateRange) => {
     setRange(next);
     if (next?.from && next.to) {
-      setFilters({
-        start_date: format(next.from, "yyyy-MM-dd"),
-        end_date: format(next.to, "yyyy-MM-dd"),
-      });
+      setFilters(filtersFromRange({ from: next.from, to: next.to }));
     } else if (!next) {
       setFilters(DEFAULT_FILTERS);
     }
