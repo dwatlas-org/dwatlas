@@ -12,12 +12,9 @@ export type PanelMetrics = {
   metrics: Record<string, number>;
 };
 
-export type PanelChartPoint = {
-  label: string;
-  [key: string]: string | number;
-};
+export type PanelChartPoint = Record<string, string | number>;
 
-const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8000";
+const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8000/api";
 
 async function postPanel<T>(
   path: string,
