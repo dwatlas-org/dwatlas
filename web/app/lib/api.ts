@@ -56,7 +56,7 @@ export function fetchPanelChart(
   return postPanel(`/panels/${view}/charts`, filters, signal);
 }
 
-export async function requestAccess(
+export async function requestAccess<T = unknown>(
   name: string,
   email: string,
   organization: string,
