@@ -13,13 +13,16 @@ import {
   Quote,
   MessageCircle,
   Maximize,
-  Calendar,
   Info,
   FileText,
 } from "lucide-react";
+import { format } from "date-fns";
+import { useCallback, useState } from "react";
+import { type DateRange } from "react-day-picker";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PanelChart } from "@/components/panel-chart";
+import { RangeDatePicker } from "@/components/range-date-picker";
 import { useChart, useMetrics } from "@/hooks/use-panel-data";
 import { cn } from "@/lib/utils";
 import {
@@ -101,8 +104,23 @@ function PanelContent({
   tooltipLabelKey?: string;
   barSeries?: BarSeries[];
 }) {
-  const metrics = useMetrics(view, DEFAULT_FILTERS);
-  const chart = useChart(view, DEFAULT_FILTERS);
+  const [range, setRange] = useState<DateRange | undefined>(undefined);
+  const [filters, setFilters] = useState<PanelFilters>(DEFAULT_FILTERS);
+
+  const handleRangeChange = useCallback((next?: DateRange) => {
+    setRange(next);
+    if (next?.from && next.to) {
+      setFilters({
+        start_date: format(next.from, "yyyy-MM-dd"),
+        end_date: format(next.to, "yyyy-MM-dd"),
+      });
+    } else if (!next) {
+      setFilters(DEFAULT_FILTERS);
+    }
+  }, []);
+
+  const metrics = useMetrics(view, filters);
+  const chart = useChart(view, filters);
 
   return (
     <div className="min-h-screen bg-background p-6">
@@ -126,7 +144,7 @@ function PanelContent({
             <Notes />
           </div>
           <div className="lg:col-span-1">
-            <Filters />
+            <Filters range={range} onRangeChange={handleRangeChange} />
           </div>
         </div>
       </div>
@@ -170,8 +188,26 @@ export function Head({
   );
 }
 
-function formatMetric(value: number | null | undefined): string {
-  return value?.toLocaleString() ?? "0";
+const METRIC_COLORS = [
+  "text-slate-900",
+  "text-fuchsia-600",
+  "text-blue-500",
+  "text-orange-500",
+  "text-emerald-600",
+];
+
+function formatMetricValue(
+  label: string,
+  value: number | null | undefined,
+): string {
+  if (value === null || value === undefined) return "0";
+  const isRate =
+    label.toLowerCase().includes("rate") ||
+    label.toLowerCase().includes("percentage") ||
+    label.includes("%");
+  const formatted =
+    typeof value === "number" ? value.toLocaleString() : String(value);
+  return isRate ? `${formatted}%` : formatted;
 }
 
 export function Metrics({
@@ -181,8 +217,11 @@ export function Metrics({
   metrics?: PanelMetrics | null;
   isLoading?: boolean;
 }) {
-  const { total, average, median, conversion } = metrics?.metrics ?? {};
-  const conversionRate = ((conversion ?? 0) * 100).toFixed(1);
+  const items = metrics?.metrics ?? [];
+
+  if (items.length === 0 && !isLoading) {
+    return null;
+  }
 
   return (
     <div
@@ -192,44 +231,32 @@ export function Metrics({
         isLoading && "opacity-60",
       )}
     >
-      <div className="flex flex-1 flex-col items-center justify-center p-6 text-center">
-        <div className="text-4xl font-extrabold text-slate-900">
-          {formatMetric(total)}
-        </div>
-        <div className="mt-1 text-xs font-semibold tracking-wider text-slate-500 uppercase">
-          Regular Users
-        </div>
-      </div>
-      <div className="flex flex-1 flex-col items-center justify-center p-6 text-center">
-        <div className="text-4xl font-extrabold text-fuchsia-600">
-          {formatMetric(average)}
-        </div>
-        <div className="mt-1 text-xs font-semibold tracking-wider text-slate-500 uppercase">
-          Monthly Average of
-          <br />
-          Regular Users
-        </div>
-      </div>
-      <div className="flex flex-1 flex-col items-center justify-center p-6 text-center">
-        <div className="text-4xl font-extrabold text-blue-500">
-          {formatMetric(median)}
-        </div>
-        <div className="mt-1 text-xs font-semibold tracking-wider text-slate-500 uppercase">
-          Monthly Median of
-          <br />
-          Regular Users
-        </div>
-      </div>
-      <div className="flex flex-1 flex-col items-center justify-center p-6 text-center">
-        <div className="text-4xl font-extrabold text-orange-500">
-          {conversionRate}%
-        </div>
-        <div className="mt-1 text-xs font-semibold tracking-wider text-slate-500 uppercase">
-          Conversion Rate to
-          <br />
-          Regular Users
-        </div>
-      </div>
+      {isLoading && items.length === 0
+        ? Array.from({ length: 3 }).map((_, i) => (
+            <div
+              key={i}
+              className="flex flex-1 flex-col items-center justify-center p-6 text-center animate-pulse"
+            >
+              <div className="h-10 w-24 rounded bg-slate-200" />
+              <div className="mt-2 h-4 w-32 rounded bg-slate-100" />
+            </div>
+          ))
+        : items.map((item, index) => {
+            const colorClass = METRIC_COLORS[index % METRIC_COLORS.length];
+            return (
+              <div
+                key={item.label || index}
+                className="flex flex-1 flex-col items-center justify-center p-6 text-center"
+              >
+                <div className={cn("text-4xl font-extrabold", colorClass)}>
+                  {formatMetricValue(item.label, item.value)}
+                </div>
+                <div className="mt-1 text-xs font-semibold tracking-wider text-slate-500 uppercase">
+                  {item.label}
+                </div>
+              </div>
+            );
+          })}
     </div>
   );
 }
@@ -335,12 +362,21 @@ export function Chart({
   );
 }
 
-export function Filters() {
+export function Filters({
+  range,
+  onRangeChange,
+}: {
+  range?: DateRange;
+  onRangeChange: (next?: DateRange) => void;
+}) {
   return (
     <div className="flex w-full flex-col gap-6 rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
       <div className="flex items-center justify-between pb-2">
         <span className="text-base font-bold text-slate-900">Filters</span>
-        <button className="text-sm font-medium text-slate-500 hover:text-slate-900 hover:underline">
+        <button
+          onClick={() => onRangeChange(undefined)}
+          className="text-sm font-medium text-slate-500 hover:text-slate-900 hover:underline"
+        >
           Clear
         </button>
       </div>
@@ -349,10 +385,7 @@ export function Filters() {
         <label className="text-xs font-bold uppercase tracking-wider text-slate-500">
           Period
         </label>
-        <div className="flex items-center gap-2 rounded-md border border-slate-200 bg-slate-50/50 px-3 py-2 text-sm text-slate-900">
-          <Calendar className="h-4 w-4 text-slate-500" />
-          <span>01/05/2024 — 30/06/2026</span>
-        </div>
+        <RangeDatePicker value={range} onChange={onRangeChange} />
       </div>
 
       <div className="flex flex-col gap-3">

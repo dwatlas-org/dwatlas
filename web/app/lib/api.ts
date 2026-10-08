@@ -8,8 +8,13 @@ export type PanelFilters = {
   state?: string;
 };
 
+export type PanelMetricItem = {
+  label: string;
+  value: number;
+};
+
 export type PanelMetrics = {
-  metrics: Record<string, number>;
+  metrics: PanelMetricItem[];
 };
 
 export type PanelChartPoint = Record<string, string | number>;

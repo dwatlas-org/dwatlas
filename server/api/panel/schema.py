@@ -19,7 +19,7 @@ class PanelFilter(BaseModel):
 
 
 class MetricsResponse(BaseModel):
-    metrics: dict[str, Any]
+    metrics: list[dict[str, Any]]
 
 
 class TemporalEvolutionChartData(BaseModel):
