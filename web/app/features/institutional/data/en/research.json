@@ -1,0 +1,133 @@
+{
+  "hero": {
+    "kicker": "Research",
+    "title": "Projects and Outputs",
+    "description": "Delivery Worker Atlas operates as a shared infrastructure for research on platform work. We bring together and produce data, methods, and tools in collaboration with workers, researchers, and partner organizations, contributing to public debate on mobility, working conditions, data justice, and the future of work in cities."
+  },
+  "projects": [
+    {
+      "id": "territorialization-platforms-brazil",
+      "title": "Territorialization of platforms and de-/re-territorialization of workers in Brazil",
+      "description": "This research investigates how app-based delivery work is distributed across urban space through the analysis of geolocation, earnings, and working-condition data, seeking to understand circulation patterns, areas of greater activity, and territorial inequalities.",
+      "tags": [
+        "Urban mobility",
+        "Geodata",
+        "Delivery workers",
+        "Urban inequality",
+        "Public policy"
+      ],
+      "imageRef": "/institutional/research/research-placeholder.jpg",
+      "imageAlt": "Map of delivery activity intensity in Rio de Janeiro",
+      "details": {
+        "people": [
+          {
+            "name": "Igor Viana",
+            "role": "Coordination"
+          },
+          {
+            "name": "Lalita Kraus",
+            "role": "Supervision"
+          }
+        ],
+        "period": {
+          "start": "2024-04",
+          "end": "2026-09",
+          "label": "April 2024 – September 2026"
+        },
+        "institutions": [
+          "Federal University of Rio de Janeiro (UFRJ)",
+          "Martin Luther University Halle-Wittenberg (MLU)"
+        ],
+        "funding": [
+          "CAPES (cotutelle doctoral scholarship)",
+          "FAPERJ (research support)"
+        ],
+        "contributionTitle": "Contribution to Delivery Worker Atlas",
+        "contribution": [
+          "This research contributes to Delivery Worker Atlas by producing and analyzing geolocation, earnings, and working-condition data from delivery workers, expanding understanding of circulation patterns and the territorial inequalities of platform work in Brazil.",
+          "The results feed the DWA database, support the development of visualizations and territorial analysis methodologies, and strengthen the use of worker-generated data as a tool for research, advocacy, and data justice."
+        ]
+      },
+      "outputs": []
+    },
+    {
+      "id": "platform-work-economy",
+      "title": "The economics of platform work: earnings, costs, and sustainability",
+      "description": "This project analyzes the economic dynamics of delivery work across different platforms using data collected by Delivery Worker Atlas. The research seeks to understand remuneration patterns, the main operating costs, and the factors that affect the long-term sustainability of this activity.",
+      "tags": [
+        "Economics of work",
+        "Earnings and costs",
+        "Digital platforms",
+        "Sustainability",
+        "App-based work"
+      ],
+      "imageRef": "/institutional/research/research-placeholder.jpg",
+      "imageAlt": "Delivery worker using a navigation app on a motorcycle",
+      "details": null,
+      "outputs": [
+        {
+          "type": "Article",
+          "title": "Earnings, expenses and working time of app-based delivery workers in Brazil",
+          "authors": "Viana, I.; Kraus, L.",
+          "year": 2025,
+          "actionLabel": "View publication",
+          "url": null
+        },
+        {
+          "type": "Report",
+          "title": "Working conditions and activity costs of app-based delivery in Brazil",
+          "authors": "Viana, I.",
+          "year": 2024,
+          "actionLabel": "View report",
+          "url": null
+        },
+        {
+          "type": "Presentation",
+          "title": "What the data reveal: earnings, costs, and working time of delivery workers",
+          "authors": "Viana, I.",
+          "year": 2024,
+          "actionLabel": "View presentation",
+          "url": null
+        },
+        {
+          "type": "Dataset",
+          "title": "Delivery worker earnings and expenses data (2024)",
+          "authors": "Delivery Worker Atlas",
+          "year": 2024,
+          "actionLabel": "View dataset",
+          "url": null
+        },
+        {
+          "type": "Working paper",
+          "title": "Platform work, income instability and everyday survival strategies",
+          "authors": "Viana, I.",
+          "year": 2025,
+          "actionLabel": "View working paper",
+          "url": null
+        }
+      ]
+    },
+    {
+      "id": "data-rights-organization",
+      "title": "Data, rights, and organization: technology for workers",
+      "description": "This research explores how data produced by workers themselves can contribute to rights advocacy, collective organization, and the construction of fairer technological alternatives. Drawing on Meu Corre and other Delivery Worker Atlas tools, the project investigates data justice practices, data governance, and forms of collaboration among workers, researchers, and civil society.",
+      "tags": [
+        "Data justice",
+        "Worker organization",
+        "Social technology",
+        "Digital rights",
+        "Cooperativism"
+      ],
+      "imageRef": "/institutional/research/research-placeholder.jpg",
+      "imageAlt": "Delivery workers and a sign about decent work on platforms",
+      "details": null,
+      "outputs": []
+    }
+  ],
+  "sourceNotes": {
+    "detailsNotShown": [
+      "Detailed information for the second and third projects is not visible in the supplied design images.",
+      "Outputs for the first and third projects are not visible in the supplied design images."
+    ]
+  }
+}

@@ -25,12 +25,11 @@ def mock_db():
 def mock_repo():
     repo = MagicMock(spec=PanelRepository)
     repo.fetch_metrics = AsyncMock(
-        return_value={
-            "total": 200,
-            "average": 14.5,
-            "median": 16.0,
-            "conversion": 0.134,
-        }
+        return_value=[
+            {"label": "Monthly average of regular users", "value": 14.5},
+            {"label": "Monthly median of regular users", "value": 16.0},
+            {"label": "Conversion rate to regular users", "value": 13.4},
+        ]
     )
     repo.fetch_chart = AsyncMock(
         return_value=[
@@ -46,12 +45,11 @@ def mock_service():
     service = MagicMock(spec=PanelService)
     service.get_metrics = AsyncMock(
         return_value={
-            "metrics": {
-                "total": 200,
-                "average": 14.5,
-                "median": 16.0,
-                "conversion": 0.134,
-            }
+            "metrics": [
+                {"label": "Monthly average of regular users", "value": 14.5},
+                {"label": "Monthly median of regular users", "value": 16.0},
+                {"label": "Conversion rate to regular users", "value": 13.4},
+            ]
         }
     )
     service.get_chart = AsyncMock(
@@ -83,23 +81,23 @@ def test_build_function_call_without_filters():
 
 @pytest.mark.asyncio
 async def test_repository_fetch_metrics(mock_db):
-    mock_db.fetchrow.return_value = {
-        "total": 200,
-        "average": 14.5,
-        "median": 16.0,
-        "conversion": 0.134,
-    }
+    mock_db.fetch.return_value = [
+        {"label": "Monthly average of regular users", "value": 14.5},
+        {"label": "Monthly median of regular users", "value": 16.0},
+        {"label": "Conversion rate to regular users", "value": 13.4},
+    ]
     repo = get_panel_repository(db=mock_db)
 
     filters = PanelFilter(state="SP")
     result = await repo.fetch_metrics(AllowedView.temporal_evolution, filters)
 
-    assert result["total"] == 200
+    assert len(result) == 3
+    assert result[0]["label"] == "Monthly average of regular users"
     assert (
-        mock_db.fetchrow.call_args[0][0]
+        mock_db.fetch.call_args[0][0]
         == "SELECT * FROM temporal_evolution_metrics(state => $1)"
     )
-    assert mock_db.fetchrow.call_args[0][1] == "SP"
+    assert mock_db.fetch.call_args[0][1] == "SP"
 
 
 @pytest.mark.asyncio
@@ -122,8 +120,9 @@ async def test_service_get_metrics(mock_repo):
 
     result = await service.get_metrics(AllowedView.temporal_evolution, PanelFilter())
 
-    assert result.metrics["total"] == 200
-    assert result.metrics["average"] == 14.5
+    assert len(result.metrics) == 3
+    assert result.metrics[0]["label"] == "Monthly average of regular users"
+    assert result.metrics[0]["value"] == 14.5
     mock_repo.fetch_metrics.assert_called_once_with(
         AllowedView.temporal_evolution, PanelFilter()
     )
@@ -167,8 +166,11 @@ async def test_read_metrics_route(mock_service):
 
     assert response.status_code == 200
     data = response.json()
-    assert data["metrics"]["total"] == 200
-    assert data["metrics"]["conversion"] == 0.134
+    assert len(data["metrics"]) == 3
+    assert data["metrics"][0] == {
+        "label": "Monthly average of regular users",
+        "value": 14.5,
+    }
     app.dependency_overrides.clear()
 
 

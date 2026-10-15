@@ -38,11 +38,11 @@ import { cn } from "@/lib/utils";
 import { getGroupFirstPanelSlug, panelGroups } from "@/lib/panels";
 
 const footerLinks = [
-  { title: "About Us", url: "#" },
+  { title: "About us", url: "#" },
   { title: "Research", url: "#" },
   { title: "Methodology", url: "#" },
-  { title: "Data Tree", url: "#" },
-  { title: "Analytics", url: "#" },
+  { title: "Data dictionary", url: "#" },
+  { title: "Analysis", url: "#" },
   { title: "Glossary", url: "#" },
   { title: "FAQ", url: "#" },
   { title: "Contact", url: "#" },
@@ -134,7 +134,7 @@ export function MainNav({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 render={
                   <NavLink
                     to="#"
-                    aria-label="Saved Views"
+                    aria-label="Saved Visualisations"
                     className="relative flex size-10 items-center justify-center rounded-lg text-slate-800 transition-colors hover:bg-slate-100"
                   >
                     <Bookmark className="size-6" />
@@ -142,7 +142,9 @@ export function MainNav({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   </NavLink>
                 }
               />
-              <TooltipContent side="right">Saved Views (1)</TooltipContent>
+              <TooltipContent side="right">
+                Saved Visualisations (1)
+              </TooltipContent>
             </Tooltip>
 
             {panelGroups.map((item) => {
@@ -250,7 +252,9 @@ export function MainNav({ ...props }: React.ComponentProps<typeof Sidebar>) {
               <SidebarMenuItem>
                 <SidebarMenuButton className="h-10 px-3 font-semibold text-slate-900 hover:bg-slate-100">
                   <Bookmark className="size-5 shrink-0 text-slate-900" />
-                  <span className="text-sm font-semibold">Saved Views</span>
+                  <span className="text-sm font-semibold">
+                    Saved Visualisations
+                  </span>
                   <span className="ml-auto flex h-5 min-w-5 items-center justify-center rounded-full bg-orange-100 px-1.5 text-xs font-bold text-orange-600">
                     1
                   </span>
@@ -259,7 +263,7 @@ export function MainNav({ ...props }: React.ComponentProps<typeof Sidebar>) {
             </SidebarMenu>
 
             <div className="mb-1 mt-4 px-3 text-xs font-bold uppercase tracking-wider text-slate-400">
-              DATA PANEL
+              DATA DASHBOARD
             </div>
 
             <SidebarMenu className="gap-0.5">
@@ -282,7 +286,7 @@ export function MainNav({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     <ChevronDown className="ml-auto size-4 text-slate-500 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-180" />
                   </CollapsibleTrigger>
                   <CollapsibleContent>
-                    <div className="flex flex-col py-1 pl-7 pr-2">
+                    <div className="flex flex-col py-1 pl-8 pr-2">
                       {item.items.map((subItem) =>
                         subItem.view ? (
                           <NavLink
@@ -290,23 +294,21 @@ export function MainNav({ ...props }: React.ComponentProps<typeof Sidebar>) {
                             to={`/panels/${subItem.slug}`}
                             className={({ isActive }) =>
                               cn(
-                                "flex items-center gap-2 rounded-md py-1.5 text-sm font-medium transition-colors",
+                                "flex items-center rounded-md py-1.5 px-2 text-sm transition-colors",
                                 isActive
-                                  ? "bg-blue-50 text-blue-600"
-                                  : "text-slate-600 hover:text-blue-600",
+                                  ? "font-semibold text-slate-900"
+                                  : "font-normal text-slate-600 hover:text-slate-900 hover:bg-slate-50",
                               )
                             }
                           >
-                            <span className="text-slate-400">↳</span>
                             <span>{subItem.title}</span>
                           </NavLink>
                         ) : (
                           <span
                             key={subItem.slug}
                             aria-disabled="true"
-                            className="flex cursor-not-allowed items-center gap-2 py-1.5 text-sm font-medium text-slate-300"
+                            className="flex cursor-not-allowed items-center rounded-md py-1.5 px-2 text-sm font-normal text-slate-300"
                           >
-                            <span className="text-slate-300">↳</span>
                             <span>{subItem.title}</span>
                           </span>
                         ),
@@ -319,44 +321,44 @@ export function MainNav({ ...props }: React.ComponentProps<typeof Sidebar>) {
           </SidebarContent>
 
           <SidebarFooter className="bg-slate-950 p-4 text-white">
-            <Collapsible className="group/footer">
-              <div className="flex items-center justify-between rounded-md p-1 transition-colors hover:bg-slate-800">
+            <Collapsible defaultOpen={false} className="group/footer">
+              <div className="flex items-center justify-between rounded-md p-1 transition-colors hover:bg-slate-900">
                 <a href="#profile" className="flex flex-1 items-center gap-2.5">
-                  <CircleUser className="size-6 text-white" />
-                  <span className="text-base font-bold text-white">
-                    Profile
-                  </span>
+                  <CircleUser className="size-5 text-white" />
+                  <span className="text-sm font-bold text-white">Profile</span>
                 </a>
 
                 <CollapsibleTrigger>
                   <button
                     type="button"
                     aria-label="Toggle Footer Navigation"
-                    className="-mr-1 flex items-center justify-center rounded-md p-1 transition-colors hover:bg-slate-800"
+                    className="-mr-1 flex items-center justify-center rounded-md p-1 transition-colors hover:bg-slate-900"
                   >
-                    <ChevronDown className="size-5 text-white transition-transform duration-200 group-data-[state=open]/footer:rotate-180" />
+                    <ChevronRight className="size-4 text-white transition-transform duration-200 group-data-[state=open]/footer:rotate-90" />
                   </button>
                 </CollapsibleTrigger>
               </div>
 
               <CollapsibleContent>
-                <div className="mt-2 flex items-center justify-between px-1">
-                  <span className="text-sm font-bold text-white">Language</span>
+                <div className="mt-3 flex items-center justify-between px-1">
+                  <span className="text-xs font-medium text-slate-400">
+                    Language
+                  </span>
                   <button
                     type="button"
-                    className="flex items-center gap-1.5 rounded-lg bg-slate-200 px-3 py-1 text-xs font-bold text-slate-900 transition-colors hover:bg-white"
+                    className="flex items-center gap-1.5 rounded-md bg-slate-200 px-2.5 py-1 text-xs font-bold text-slate-900 transition-colors hover:bg-white"
                   >
-                    <span>EN-US</span>
+                    <span>EN-GB</span>
                     <ChevronDown className="size-3.5" />
                   </button>
                 </div>
 
-                <div className="mb-1 mt-3 flex flex-col gap-2.5 px-1 pb-1">
+                <div className="mb-1 mt-3 flex flex-col gap-2 px-1 pb-1">
                   {footerLinks.map((link) => (
                     <a
                       key={link.title}
                       href={link.url}
-                      className="text-sm font-bold text-slate-300 transition-colors hover:text-white"
+                      className="text-xs font-normal text-slate-400 transition-colors hover:text-white"
                     >
                       {link.title}
                     </a>

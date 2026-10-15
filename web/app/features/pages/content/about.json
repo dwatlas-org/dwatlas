@@ -1,0 +1,164 @@
+{
+  "hero": {
+    "kicker": "About us",
+    "title": "Our Network",
+    "description": "Delivery Worker Atlas is built by a network of work and collaboration. We bring together people with different trajectories, institutions, and areas of expertise who, in complementary ways, help produce, analyze, and share data on app-based delivery work in Brazil. Our network includes researchers, developers, designers, activists, and institutional partners who believe in the use of data as a tool to strengthen workers and broaden public debate on the future of work."
+  },
+  "sections": {
+    "currentContributors": {
+      "title": "Who is contributing",
+      "people": [
+        {
+          "id": "igor-vecchia",
+          "name": "Igor Vecchia",
+          "role": "Coordination and research",
+          "affiliation": "Martin Luther University Halle-Wittenberg / UFRJ",
+          "description": "Geographer and doctoral researcher studying platform delivery work and its relationship with the production of urban space.",
+          "email": "igor@dwatlas.org",
+          "imageRef": "/institutional/avatars/avatar-01.png",
+          "contributions": "Overall project coordination, research development, data analysis, development of data-collection and visualization methodologies, coordination with institutional partners, production of texts and reports, and organization of events and debates."
+        },
+        {
+          "id": "quinn",
+          "name": "Quinn",
+          "role": "Research and data",
+          "affiliation": "Independent researcher",
+          "description": "Research on platform work, data justice, and participatory methodologies.",
+          "email": "quinn@dwatlas.org",
+          "imageRef": "/institutional/avatars/avatar-01.png",
+          "contributions": null
+        },
+        {
+          "id": "daniel",
+          "name": "Daniel",
+          "role": "Software development",
+          "affiliation": "Independent developer",
+          "description": "Software developer with experience in web applications and data visualization.",
+          "email": "daniel@dwatlas.org",
+          "imageRef": "/institutional/avatars/avatar-01.png",
+          "contributions": null
+        },
+        {
+          "id": "ian",
+          "name": "Ian",
+          "role": "Software development",
+          "affiliation": "Independent developer",
+          "description": "Developer with experience in web applications, geospatial data, and visualization.",
+          "email": "ian@dwatlas.org",
+          "imageRef": "/institutional/avatars/avatar-01.png",
+          "contributions": null
+        },
+        {
+          "id": "ux-design-placeholder",
+          "name": "Person name",
+          "role": "UX and design",
+          "affiliation": "Institution / independent work",
+          "description": "Brief description of trajectory and experience relevant to the project.",
+          "email": "nome@dwatlas.org",
+          "imageRef": "/institutional/avatars/avatar-01.png",
+          "contributions": null,
+          "placeholder": true
+        },
+        {
+          "id": "research-placeholder",
+          "name": "Person name",
+          "role": "Research",
+          "affiliation": "Institution / independent work",
+          "description": "Brief description of trajectory and experience relevant to the project.",
+          "email": "nome@dwatlas.org",
+          "imageRef": "/institutional/avatars/avatar-01.png",
+          "contributions": null,
+          "placeholder": true
+        }
+      ]
+    },
+    "pastContributors": {
+      "title": "Who has already contributed",
+      "people": [
+        {
+          "id": "past-research-placeholder",
+          "name": "Person name",
+          "role": "Research",
+          "affiliation": "Institution / independent work",
+          "description": "Brief description of trajectory and experience relevant to the project.",
+          "email": "nome@dwatlas.org",
+          "imageRef": "/institutional/avatars/avatar-01.png",
+          "contributions": null,
+          "placeholder": true
+        },
+        {
+          "id": "past-development-placeholder",
+          "name": "Person name",
+          "role": "Development",
+          "affiliation": "Institution / independent work",
+          "description": "Brief description of trajectory and experience relevant to the project.",
+          "email": "nome@dwatlas.org",
+          "imageRef": "/institutional/avatars/avatar-01.png",
+          "contributions": null,
+          "placeholder": true
+        },
+        {
+          "id": "past-community-placeholder",
+          "name": "Person name",
+          "role": "Community support",
+          "affiliation": "Institution / independent work",
+          "description": "Brief description of trajectory and experience relevant to the project.",
+          "email": "nome@dwatlas.org",
+          "imageRef": "/institutional/avatars/avatar-01.png",
+          "contributions": null,
+          "placeholder": true
+        }
+      ]
+    },
+    "institutions": {
+      "title": "Institutions involved",
+      "items": [
+        {
+          "name": "Federal University of Rio de Janeiro (UFRJ)",
+          "logoRef": "/institutional/logos/ufrj.png",
+          "url": "https://ufrj.br/"
+        },
+        {
+          "name": "Martin Luther University Halle-Wittenberg (MLU)",
+          "logoRef": "/institutional/logos/mlu.png",
+          "url": "https://www.uni-halle.de/"
+        },
+        {
+          "name": "Institute for Research and Urban and Regional Planning (IPPUR/UFRJ)",
+          "logoRef": "/institutional/logos/ippur.png",
+          "url": "https://ippur.ufrj.br/"
+        }
+      ]
+    },
+    "funding": {
+      "title": "Funding",
+      "items": [
+        {
+          "name": "Prototype Fund",
+          "logoRef": "/institutional/logos/prototype-fund.png",
+          "url": "https://prototypefund.de/"
+        },
+        {
+          "name": "CNPq",
+          "logoRef": "/institutional/logos/cnpq.png",
+          "url": "https://www.gov.br/cnpq/pt-br"
+        },
+        {
+          "name": "AMOBITEC",
+          "logoRef": "/institutional/logos/amobitec.png",
+          "url": "https://amobitec.org/"
+        },
+        {
+          "name": "CEBRAP",
+          "logoRef": "/institutional/logos/cebrap.png",
+          "url": "https://cebrap.org.br/"
+        },
+        {
+          "name": "International Labour Organization",
+          "logoRef": "/institutional/logos/ilo.png",
+          "url": "https://www.ilo.org/"
+        }
+      ]
+    }
+  }
+}

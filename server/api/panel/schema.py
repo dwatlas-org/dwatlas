@@ -19,7 +19,7 @@ class PanelFilter(BaseModel):
 
 
 class MetricsResponse(BaseModel):
-    metrics: dict[str, Any]
+    metrics: list[dict[str, Any]]
 
 
 class TemporalEvolutionChartData(BaseModel):
@@ -28,8 +28,11 @@ class TemporalEvolutionChartData(BaseModel):
 
 
 class RetentionRateChartData(BaseModel):
-    label: Any
-    average_days: Any
+    retention_range: str
+    lower_limit: int
+    upper_limit: int
+    user_count: int
+    user_percentage: float
 
 
 class RegistrationsChartData(BaseModel):

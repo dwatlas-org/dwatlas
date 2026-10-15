@@ -8,14 +8,16 @@ export type PanelFilters = {
   state?: string;
 };
 
-export type PanelMetrics = {
-  metrics: Record<string, number>;
+export type PanelMetricItem = {
+  label: string;
+  value: number;
 };
 
-export type PanelChartPoint = {
-  label: string;
-  [key: string]: string | number;
+export type PanelMetrics = {
+  metrics: PanelMetricItem[];
 };
+
+export type PanelChartPoint = Record<string, string | number>;
 
 const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8000/api";
 
@@ -54,7 +56,7 @@ export function fetchPanelChart(
   return postPanel(`/panels/${view}/charts`, filters, signal);
 }
 
-export async function requestAccess<T>(
+export async function requestAccess<T = unknown>(
   name: string,
   email: string,
   organization: string,

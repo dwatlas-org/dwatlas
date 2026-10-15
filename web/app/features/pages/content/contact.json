@@ -1,0 +1,62 @@
+{
+  "hero": {
+    "kicker": "Get in touch",
+    "title": "Contact",
+    "description": "Do you have a question, found a problem in the data, or want to talk about research, partnership, or collaboration? Get in touch with the Delivery Worker Atlas team."
+  },
+  "form": {
+    "title": "Send us a message",
+    "fields": [
+      {
+        "id": "name",
+        "label": "Name",
+        "type": "text",
+        "placeholder": "Your full name",
+        "required": true
+      },
+      {
+        "id": "email",
+        "label": "Email",
+        "type": "email",
+        "placeholder": "your@email.com",
+        "required": true
+      },
+      {
+        "id": "organization",
+        "label": "Institution or organization",
+        "optionalLabel": "optional",
+        "type": "text",
+        "placeholder": "University, NGO, company, etc.",
+        "required": false
+      },
+      {
+        "id": "subject",
+        "label": "Subject",
+        "type": "select",
+        "placeholder": "Select an option",
+        "required": true,
+        "options": [
+          "General question",
+          "Data and methodology",
+          "Platform worker",
+          "Research or collaboration",
+          "Press",
+          "Problem or correction in the data",
+          "Suggestion for DWA",
+          "Other"
+        ]
+      },
+      {
+        "id": "message",
+        "label": "Message",
+        "type": "textarea",
+        "placeholder": "Write your message here...",
+        "required": true
+      }
+    ],
+    "submitLabel": "Send message",
+    "privacyText": "We will use your contact information only to respond to your message. To learn more, see our Privacy Policy.",
+    "privacyLinkLabel": "Privacy Policy",
+    "privacyLinkTarget": "privacy-policy"
+  }
+}

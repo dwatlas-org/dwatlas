@@ -5,106 +5,126 @@ export function TopbarLayout() {
   return (
     <>
       <div className="typeset typeset-docs">
-        <header className="w-full bg-[#F0F0F0]">
-          <div className="max-w-7xl mx-auto px-6 h-15 flex items-center justify-between">
+        <header className="w-full bg-white border-b border-slate-100">
+          <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 h-18 flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <a
-                href="/"
-                className="no-underline text-xl font-bold tracking-tight text-stone-900"
+              <NavLink
+                to="/"
+                className="no-underline text-xl font-bold tracking-tight text-slate-900"
               >
                 DeliveryWorker
                 <span className="text-orange-500 font-bold">Atlas</span>
-              </a>
+              </NavLink>
             </div>
 
-            <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-[#264370]">
+            <nav className="hidden lg:flex items-center gap-7 text-sm font-semibold text-[#1e3a8a]">
               <NavLink
-                to="/"
-                className={cn(
-                  ({ isActive }: { isActive: boolean }) =>
-                    isActive ? "font-bold" : "",
-                  "no-underline",
-                )}
+                to="/pages/about"
+                className={({ isActive }) =>
+                  cn(
+                    "no-underline transition-colors hover:text-slate-900",
+                    isActive ? "text-slate-900 font-bold" : "text-[#1e3a8a]",
+                  )
+                }
               >
-                Home
+                About us
               </NavLink>
               <NavLink
-                to="/panels"
-                className={cn(
-                  ({ isActive }: { isActive: boolean }) =>
-                    isActive ? "font-bold" : "",
-                  "no-underline",
-                )}
+                to="/pages/researches"
+                className={({ isActive }) =>
+                  cn(
+                    "no-underline transition-colors hover:text-slate-900",
+                    isActive ? "text-slate-900 font-bold" : "text-[#1e3a8a]",
+                  )
+                }
               >
-                Data Panels
+                Research
               </NavLink>
               <NavLink
-                to="/about"
-                className={cn(
-                  ({ isActive }: { isActive: boolean }) =>
-                    isActive ? "font-bold" : "",
-                  "no-underline",
-                )}
+                to="/pages/methodology"
+                className={({ isActive }) =>
+                  cn(
+                    "no-underline transition-colors hover:text-slate-900",
+                    isActive ? "text-slate-900 font-bold" : "text-[#1e3a8a]",
+                  )
+                }
               >
-                About
+                Methodology
               </NavLink>
               <NavLink
-                to="/register"
-                className={cn(
-                  ({ isActive }: { isActive: boolean }) =>
-                    isActive ? "font-bold" : "",
-                  "no-underline",
-                )}
+                to="/pages/data-tree"
+                className={({ isActive }) =>
+                  cn(
+                    "no-underline transition-colors hover:text-slate-900",
+                    isActive ? "text-slate-900 font-bold" : "text-[#1e3a8a]",
+                  )
+                }
               >
-                Register
+                Data tree
               </NavLink>
               <NavLink
-                to="/login"
-                className={cn(
-                  ({ isActive }: { isActive: boolean }) =>
-                    isActive ? "font-bold" : "",
-                  "no-underline",
-                )}
+                to="/pages/analyses"
+                className={({ isActive }) =>
+                  cn(
+                    "no-underline transition-colors hover:text-slate-900",
+                    isActive ? "text-slate-900 font-bold" : "text-[#1e3a8a]",
+                  )
+                }
               >
-                Login
+                Analyses
               </NavLink>
               <NavLink
-                to="/signup"
-                className={cn(
-                  ({ isActive }: { isActive: boolean }) =>
-                    isActive ? "font-bold" : "",
-                  "no-underline",
-                )}
+                to="/pages/glossary"
+                className={({ isActive }) =>
+                  cn(
+                    "no-underline transition-colors hover:text-slate-900",
+                    isActive ? "text-slate-900 font-bold" : "text-[#1e3a8a]",
+                  )
+                }
               >
-                Sign Up
+                Glossary
               </NavLink>
-              {/*<a href="#" className="hover:text-[#264370]-900 transition-colors">Sobre nós</a>
-            <a href="#" className="hover:text-blue-900 transition-colors">Pesquisas</a>
-            <a href="#" className="hover:text-blue-900 transition-colors">Metodologia</a>
-            <a href="#" className="hover:text-blue-900 transition-colors">Árvore de dados</a>
-            <a href="#" className="hover:text-blue-900 transition-colors">Análises</a>
-            <a href="#" className="hover:text-blue-900 transition-colors">Glossário</a>
-            <a href="#" className="hover:text-blue-900 transition-colors">FAQ</a>
-            <a href="#" className="hover:text-blue-900 transition-colors">Contato</a>*/}
+              <NavLink
+                to="/pages/faq"
+                className={({ isActive }) =>
+                  cn(
+                    "no-underline transition-colors hover:text-slate-900",
+                    isActive ? "text-slate-900 font-bold" : "text-[#1e3a8a]",
+                  )
+                }
+              >
+                FAQ
+              </NavLink>
+              <NavLink
+                to="/pages/contact"
+                className={({ isActive }) =>
+                  cn(
+                    "no-underline transition-colors hover:text-slate-900",
+                    isActive ? "text-slate-900 font-bold" : "text-[#1e3a8a]",
+                  )
+                }
+              >
+                Contact
+              </NavLink>
             </nav>
 
             <div className="flex items-center gap-4">
               <div className="relative">
-                <select className="appearance-none bg-stone-100 border border-stone-200 text-stone-700 text-xs font-medium rounded-md py-1.5 pl-3 pr-8 focus:outline-none focus:ring-1 focus:ring-stone-400 cursor-pointer">
-                  <option>PT-BR</option>
-                  <option>EN</option>
+                <select className="appearance-none bg-slate-100 hover:bg-slate-200/80 border border-slate-200 text-slate-800 text-xs font-bold rounded-md py-1.5 pl-3 pr-7 focus:outline-none focus:ring-1 focus:ring-slate-400 cursor-pointer transition-colors">
+                  <option value="EN-GB">EN-GB</option>
+                  <option value="PT-BR">PT-BR</option>
                 </select>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-stone-500">
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-600">
                   <svg
-                    className="w-3 h-3"
+                    className="w-3.5 h-3.5"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2.5"
                       d="M19 9l-7 7-7-7"
                     />
                   </svg>

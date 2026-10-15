@@ -1,0 +1,97 @@
+{
+  "hero": {
+    "kicker": "From record to visualization",
+    "title": "Data Tree",
+    "description": "This page presents the organization, provenance, and processing of the data used in Delivery Worker Atlas. The data tree visually shows how different information sources are integrated, processed, and transformed into research products, visualizations, and analyses."
+  },
+  "diagram": {
+    "source": {
+      "title": "Meu Corre App",
+      "description": "Data entered by delivery workers"
+    },
+    "groups": [
+      {
+        "id": "profile",
+        "title": "Profile",
+        "fields": [
+          "gender",
+          "age group",
+          "state",
+          "city",
+          "neighborhood",
+          "platform",
+          "race/color"
+        ]
+      },
+      {
+        "id": "work",
+        "title": "Work",
+        "fields": [
+          "vehicle",
+          "companies",
+          "goals",
+          "goal value",
+          "type",
+          "status"
+        ]
+      },
+      {
+        "id": "geolocation",
+        "title": "Geolocation",
+        "fields": ["time", "coordinates", "distance", "direction", "routes"]
+      },
+      {
+        "id": "earnings",
+        "title": "Earnings",
+        "fields": [
+          "value",
+          "extra value",
+          "company",
+          "trips",
+          "distance",
+          "duration",
+          "city",
+          "date"
+        ]
+      },
+      {
+        "id": "expenses",
+        "title": "Expenses",
+        "fields": [
+          "value",
+          "category",
+          "company",
+          "date",
+          "notes",
+          "fuel",
+          "food",
+          "other"
+        ]
+      }
+    ],
+    "processing": [
+      {
+        "title": "Regular-user filter"
+      },
+      {
+        "title": "Data standardization and organization"
+      }
+    ],
+    "outputs": ["Tables", "Charts", "Maps", "Texts"]
+  },
+  "body": [
+    "The Delivery Worker Atlas data tree presents the path traveled by data from their initial recording to the final products made available on the platform. It shows the data sources, how information is collected, processed, and standardized, and how the different elements relate to one another.",
+    "DWA data include records produced by workers themselves through the Meu Corre app, public data, research information, and other complementary sources. These data go through stages of filtering, anonymization, standardization, and organization before being analyzed and presented in tables, charts, maps, and texts.",
+    "The data tree makes it possible to visualize, in an integrated way, the relationships among different layers of information, indicating how each dataset contributes to the project's results. It also highlights the main limits and precautions involved at each stage, such as questions of representativeness, temporality, geographic coverage, and participant privacy."
+  ],
+  "methodologyAction": {
+    "label": "View Methodology",
+    "target": "methodology"
+  },
+  "cta": {
+    "title": "Do you have a question about the data tree?",
+    "description": "If you have questions, suggestions, or identify any problem in the representation of the data, contact the Delivery Worker Atlas team.",
+    "actionLabel": "Contact us",
+    "actionTarget": "contact"
+  }
+}

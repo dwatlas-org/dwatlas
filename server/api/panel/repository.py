@@ -22,16 +22,16 @@ def build_function_call(function: str, filters: PanelFilter) -> tuple[str, list[
 
 @dataclass(frozen=True)
 class PanelRepository:
-    fetch_metrics: Callable[[AllowedView, PanelFilter], Awaitable[dict]]
+    fetch_metrics: Callable[[AllowedView, PanelFilter], Awaitable[list[dict]]]
     fetch_chart: Callable[[AllowedView, PanelFilter], Awaitable[list[dict]]]
 
 
 def get_panel_repository(db: Any = Depends(get_pg_session)) -> PanelRepository:
 
-    async def fetch_metrics(view: AllowedView, filters: PanelFilter) -> dict:
+    async def fetch_metrics(view: AllowedView, filters: PanelFilter) -> list[dict]:
         query, args = build_function_call(f"{view.value}_metrics", filters)
-        row = await db.fetchrow(query, *args)
-        return dict(row) if row else {}
+        rows = await db.fetch(query, *args)
+        return [dict(row) for row in rows]
 
     async def fetch_chart(view: AllowedView, filters: PanelFilter) -> list[dict]:
         query, args = build_function_call(f"{view.value}_chart", filters)

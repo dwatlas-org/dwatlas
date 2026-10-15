@@ -1,0 +1,156 @@
+{
+  "hero": {
+    "kicker": "Terms and definitions",
+    "title": "Glossary",
+    "description": "This section presents the main concepts, indicators, and terms used by Delivery Worker Atlas. The definitions explain both concepts related to platform work and the way specific measures are produced and used by the project."
+  },
+  "search": {
+    "placeholder": "Search for a term..."
+  },
+  "categories": [
+    {
+      "id": "all",
+      "label": "All"
+    },
+    {
+      "id": "platform-work",
+      "label": "Platform work"
+    },
+    {
+      "id": "working-time",
+      "label": "Working time"
+    },
+    {
+      "id": "earnings",
+      "label": "Earnings"
+    },
+    {
+      "id": "expenses",
+      "label": "Expenses"
+    },
+    {
+      "id": "mobility",
+      "label": "Mobility"
+    },
+    {
+      "id": "data-methodology",
+      "label": "Data and methodology"
+    }
+  ],
+  "alphabet": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N",
+    "O",
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "U",
+    "V",
+    "W",
+    "X",
+    "Y",
+    "Z"
+  ],
+  "terms": [
+    {
+      "letter": "A",
+      "term": "Delivery app",
+      "definition": null,
+      "source": null,
+      "tags": []
+    },
+    {
+      "letter": "A",
+      "term": "Algorithm",
+      "definition": null,
+      "source": null,
+      "tags": []
+    },
+    {
+      "letter": "A",
+      "term": "Autonomy",
+      "definition": null,
+      "source": null,
+      "tags": []
+    },
+    {
+      "letter": "C",
+      "term": "Urban circulation",
+      "definition": null,
+      "source": null,
+      "tags": []
+    },
+    {
+      "letter": "C",
+      "term": "Employment contract",
+      "definition": null,
+      "source": null,
+      "tags": []
+    },
+    {
+      "letter": "D",
+      "term": "Worker-generated data",
+      "definition": "Worker-generated data are information produced directly by delivery workers and motorcycle couriers from their own work experience, through manual records in the app, geolocation sharing, sending screenshots, and other forms of contribution. These data include, among other things, earnings, expenses, working time, trips, platforms used, and working conditions. In Delivery Worker Atlas, these data are processed in aggregated and anonymized form, protecting participants' privacy, and are used to produce indicators, visualizations, and analyses of platform work in Brazil.",
+      "source": "Delivery Worker Atlas",
+      "tags": ["Platform work", "Data", "Worker participation", "Privacy"]
+    },
+    {
+      "letter": "D",
+      "term": "Work expenses",
+      "definition": null,
+      "source": null,
+      "tags": []
+    },
+    {
+      "letter": "D",
+      "term": "Distance traveled",
+      "definition": null,
+      "source": null,
+      "tags": []
+    },
+    {
+      "letter": "G",
+      "term": "Gross earnings",
+      "definition": null,
+      "source": null,
+      "tags": []
+    },
+    {
+      "letter": "G",
+      "term": "Net earnings",
+      "definition": null,
+      "source": null,
+      "tags": []
+    },
+    {
+      "letter": "G",
+      "term": "Algorithmic management",
+      "definition": null,
+      "source": null,
+      "tags": []
+    }
+  ],
+  "cta": {
+    "title": "Is a term missing?",
+    "description": "If you did not find a term you consider important, or would like to suggest a new definition or a change to an existing term, please contact us. Your contribution helps keep the glossary more complete, accurate, and useful for everyone.",
+    "actionLabel": "Contact us",
+    "actionTarget": "contact"
+  },
+  "sourceNotes": {
+    "definitionsNotShown": "The supplied glossary design only shows the definition for 'Worker-generated data'. Definitions for the other listed terms are therefore left null."
+  }
+}
