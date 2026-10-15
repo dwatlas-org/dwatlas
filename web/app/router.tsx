@@ -17,7 +17,7 @@ import { Index } from "./features/index";
 import { ErrorBoundary } from "./features/error";
 import { Panel } from "./features/panel";
 import { Signup, signupAction } from "./features/signup";
-import { Registration, requestAction } from "./features/registration";
+import { Registration, requestOrLoginAction } from "./features/registration";
 import { Sandbox } from "./features/sandbox";
 import { defaultPanelSlug } from "./lib/panels";
 
@@ -82,7 +82,7 @@ export const router = createBrowserRouter([
           {
             path: "register",
             Component: Registration,
-            action: requestAction,
+            action: requestOrLoginAction,
           },
           {
             path: "sandbox",
