@@ -21,93 +21,106 @@ import { Registration, requestOrLoginAction } from "./features/registration";
 import { Sandbox } from "./features/sandbox";
 import { defaultPanelSlug } from "./lib/panels";
 
+import { AuthProvider } from "./contexts/auth-context";
+import ProtectedRoute from "./components/protected-route";
+
 export const router = createBrowserRouter([
   {
-    Component: RootLayout,
-    ErrorBoundary: ErrorBoundary,
+    Component: AuthProvider,
     children: [
       {
-        Component: TopbarLayout,
+        Component: RootLayout,
+        ErrorBoundary: ErrorBoundary,
         children: [
           {
-            index: true,
-            Component: Index,
-          },
-          {
-            path: "pages",
-            children: [
-              {
-                path: "about",
-                Component: AboutPage,
-              },
-              {
-                path: "methodology",
-                Component: MethodologyPage,
-              },
-              {
-                path: "researches",
-                Component: ResearchesPage,
-              },
-              {
-                path: "data-tree",
-                Component: DataTreePage,
-              },
-              {
-                path: "analyses",
-                Component: AnalysesPage,
-              },
-              {
-                path: "analyses/:analysisId",
-                Component: AnalysisArticlePage,
-              },
-              {
-                path: "glossary",
-                Component: GlossaryPage,
-              },
-              {
-                path: "faq",
-                Component: FAQPage,
-              },
-              {
-                path: "contact",
-                Component: ContactPage,
-              },
-            ],
-          },
-          {
-            path: "signup",
-            Component: Signup,
-            action: signupAction,
-          },
-          {
-            path: "register",
-            Component: Registration,
-            action: requestOrLoginAction,
-          },
-          {
-            path: "sandbox",
+            Component: TopbarLayout,
             children: [
               {
                 index: true,
-                Component: Sandbox,
+                Component: Index,
+              },
+              {
+                path: "pages",
+                children: [
+                  {
+                    path: "about",
+                    Component: AboutPage,
+                  },
+                  {
+                    path: "methodology",
+                    Component: MethodologyPage,
+                  },
+                  {
+                    path: "researches",
+                    Component: ResearchesPage,
+                  },
+                  {
+                    path: "data-tree",
+                    Component: DataTreePage,
+                  },
+                  {
+                    path: "analyses",
+                    Component: AnalysesPage,
+                  },
+                  {
+                    path: "analyses/:analysisId",
+                    Component: AnalysisArticlePage,
+                  },
+                  {
+                    path: "glossary",
+                    Component: GlossaryPage,
+                  },
+                  {
+                    path: "faq",
+                    Component: FAQPage,
+                  },
+                  {
+                    path: "contact",
+                    Component: ContactPage,
+                  },
+                ],
+              },
+              {
+                path: "signup",
+                Component: Signup,
+                action: signupAction,
+              },
+              {
+                path: "register",
+                Component: Registration,
+                action: requestOrLoginAction,
+              },
+              {
+                path: "sandbox",
+                children: [
+                  {
+                    index: true,
+                    Component: Sandbox,
+                  },
+                ],
               },
             ],
           },
-        ],
-      },
-      {
-        path: "panels",
-        Component: SidebarLayout,
-        children: [
           {
-            index: true,
-            Component: () => (
-              <Navigate to={`/panels/${defaultPanelSlug}`} replace />
-            ),
-          },
-          {
-            path: ":slug",
-            Component: Panel,
+            path: "panels",
+            Component: ProtectedRoute,
+            children: [
+              {
+                Component: SidebarLayout,
+                children: [
+                  {
+                    index: true,
+                    Component: () => (
+                      <Navigate to={`/panels/${defaultPanelSlug}`} replace />
+                    ),
+                  },
+                  {
+                    path: ":slug",
+                    Component: Panel,
+                  },
+                ],
+              },
+            ],
           },
         ],
       },
