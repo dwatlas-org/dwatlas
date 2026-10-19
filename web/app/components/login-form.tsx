@@ -23,12 +23,14 @@ function LoginFormBody({
   const [success, setSuccess] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [remember, setRemember] = useState(false);
   const auth = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(remember);
     if (typeof email !== "string" || !email.includes("@")) {
       setError("Valid email is required");
       return;
@@ -40,7 +42,7 @@ function LoginFormBody({
     setError("");
     setIsSubmitting(true);
     try {
-      await auth.login(email, password);
+      await auth.login(email, password, remember);
       const redirectTo = location.state?.from?.pathname || "/";
       navigate(redirectTo, { replace: true });
       setSuccess("Login successful");
@@ -124,6 +126,7 @@ function LoginFormBody({
                   id="remember"
                   name="remember"
                   className="size-4 cursor-pointer rounded border-slate-300 text-[#13315C] focus:ring-[#13315C]"
+                  onClick={(e) => setRemember(e.target.checked)}
                 />
                 <span>Remember me</span>
               </label>

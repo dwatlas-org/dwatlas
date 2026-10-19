@@ -5,17 +5,11 @@ export default function useToken() {
   const getToken = () => {
     console.log("getToken");
     // get token from local or session storage
-    const tokenLocal = localStorage.getItem("token");
-    if (!tokenLocal) {
-      console.log("No token");
-      return null;
-    }
-
-    console.log(`tokenLocal: ${tokenLocal}`);
-
-    const token = tokenLocal;
-
+    // TODO find a way to elegantly set the storage to remove from below
+    const token =
+      localStorage.getItem("token") || sessionStorage.getItem("token");
     if (!token) {
+      console.log("No token");
       return null;
     }
 
@@ -37,8 +31,12 @@ export default function useToken() {
   // TODO this is only using localStorage for now
   const [token, setToken] = useState(getToken());
 
-  const saveToken = (userToken) => {
-    localStorage.setItem("token", userToken);
+  const saveToken = (userToken, remember) => {
+    if (remember) {
+      localStorage.setItem("token", userToken);
+    } else {
+      sessionStorage.setItem("token", userToken);
+    }
     setToken(userToken);
   };
 

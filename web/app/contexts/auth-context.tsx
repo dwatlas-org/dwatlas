@@ -10,7 +10,8 @@ export function AuthProvider() {
   console.log(`AuthProvider token: ${token}`);
   const [user, setUser] = useState(null);
 
-  const login = async (email: string, password: string) => {
+  const login = async (email: string, password: string, remember: boolean) => {
+    console.log(`auth.login remember: ${remember}`);
     const response = await api_login(email, password);
 
     if (!response.ok) {
@@ -20,7 +21,7 @@ export function AuthProvider() {
     const data = await response.json();
     const token = data.access_token;
 
-    setToken(token);
+    setToken(token, remember);
     // optionally decode token to set user info
     return token;
   };
