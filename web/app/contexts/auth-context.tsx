@@ -11,16 +11,18 @@ export function AuthProvider() {
   const [user, setUser] = useState(null);
 
   const login = async (email: string, password: string) => {
-    const response = api_login(email, password);
+    const response = await api_login(email, password);
 
     if (!response.ok) {
       throw new Error("Login failed");
     }
 
     const data = await response.json();
-    setToken(data);
+    const token = data.access_token;
+
+    setToken(token);
     // optionally decode token to set user info
-    return data;
+    return token;
   };
 
   const logout = () => {

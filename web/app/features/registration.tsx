@@ -85,8 +85,10 @@ export async function requestOrLoginAction({
 }
 
 export function Registration() {
-  const fetcher = useFetcher<typeof requestOrLoginAction>();
-  const isSubmitting = fetcher.state === "submitting";
+  // const fetcher = useFetcher<typeof requestOrLoginAction>();
+  // const isSubmitting = fetcher.state === "submitting";
+  //
+  //
 
   return (
     <div className="flex min-h-svh w-full flex-col items-center justify-center bg-slate-50 px-6 py-12">
@@ -99,26 +101,8 @@ export function Registration() {
       <div className="w-full max-w-4xl">
         <Card className="overflow-hidden rounded-2xl bg-white p-0 shadow-sm ring-1 ring-slate-200/70">
           <CardContent className="grid p-0 lg:grid-cols-2 lg:divide-x lg:divide-slate-100">
-            <LoginForm
-              bare
-              Form={fetcher.Form}
-              isSubmitting={isSubmitting}
-              error={fetcher.data?.errorLogin}
-              success={
-                fetcher.data?.successLogin ? "Login successful" : undefined
-              }
-            />
-            <RequestForm
-              bare
-              Form={fetcher.Form}
-              isSubmitting={isSubmitting}
-              error={fetcher.data?.error}
-              success={
-                fetcher.data?.successRequest
-                  ? `Request submitted for ${fetcher.data.name} (${fetcher.data.email})`
-                  : undefined
-              }
-            />
+            <LoginForm bare />
+            <RequestForm bare />
           </CardContent>
         </Card>
         <p className="mt-6 text-center text-sm text-slate-500">

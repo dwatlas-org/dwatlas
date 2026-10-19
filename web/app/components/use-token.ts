@@ -30,17 +30,16 @@ export default function useToken() {
       }
       return token;
     } catch (error) {
-      localStorage.remove_item("token");
+      localStorage.removeItem("token");
       return null;
     }
   };
-  // continue here
   // TODO this is only using localStorage for now
   const [token, setToken] = useState(getToken());
 
   const saveToken = (userToken) => {
-    localStorage.setItem("token", JSON.stringify(userToken));
-    setToken(userToken.token);
+    localStorage.setItem("token", userToken);
+    setToken(userToken);
   };
 
   const removeToken = () => {

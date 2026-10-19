@@ -1,9 +1,12 @@
+import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { ArrowRight } from "lucide-react";
+import { useAuth } from "@/contexts/auth-context";
+import { useLocation, useNavigate } from "react-router";
 
 const inputClass =
   "h-10 w-full rounded-lg border border-slate-200 bg-white px-3.5 text-sm outline-none transition-all placeholder:text-slate-400 focus-visible:border-slate-400 focus-visible:ring-2 focus-visible:ring-slate-200";
@@ -11,16 +14,39 @@ const inputClass =
 function LoginFormBody({
   className,
   Form = "form",
-  isSubmitting,
-  error,
-  success,
 }: {
   className?: string;
   Form?: React.ElementType;
-  isSubmitting?: boolean;
-  success?: string;
-  error?: string;
 }) {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const auth = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    console.log(`Location: ${location}`);
+    console.log(`from: ${location.state.from.pathname}`);
+    e.preventDefault();
+    setError("");
+    setIsSubmitting(true);
+    console.log(`Email: ${email}`);
+    console.log(`Password: ${password}`);
+    try {
+      await auth.login(email, password);
+      const redirectTo = location.state?.from?.pathname || "/";
+      navigate(redirectTo, { replace: true });
+      setSuccess("Login successful");
+    } catch (error) {
+      setError(error.mesage || "Login failed");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <>
       <Form
@@ -30,6 +56,7 @@ function LoginFormBody({
           "flex flex-col justify-between gap-6 p-8 lg:p-12",
           className,
         )}
+        onSubmit={handleSubmit}
       >
         <input name="form_type" hidden defaultValue="login" />
         <div className="flex flex-col gap-6">
@@ -64,6 +91,7 @@ function LoginFormBody({
                 placeholder="you@organisation.org"
                 required
                 className={inputClass}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </Field>
 
@@ -81,6 +109,7 @@ function LoginFormBody({
                 placeholder="••••••••••••"
                 required
                 className={inputClass}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </Field>
 
@@ -121,27 +150,13 @@ export function LoginForm({
   className,
   bare = false,
   Form = "form",
-  isSubmitting = false,
-  error,
-  success,
   ...props
 }: React.ComponentProps<"div"> & {
   bare?: boolean;
   Form?: React.ElementType;
-  isSubmitting?: boolean;
-  error?: string;
-  success?: string;
 }) {
   if (bare) {
-    return (
-      <LoginFormBody
-        Form={Form}
-        isSubmitting={isSubmitting}
-        className={className}
-        error={error}
-        success={success}
-      />
-    );
+    return <LoginFormBody Form={Form} className={className} />;
   }
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
