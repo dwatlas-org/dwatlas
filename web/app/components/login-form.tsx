@@ -28,13 +28,17 @@ function LoginFormBody({
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    console.log(`Location: ${location}`);
-    console.log(`from: ${location.state.from.pathname}`);
     e.preventDefault();
+    if (typeof email !== "string" || !email.includes("@")) {
+      setError("Valid email is required");
+      return;
+    }
+    if (typeof password !== "string" || !password.trim()) {
+      setError("Password is required");
+      return;
+    }
     setError("");
     setIsSubmitting(true);
-    console.log(`Email: ${email}`);
-    console.log(`Password: ${password}`);
     try {
       await auth.login(email, password);
       const redirectTo = location.state?.from?.pathname || "/";
