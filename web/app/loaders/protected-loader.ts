@@ -1,4 +1,3 @@
-// TODO don't hard-code api path here, possible write a function in lib/api?
 import { redirect } from "react-router";
 import { get_current_user } from "@/lib/api";
 

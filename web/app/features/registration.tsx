@@ -62,6 +62,7 @@ async function loginAction(formData: FormData): Promise<ActionData> {
     return { errorLogin: "Incorrect email or password" };
   }
 
+  // TODO redirect to originally requested page instead
   throw redirect("/panels");
 }
 
