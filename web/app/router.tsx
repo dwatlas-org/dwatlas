@@ -20,11 +20,15 @@ import { Signup, signupAction } from "./features/signup";
 import { Registration, requestOrLoginAction } from "./features/registration";
 import { Sandbox } from "./features/sandbox";
 import { defaultPanelSlug } from "./lib/panels";
+import { protectedLoader } from "./loaders/protected-loader";
+import { rootLoader } from "./loaders/root-loader";
+import { guestLoader } from "./loaders/guest-loader";
 
 export const router = createBrowserRouter([
   {
     Component: RootLayout,
     ErrorBoundary: ErrorBoundary,
+    loader: rootLoader,
     children: [
       {
         Component: TopbarLayout,
@@ -83,6 +87,7 @@ export const router = createBrowserRouter([
             path: "register",
             Component: Registration,
             action: requestOrLoginAction,
+            loader: guestLoader,
           },
           {
             path: "sandbox",
@@ -97,6 +102,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "panels",
+        loader: protectedLoader,
         Component: SidebarLayout,
         children: [
           {
