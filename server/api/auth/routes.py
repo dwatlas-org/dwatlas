@@ -6,7 +6,7 @@ from sqlmodel import Session
 
 from api.config import settings
 from api.user.database import get_session
-from api.user.models import User
+from api.user.models import User, UserPublic
 from api.user.service import authenticate_user
 
 from .models import LoginData
@@ -54,5 +54,5 @@ async def api_login(
 @router.get("/me/")
 async def api_auth_me(
     current_user: Annotated[User, Depends(get_current_active_user)],
-) -> User:
+) -> UserPublic:
     return current_user
