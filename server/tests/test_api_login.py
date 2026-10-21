@@ -5,6 +5,7 @@ from fastapi.testclient import TestClient
 from api.config import settings
 from api.user.models import User
 from api.user.service import hash_password
+from tests.util import unpack_token
 
 
 @pytest.mark.parametrize("user__hashed_password", [hash_password("supersecure123!")])
@@ -18,9 +19,8 @@ def test_api_login(client: TestClient, user: User, basepath: str):
         },
     )
     assert response.status_code == 200
-    data = response.json()
-    token = data["access_token"]
-    assert data["token_type"] == "bearer"
+
+    token = unpack_token(response.headers)
 
     payload = jwt.decode(
         token, settings.AUTH_SECRET_KEY, algorithms=[settings.AUTH_ALGORITHM]

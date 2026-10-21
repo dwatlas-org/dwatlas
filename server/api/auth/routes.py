@@ -34,13 +34,18 @@ async def api_login(
     access_token = create_access_token(
         data={"sub": user.email}, expires_delta=access_token_expires
     )
+    if login_data.remember:
+        max_age = settings.AUTH_ACCESS_TOKEN_EXPIRE_MINUTES * 60  # convert to seconds
+    else:
+        max_age = None
+
     response.set_cookie(
         key="access_token",
         value=access_token,
         httponly=True,
         secure=True,
         samesite="strict",
-        max_age=settings.AUTH_ACCESS_TOKEN_EXPIRE_MINUTES,
+        max_age=max_age,
         path="/",
     )
     return {"message": "Login successful"}

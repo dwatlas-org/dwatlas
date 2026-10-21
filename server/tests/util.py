@@ -1,0 +1,3 @@
+def unpack_token(headers: dict[str, str]) -> str:
+    token = headers.get("set-cookie").split(";")[0][13:]  # ahem...
+    return token

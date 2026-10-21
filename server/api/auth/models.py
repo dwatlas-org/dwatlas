@@ -9,3 +9,4 @@ class TokenData(SQLModel):
 class LoginData(SQLModel):
     email: EmailStr
     password: str
+    remember: bool | None = False
