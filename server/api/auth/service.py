@@ -2,7 +2,7 @@ from datetime import UTC, datetime, timedelta
 from typing import Annotated, Any
 
 import jwt
-from fastapi import Depends, HTTPException, status
+from fastapi import Cookie, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from sqlmodel import Session
 
@@ -25,12 +25,12 @@ class UnauthorizedError(HTTPException):
 
 
 async def get_current_user(
-    token: Annotated[str, Depends(oauth2_scheme)],
     session: Annotated[Session, Depends(get_session)],
+    access_token: Annotated[str | None, Cookie()] = None,
 ):
     try:
         payload = jwt.decode(
-            token, settings.AUTH_SECRET_KEY, algorithms=[settings.AUTH_ALGORITHM]
+            access_token, settings.AUTH_SECRET_KEY, algorithms=[settings.AUTH_ALGORITHM]
         )
         email = payload.get("sub")
         if email is None:

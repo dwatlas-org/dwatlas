@@ -83,15 +83,28 @@ export async function requestAccess<T = unknown>(
 export async function login(
   email: string,
   password: string,
+  remember: boolean,
 ): Promise<Response> {
   const path = "/auth/token";
   const response = await fetch(`${API_URL}${path}`, {
     method: "POST",
+    credentials: "include",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       email: email,
       password: password,
+      remember: remember,
     }),
+  });
+
+  return response;
+}
+
+export async function get_current_user(): Promise<Response> {
+  const path = "/auth/me";
+  const response = await fetch(`${API_URL}${path}`, {
+    method: "get",
+    credentials: "include",
   });
 
   return response;

@@ -1,4 +1,9 @@
-import { useFetcher, useRouteError, isRouteErrorResponse } from "react-router";
+import {
+  redirect,
+  useFetcher,
+  useRouteError,
+  isRouteErrorResponse,
+} from "react-router";
 import { Card, CardContent } from "@/components/ui/card";
 import { LoginForm } from "@/components/login-form";
 import { RequestForm } from "@/components/request-form";
@@ -42,7 +47,7 @@ async function requestAction(formData: FormData): Promise<ActionData> {
 async function loginAction(formData: FormData): Promise<ActionData> {
   const email = formData.get("email");
   const password = formData.get("password");
-  const remember = formData.get("remember");
+  const remember = formData.get("remember") === "on";
 
   if (typeof email !== "string" || !email.includes("@")) {
     return { errorLogin: "Valid email is required" };
@@ -51,22 +56,14 @@ async function loginAction(formData: FormData): Promise<ActionData> {
     return { errorLogin: "Password is required" };
   }
 
-  const response = await login(email, password);
+  const response = await login(email, password, remember);
 
   if (!response.ok) {
     return { errorLogin: "Incorrect email or password" };
   }
 
-  const data = await response.json();
-  const token = data.access_token;
-
-  if (remember === "on") {
-    localStorage.setItem("token", JSON.stringify(token));
-  } else if (remember === null) {
-    sessionStorage.setItem("token", JSON.stringify(token));
-  }
-
-  return { successLogin: true };
+  // TODO redirect to originally requested page instead
+  throw redirect("/panels");
 }
 
 export async function requestOrLoginAction({
