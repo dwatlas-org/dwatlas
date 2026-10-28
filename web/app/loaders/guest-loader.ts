@@ -1,8 +1,8 @@
 import { redirect } from "react-router";
-import { get_current_user } from "@/lib/api";
+import { getCurrentUser } from "@/lib/api";
 
 export async function guestLoader() {
-  const response = await get_current_user();
+  const response = await getCurrentUser();
   if (response.ok) {
     throw redirect("/panels");
   }
