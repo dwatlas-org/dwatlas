@@ -100,7 +100,7 @@ export async function login(
   return response;
 }
 
-export async function get_current_user(): Promise<Response> {
+export async function getCurrentUser(): Promise<Response> {
   const path = "/auth/me";
   const response = await fetch(`${API_URL}${path}`, {
     method: "get",
