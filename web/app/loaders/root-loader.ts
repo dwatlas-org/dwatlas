@@ -1,7 +1,7 @@
-import { get_current_user } from "@/lib/api";
+import { getCurrentUser } from "@/lib/api";
 
 export async function rootLoader() {
-  const response = await get_current_user();
+  const response = await getCurrentUser();
   if (!response.ok) {
     return { user: null };
   }
