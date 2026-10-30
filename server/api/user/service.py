@@ -1,6 +1,7 @@
-import datetime
+from datetime import UTC, datetime, timedelta
 from email.message import EmailMessage
 
+import jwt
 from fastapi import BackgroundTasks
 from pwdlib import PasswordHash
 from sqlalchemy.exc import IntegrityError
@@ -57,7 +58,7 @@ def authenticate_user(*, email: str, password: str, session: Session) -> User | 
     elif not verify_password(password, user.hashed_password):
         user = None
     else:
-        user.last_login = datetime.datetime.now(datetime.UTC)
+        user.last_login = datetime.now(UTC)
         session.add(user)
         session.commit()
     return user
@@ -137,4 +138,45 @@ def send_access_request(
         f"E-Mail: {form_data.email}\nType of organization / institution: {form_data.organization}\nPurpose of access: {form_data.bio}"
     )
     background_tasks.add_task(email_service.send, [message])
+
     return {"message": "Request for access sent"}
+
+
+def create_password_reset_token(email: str, hashed_password: str, expire_minutes: int):
+    payload = {
+        "sub": email,
+        "exp": datetime.now(UTC) + timedelta(minutes=expire_minutes),
+    }
+    token = jwt.encode(payload, hashed_password, algorithm=settings.AUTH_ALGORITHM)
+    return token
+
+
+def send_password_reset(
+    background_tasks: BackgroundTasks, user: User, session: Session
+):
+    # generate token
+    token = create_password_reset_token(
+        user.email, user.hashed_password, settings.RESET_PASSWORD_TOKEN_EXPIRE_MINUTES
+    )
+    message = EmailMessage()
+    message["To"] = user.email
+    message["From"] = settings.REQUEST_ACCESS_FROM
+    message["Subject"] = "Delivery Worker Atlas: Password Reset"
+    message.set_content(f"Your password reset token: {token}")
+    background_tasks.add_task(email_service.send, [message])
+
+    return {"message": ""}
+
+
+def verify_password_reset_token(user: User, token: str):
+    try:
+        payload = jwt.decode(token, user.hashed_password, settings.AUTH_ALGORITHM)
+    except jwt.InvalidTokenError:
+        token_valid = False
+    else:
+        if payload.get("sub") == user.email:
+            token_valid = True
+        else:
+            token_valid = False
+
+    return token_valid
