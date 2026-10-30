@@ -1,6 +1,7 @@
 import { useFetcher, useRouteError, isRouteErrorResponse } from "react-router";
 import { Card, CardContent } from "@/components/ui/card";
 import { SignupForm } from "@/components/signup-form";
+import { signup } from "@/lib/api";
 
 export async function signupAction({ request }: { request: Request }) {
   const formData = await request.formData();
@@ -18,6 +19,11 @@ export async function signupAction({ request }: { request: Request }) {
 
   if (password !== confirmPassword) {
     return { error: "Passwords do not match" };
+  }
+
+  const response = await signup(email, password);
+  if (!response.ok) {
+    return { error: "Signup failed" };
   }
 
   return { success: true, email };

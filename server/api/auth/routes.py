@@ -4,6 +4,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException, Response, status
 from sqlmodel import Session
 
+from api.auth import AUTH_COOKIE_KEY
 from api.config import settings
 from api.user.database import get_session
 from api.user.models import User, UserPublic
@@ -40,7 +41,7 @@ async def api_login(
         max_age = None
 
     response.set_cookie(
-        key="access_token",
+        key=AUTH_COOKIE_KEY,
         value=access_token,
         httponly=True,
         secure=True,
@@ -49,6 +50,14 @@ async def api_login(
         path="/",
     )
     return {"message": "Login successful"}
+
+
+@router.get("/logout")
+async def api_logout(response: Response):
+    response.delete_cookie(
+        key=AUTH_COOKIE_KEY,
+    )
+    return {"message": "Logout successful"}
 
 
 @router.get("/me/")
