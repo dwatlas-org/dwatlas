@@ -23,6 +23,10 @@ import { defaultPanelSlug } from "./lib/panels";
 import { protectedLoader } from "./loaders/protected-loader";
 import { rootLoader } from "./loaders/root-loader";
 import { guestLoader } from "./loaders/guest-loader";
+import {
+  PasswordReset,
+  resetPasswordAction,
+} from "./features/password-reset.tsx";
 
 export const router = createBrowserRouter([
   {
@@ -87,6 +91,12 @@ export const router = createBrowserRouter([
             path: "register",
             Component: Registration,
             action: requestOrLoginAction,
+            loader: guestLoader,
+          },
+          {
+            path: "passwordreset",
+            Component: PasswordReset,
+            action: resetPasswordAction,
             loader: guestLoader,
           },
           {
