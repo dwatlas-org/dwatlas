@@ -109,3 +109,21 @@ export async function get_current_user(): Promise<Response> {
 
   return response;
 }
+
+export async function signup(
+  email: string,
+  password: string,
+): Promise<Response> {
+  const path = "/user/signup";
+  const response = await fetch(`${API_URL}${path}`, {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      email: email,
+      password: password,
+    }),
+  });
+
+  return response;
+}
