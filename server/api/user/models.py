@@ -55,3 +55,13 @@ class UserUpdate(SQLModel):
 class UserSignup(SQLModel):
     email: EmailStr
     password: str
+
+
+class PasswordUpdateData(SQLModel):
+    email: EmailStr
+    token: str
+    password: str
+
+
+class PasswordResetData(SQLModel):
+    email: EmailStr
