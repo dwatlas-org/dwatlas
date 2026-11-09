@@ -278,6 +278,16 @@ export function Metrics({
   );
 }
 
+const CHART_TYPE_OPTIONS: {
+  kind: ChartType;
+  label: string;
+  icon: typeof LineChartIcon;
+}[] = [
+  { kind: "line", label: "Lines", icon: LineChartIcon },
+  { kind: "bar", label: "Bars", icon: BarChart3 },
+  { kind: "map", label: "Map", icon: Map },
+];
+
 export function Chart({
   kind = "line",
   metricLabel = "Value",
@@ -309,18 +319,22 @@ export function Chart({
         </h2>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <button className="inline-flex items-center gap-2 rounded-md border border-indigo-300 bg-indigo-50/60 px-3 py-1.5 text-sm font-medium text-indigo-900">
-              <LineChartIcon className="h-4 w-4" />
-              Lines
-            </button>
-            <button className="inline-flex items-center gap-2 rounded-md border border-slate-200 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50">
-              <BarChart3 className="h-4 w-4 text-slate-400" />
-              Bars
-            </button>
-            <button className="inline-flex items-center gap-2 rounded-md border border-slate-200 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50">
-              <Map className="h-4 w-4 text-slate-400" />
-              Map
-            </button>
+            {CHART_TYPE_OPTIONS.filter((option) => option.kind === kind).map(
+              (option) => {
+                const Icon = option.icon;
+
+                return (
+                  <button
+                    key={option.kind}
+                    type="button"
+                    className="inline-flex items-center gap-2 rounded-md border border-indigo-300 bg-indigo-50/60 px-3 py-1.5 text-sm font-medium text-indigo-900"
+                  >
+                    <Icon className="h-4 w-4" />
+                    {option.label}
+                  </button>
+                );
+              },
+            )}
           </div>
           <button className="inline-flex items-center gap-2 rounded-md border border-slate-200 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50">
             <Bookmark className="h-4 w-4" />
