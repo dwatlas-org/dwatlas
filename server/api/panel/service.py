@@ -11,6 +11,7 @@ from api.panel.schema import (
     AllowedView,
     ChartData,
     DemographicsChartData,
+    GenderChartData,
     MetricsResponse,
     PanelFilter,
     RegistrationsChartData,
@@ -23,6 +24,7 @@ CHART_MODELS: dict[AllowedView, type[BaseModel]] = {
     AllowedView.retention_rate: RetentionRateChartData,
     AllowedView.registrations: RegistrationsChartData,
     AllowedView.demographics: DemographicsChartData,
+    AllowedView.gender: GenderChartData,
 }
 
 logger = logging.getLogger(__name__)

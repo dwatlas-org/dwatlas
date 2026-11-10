@@ -10,6 +10,7 @@ class AllowedView(str, Enum):
     retention_rate = "retention_rate"
     registrations = "registrations"
     demographics = "demographics"
+    gender = "gender"
 
 
 class PanelFilter(BaseModel):
@@ -17,6 +18,10 @@ class PanelFilter(BaseModel):
     end_date: date | None = None
     city: str | None = None
     state: str | None = None
+    age_min: int | None = None
+    age_max: int | None = None
+    vehicle_type: str | None = None
+    company_type: str | None = None
 
 
 class MetricsResponse(BaseModel):
@@ -51,9 +56,21 @@ class DemographicsChartData(BaseModel):
     color: str
 
 
+class GenderChartData(BaseModel):
+    bin_index: int
+    label: str
+    men: float | None = None
+    women: float | None = None
+    other: float | None = None
+    men_label: str | None = None
+    women_label: str | None = None
+    other_label: str | None = None
+
+
 ChartData = (
     TemporalEvolutionChartData
     | RetentionRateChartData
     | RegistrationsChartData
     | DemographicsChartData
+    | GenderChartData
 )
