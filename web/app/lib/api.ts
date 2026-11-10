@@ -3,7 +3,8 @@ export type PanelView =
   | "retention_rate"
   | "registrations"
   | "demographics"
-  | "gender";
+  | "gender"
+  | "age";
 
 export type PanelFilters = {
   start_date?: string;
@@ -43,6 +44,14 @@ export type GenderChartPoint = {
   men_label: string;
   women_label: string;
   other_label: string;
+};
+
+export type AgeChartPoint = {
+  bin_index: number;
+  age_min_val: number;
+  age_max_val: number | null;
+  label: string;
+  user_count: number;
 };
 
 export type PanelChartPoint = Record<

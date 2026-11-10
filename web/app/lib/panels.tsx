@@ -59,6 +59,9 @@ export type PanelSubItem = {
   tooltipLabelKey?: string;
   barSeries?: BarSeries[];
   lineSeries?: LineSeries[];
+  xAxisLabel?: string;
+  barCategoryGap?: number | string;
+  barColor?: string;
 };
 
 export type PanelGroup = {
@@ -140,9 +143,20 @@ export const panelGroups: PanelGroup[] = [
         ],
       },
       {
-        slug: "education-level",
+        slug: "age",
         title: "Age",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        description:
+          "Age distribution of regular users who met activity criteria in at least one month.",
+        view: "age",
+        chartType: "bar",
+        metricLabel: "Number of regular users",
+        chartTitle: "Distribution of regular users by age",
+        dataKey: "user_count",
+        xKey: "age_min_val",
+        tooltipLabelKey: "label",
+        xAxisLabel: "Age (years)",
+        barCategoryGap: 0,
+        barColor: "#205493",
       },
     ],
   },
@@ -320,7 +334,12 @@ export const panelItems = panelGroups.flatMap((group) => group.items);
 
 export function getPanelBySlug(slug?: string): PanelSubItem | undefined {
   if (!slug) return undefined;
-  const resolvedSlug = slug === "age-demographics" ? "demographics" : slug;
+  const resolvedSlug =
+    slug === "age-demographics"
+      ? "demographics"
+      : slug === "education-level"
+        ? "age"
+        : slug;
   return panelItems.find((item) => item.slug === resolvedSlug);
 }
 

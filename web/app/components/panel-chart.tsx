@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/chart";
 import { Spinner } from "@/components/ui/spinner";
 import { BrazilChoroplethMap } from "@/components/brazil-choropleth-map";
+import { cn } from "@/lib/utils";
 import type { PanelChartPoint } from "@/lib/api";
 import type { BarSeries, ChartType, LineSeries } from "@/lib/panels";
 
@@ -83,6 +84,9 @@ export function PanelChart({
   tooltipLabelKey,
   barSeries,
   lineSeries,
+  xAxisLabel,
+  barCategoryGap,
+  barColor,
   isLoading = false,
   error = null,
 }: {
@@ -94,6 +98,9 @@ export function PanelChart({
   tooltipLabelKey?: string;
   barSeries?: BarSeries[];
   lineSeries?: LineSeries[];
+  xAxisLabel?: string;
+  barCategoryGap?: number | string;
+  barColor?: string;
   isLoading?: boolean;
   error?: string | null;
 }) {
@@ -125,7 +132,7 @@ export function PanelChart({
         : {
             [valueKey]: {
               label: metricLabel,
-              color: CHART_COLORS[kind],
+              color: barColor ?? CHART_COLORS[kind],
             },
           }
   ) satisfies ChartConfig;
@@ -184,7 +191,8 @@ export function PanelChart({
       tickLine={false}
       axisLine={false}
       tickMargin={8}
-      domain={isPercentageMetric ? [0, 100] : undefined}
+      allowDecimals={!isPercentageMetric}
+      domain={isPercentageMetric ? [0, 100] : [0, "auto"]}
       tick={{ fill: "#94a3b8", fontSize: 11 }}
       tickFormatter={(v) =>
         isPercentageMetric && typeof v === "number" ? `${v}%` : String(v)
@@ -211,10 +219,24 @@ export function PanelChart({
       dataKey={xKey}
       tickLine={false}
       axisLine={false}
-      tickMargin={12}
-      minTickGap={20}
+      tickMargin={xAxisLabel ? 8 : 12}
+      minTickGap={10}
       tick={{ fill: "#94a3b8", fontSize: 11 }}
       tickFormatter={formatAxisLabel}
+      label={
+        xAxisLabel
+          ? {
+              value: xAxisLabel,
+              position: "insideBottom",
+              offset: -12,
+              style: {
+                textAnchor: "middle",
+                fill: "#64748b",
+                fontSize: 12,
+              },
+            }
+          : undefined
+      }
     />
   );
 
@@ -233,7 +255,10 @@ export function PanelChart({
       )}
       <ChartContainer
         config={chartConfig}
-        className="aspect-auto h-[300px] w-full"
+        className={cn(
+          "aspect-auto w-full",
+          xAxisLabel ? "h-[320px]" : "h-[300px]",
+        )}
       >
         {kind === "line" && (
           <LineChart
@@ -315,7 +340,14 @@ export function PanelChart({
           <BarChart
             accessibilityLayer
             data={chartData}
-            margin={{ left: 16, right: 16, top: 12, bottom: 12 }}
+            barCategoryGap={barCategoryGap ?? "10%"}
+            barGap={barCategoryGap === 0 ? 0 : 4}
+            margin={{
+              left: 16,
+              right: 16,
+              top: 12,
+              bottom: xAxisLabel ? 24 : 12,
+            }}
           >
             <CartesianGrid vertical={false} stroke="#f1f5f9" />
             {yAxis}
@@ -348,7 +380,9 @@ export function PanelChart({
               <Bar
                 dataKey={valueKey}
                 fill={`var(--color-${valueKey})`}
-                radius={[4, 4, 0, 0]}
+                stroke={barCategoryGap === 0 ? "#ffffff" : undefined}
+                strokeWidth={barCategoryGap === 0 ? 1 : undefined}
+                radius={barCategoryGap === 0 ? [0, 0, 0, 0] : [4, 4, 0, 0]}
               />
             )}
           </BarChart>

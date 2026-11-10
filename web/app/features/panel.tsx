@@ -83,6 +83,9 @@ export function Panel() {
       tooltipLabelKey={panel.tooltipLabelKey}
       barSeries={panel.barSeries}
       lineSeries={panel.lineSeries}
+      xAxisLabel={panel.xAxisLabel}
+      barCategoryGap={panel.barCategoryGap}
+      barColor={panel.barColor}
     />
   );
 }
@@ -99,6 +102,9 @@ function PanelContent({
   tooltipLabelKey,
   barSeries,
   lineSeries,
+  xAxisLabel,
+  barCategoryGap,
+  barColor,
 }: {
   view: PanelView;
   title: string;
@@ -111,6 +117,9 @@ function PanelContent({
   tooltipLabelKey?: string;
   barSeries?: BarSeries[];
   lineSeries?: LineSeries[];
+  xAxisLabel?: string;
+  barCategoryGap?: number | string;
+  barColor?: string;
 }) {
   const [range, setRange] = useState<DateRange | undefined>(DEFAULT_RANGE);
   const [filters, setFilters] = useState<PanelFilters>(() =>
@@ -144,6 +153,9 @@ function PanelContent({
             tooltipLabelKey={tooltipLabelKey}
             barSeries={barSeries}
             lineSeries={lineSeries}
+            xAxisLabel={xAxisLabel}
+            barCategoryGap={barCategoryGap}
+            barColor={barColor}
             data={chart.data ?? []}
             isLoading={chart.isLoading}
             error={chart.error}
@@ -302,6 +314,9 @@ export function Chart({
   tooltipLabelKey,
   barSeries,
   lineSeries,
+  xAxisLabel,
+  barCategoryGap,
+  barColor,
   data = [],
   isLoading = false,
   error = null,
@@ -314,6 +329,9 @@ export function Chart({
   tooltipLabelKey?: string;
   barSeries?: BarSeries[];
   lineSeries?: LineSeries[];
+  xAxisLabel?: string;
+  barCategoryGap?: number | string;
+  barColor?: string;
   data?: PanelChartPoint[];
   isLoading?: boolean;
   error?: string | null;
@@ -360,6 +378,9 @@ export function Chart({
         tooltipLabelKey={tooltipLabelKey}
         barSeries={barSeries}
         lineSeries={lineSeries}
+        xAxisLabel={xAxisLabel}
+        barCategoryGap={barCategoryGap}
+        barColor={barColor}
         isLoading={isLoading}
         error={error}
       />
