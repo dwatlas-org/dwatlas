@@ -10,6 +10,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /usr/local/bin/
 
+ENV UV_PYTHON=3.13
+ENV UV_PYTHON_INSTALL_DIR=/opt/uv/python
+RUN uv python install 3.13
+
 WORKDIR /app
 
 FROM base AS deps
