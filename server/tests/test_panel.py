@@ -278,3 +278,51 @@ def test_build_function_call_extended_filters():
         "SELECT * FROM gender_chart(start_date => $1, age_min => $2, age_max => $3, vehicle_type => $4, company_type => $5)"
     )
     assert args == [date(2024, 4, 1), 18, 60, "moto", "ifood"]
+
+
+@pytest.mark.asyncio
+async def test_repository_fetch_metrics_age_empty(mock_db):
+    repo = get_panel_repository(db=mock_db)
+    result = await repo.fetch_metrics(AllowedView.age, PanelFilter())
+    assert result == []
+    mock_db.fetch.assert_not_called()
+
+
+@pytest.mark.asyncio
+async def test_service_get_chart_age(mock_repo):
+    mock_repo.fetch_chart.return_value = [
+        {
+            "bin_index": 1,
+            "age_min_val": 10,
+            "age_max_val": 15,
+            "label": "10-15",
+            "user_count": 0,
+        },
+        {
+            "bin_index": 2,
+            "age_min_val": 15,
+            "age_max_val": 20,
+            "label": "15-20",
+            "user_count": 15,
+        },
+        {
+            "bin_index": 19,
+            "age_min_val": 100,
+            "age_max_val": None,
+            "label": "100+",
+            "user_count": 1,
+        },
+    ]
+    service = get_panel_service(repo=mock_repo)
+    result = await service.get_chart(AllowedView.age, PanelFilter())
+    assert len(result) == 3
+    assert result[0].bin_index == 1
+    assert result[0].age_min_val == 10
+    assert result[0].age_max_val == 15
+    assert result[0].label == "10-15"
+    assert result[0].user_count == 0
+    assert result[2].bin_index == 19
+    assert result[2].age_min_val == 100
+    assert result[2].age_max_val is None
+    assert result[2].label == "100+"
+    assert result[2].user_count == 1

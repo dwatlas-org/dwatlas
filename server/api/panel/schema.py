@@ -11,6 +11,7 @@ class AllowedView(str, Enum):
     registrations = "registrations"
     demographics = "demographics"
     gender = "gender"
+    age = "age"
 
 
 class PanelFilter(BaseModel):
@@ -67,10 +68,19 @@ class GenderChartData(BaseModel):
     other_label: str | None = None
 
 
+class AgeChartData(BaseModel):
+    bin_index: int
+    age_min_val: int
+    age_max_val: int | None = None
+    label: str
+    user_count: int
+
+
 ChartData = (
     TemporalEvolutionChartData
     | RetentionRateChartData
     | RegistrationsChartData
     | DemographicsChartData
     | GenderChartData
+    | AgeChartData
 )

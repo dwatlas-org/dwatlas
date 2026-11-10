@@ -8,6 +8,7 @@ from pydantic import BaseModel
 
 from api.panel.repository import PanelRepository, get_panel_repository
 from api.panel.schema import (
+    AgeChartData,
     AllowedView,
     ChartData,
     DemographicsChartData,
@@ -25,6 +26,7 @@ CHART_MODELS: dict[AllowedView, type[BaseModel]] = {
     AllowedView.registrations: RegistrationsChartData,
     AllowedView.demographics: DemographicsChartData,
     AllowedView.gender: GenderChartData,
+    AllowedView.age: AgeChartData,
 }
 
 logger = logging.getLogger(__name__)
