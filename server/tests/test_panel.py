@@ -220,3 +220,61 @@ async def test_service_get_chart_demographics(mock_repo):
     assert result[0].bin_index == 1
     assert result[0].user_count == 500
     assert result[0].color == "#fbd590"
+
+
+@pytest.mark.asyncio
+async def test_repository_fetch_metrics_gender_empty(mock_db):
+    repo = get_panel_repository(db=mock_db)
+    result = await repo.fetch_metrics(AllowedView.gender, PanelFilter())
+    assert result == []
+    mock_db.fetch.assert_not_called()
+
+
+@pytest.mark.asyncio
+async def test_service_get_chart_gender(mock_repo):
+    mock_repo.fetch_chart.return_value = [
+        {
+            "bin_index": 1,
+            "label": "jun 2024",
+            "men": 62.15,
+            "women": 23.40,
+            "other": 4.12,
+            "men_label": "62.15%",
+            "women_label": "23.40%",
+            "other_label": "4.12%",
+        },
+        {
+            "bin_index": 2,
+            "label": "jul 2024",
+            "men": 61.80,
+            "women": 22.90,
+            "other": None,
+            "men_label": "61.80%",
+            "women_label": "22.90%",
+            "other_label": "insufficient data",
+        },
+    ]
+    service = get_panel_service(repo=mock_repo)
+    result = await service.get_chart(AllowedView.gender, PanelFilter())
+    assert len(result) == 2
+    assert result[0].bin_index == 1
+    assert result[0].label == "jun 2024"
+    assert result[0].men == 62.15
+    assert result[0].other_label == "4.12%"
+    assert result[1].other is None
+    assert result[1].other_label == "insufficient data"
+
+
+def test_build_function_call_extended_filters():
+    filters = PanelFilter(
+        start_date="2024-04-01",
+        age_min=18,
+        age_max=60,
+        vehicle_type="moto",
+        company_type="ifood",
+    )
+    query, args = build_function_call("gender_chart", filters)
+    assert query == (
+        "SELECT * FROM gender_chart(start_date => $1, age_min => $2, age_max => $3, vehicle_type => $4, company_type => $5)"
+    )
+    assert args == [date(2024, 4, 1), 18, 60, "moto", "ifood"]
