@@ -9,6 +9,7 @@ class AllowedView(str, Enum):
     temporal_evolution = "temporal_evolution"
     retention_rate = "retention_rate"
     registrations = "registrations"
+    demographics = "demographics"
 
 
 class PanelFilter(BaseModel):
@@ -41,4 +42,18 @@ class RegistrationsChartData(BaseModel):
     earnings: Any
 
 
-ChartData = TemporalEvolutionChartData | RetentionRateChartData | RegistrationsChartData
+class DemographicsChartData(BaseModel):
+    bin_index: int
+    uf: str
+    state_name: str
+    user_count: int | None = None
+    label: str
+    color: str
+
+
+ChartData = (
+    TemporalEvolutionChartData
+    | RetentionRateChartData
+    | RegistrationsChartData
+    | DemographicsChartData
+)

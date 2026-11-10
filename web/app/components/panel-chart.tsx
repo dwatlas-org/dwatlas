@@ -22,6 +22,7 @@ import {
   type ChartConfig,
 } from "@/components/ui/chart";
 import { Spinner } from "@/components/ui/spinner";
+import { BrazilChoroplethMap } from "@/components/brazil-choropleth-map";
 import type { PanelChartPoint } from "@/lib/api";
 import type { BarSeries, ChartType } from "@/lib/panels";
 
@@ -94,6 +95,12 @@ export function PanelChart({
   isLoading?: boolean;
   error?: string | null;
 }) {
+  if (kind === "map") {
+    return (
+      <BrazilChoroplethMap data={data} isLoading={isLoading} error={error} />
+    );
+  }
+
   const valueKey = dataKey ?? "value";
   const chartConfig = (
     barSeries && barSeries.length > 0
@@ -119,33 +126,18 @@ export function PanelChart({
   const tooltipLabelFormatter = makeTooltipLabelFormatter(tooltipLabelKey);
 
   const chartData = data.map((point) => {
-    const next: Record<string, string | number> = { ...point };
+    const next: Record<string, unknown> = { ...point };
     for (const key of seriesKeys) {
       const raw = next[key];
-      if (raw !== undefined) {
+      if (raw !== undefined && raw !== null) {
         next[key] = typeof raw === "number" ? raw : Number(raw);
       }
     }
-    if (xKey in next && next[xKey] !== undefined) {
-      next[xKey] = coerceNumber(next[xKey]);
+    if (xKey in next && next[xKey] !== undefined && next[xKey] !== null) {
+      next[xKey] = coerceNumber(next[xKey] as string | number);
     }
-    return next;
+    return next as Record<string, string | number>;
   });
-
-  if (kind === "map") {
-    return (
-      <div className="flex aspect-auto h-[300px] w-full flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-slate-200 bg-slate-50/50 text-sm text-slate-500">
-        {isLoading ? (
-          <>
-            <Spinner size="lg" className="text-slate-600" />
-            <span className="text-xs text-slate-400">Loading map data…</span>
-          </>
-        ) : (
-          "Map chart not yet implemented"
-        )}
-      </div>
-    );
-  }
 
   if (isLoading && data.length === 0) {
     return (

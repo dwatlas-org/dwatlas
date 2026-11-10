@@ -191,3 +191,32 @@ async def test_read_charts_route(mock_service):
     assert len(data) == 2
     assert data[0] == {"label": "2024-06-01", "value": 32}
     app.dependency_overrides.clear()
+
+
+@pytest.mark.asyncio
+async def test_repository_fetch_metrics_demographics_empty(mock_db):
+    repo = get_panel_repository(db=mock_db)
+    result = await repo.fetch_metrics(AllowedView.demographics, PanelFilter())
+    assert result == []
+    mock_db.fetch.assert_not_called()
+
+
+@pytest.mark.asyncio
+async def test_service_get_chart_demographics(mock_repo):
+    mock_repo.fetch_chart.return_value = [
+        {
+            "bin_index": 1,
+            "uf": "SP",
+            "state_name": "São Paulo",
+            "user_count": 500,
+            "label": "10 - 1.000",
+            "color": "#fbd590",
+        }
+    ]
+    service = get_panel_service(repo=mock_repo)
+    result = await service.get_chart(AllowedView.demographics, PanelFilter())
+    assert len(result) == 1
+    assert result[0].uf == "SP"
+    assert result[0].bin_index == 1
+    assert result[0].user_count == 500
+    assert result[0].color == "#fbd590"

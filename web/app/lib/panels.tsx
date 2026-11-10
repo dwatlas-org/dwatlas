@@ -63,13 +63,13 @@ export type PanelGroup = {
 
 export const panelGroups: PanelGroup[] = [
   {
-    title: "Participant Sample",
+    title: "User Sample",
     icon: Users,
     defaultOpen: true,
     items: [
       {
         slug: "temporal-evolution",
-        title: "Temporal evolution",
+        title: "Evolution Over Time",
         description:
           "Variation in the number of regular users of the app over time.",
         view: "temporal_evolution",
@@ -78,7 +78,7 @@ export const panelGroups: PanelGroup[] = [
       },
       {
         slug: "length-of-stay",
-        title: "Length of stay",
+        title: "User Retention",
         description: "How long delivery workers stay active on the platforms.",
         view: "retention_rate",
         chartType: "bar",
@@ -90,7 +90,7 @@ export const panelGroups: PanelGroup[] = [
       },
       {
         slug: "registration-activities",
-        title: "Registration activity",
+        title: "Recording Activity",
         description: "Expenses and earnings registered by workers over time.",
         view: "registrations",
         chartType: "bar",
@@ -107,34 +107,39 @@ export const panelGroups: PanelGroup[] = [
     icon: BrazilIcon,
     items: [
       {
-        slug: "age-demographics",
-        title: "Age & Demographics",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        slug: "demographics",
+        title: "Geographic Distribution",
+        description:
+          "Geographic distribution of regular delivery workers across Brazil.",
+        view: "demographics",
+        chartType: "map",
+        metricLabel: "Regular Users",
+        chartTitle: "Distribution of regular users by state",
       },
       {
         slug: "gender-identity",
-        title: "Gender & Identity",
+        title: "Gender",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       },
       {
         slug: "education-level",
-        title: "Education Level",
+        title: "Age",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       },
     ],
   },
   {
-    title: "Work characteristics",
+    title: "Work Characteristics",
     icon: Briefcase,
     items: [
       {
         slug: "app-platforms",
-        title: "App Platforms",
+        title: "Vehicle Type",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       },
       {
         slug: "vehicle-types",
-        title: "Vehicle Types",
+        title: "Company Type",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       },
       {
@@ -297,7 +302,8 @@ export const panelItems = panelGroups.flatMap((group) => group.items);
 
 export function getPanelBySlug(slug?: string): PanelSubItem | undefined {
   if (!slug) return undefined;
-  return panelItems.find((item) => item.slug === slug);
+  const resolvedSlug = slug === "age-demographics" ? "demographics" : slug;
+  return panelItems.find((item) => item.slug === resolvedSlug);
 }
 
 export const defaultPanelSlug =

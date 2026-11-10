@@ -1,5 +1,5 @@
 export type PanelView =
-  "temporal_evolution" | "retention_rate" | "registrations";
+  "temporal_evolution" | "retention_rate" | "registrations" | "demographics";
 
 export type PanelFilters = {
   start_date?: string;
@@ -17,7 +17,19 @@ export type PanelMetrics = {
   metrics: PanelMetricItem[];
 };
 
-export type PanelChartPoint = Record<string, string | number>;
+export type DemographicsChartPoint = {
+  bin_index: number;
+  uf: string;
+  state_name: string;
+  user_count: number | null;
+  label: string;
+  color: string;
+};
+
+export type PanelChartPoint = Record<
+  string,
+  string | number | null | undefined
+>;
 
 const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8000/api";
 

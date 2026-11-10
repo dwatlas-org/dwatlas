@@ -10,6 +10,7 @@ from api.panel.repository import PanelRepository, get_panel_repository
 from api.panel.schema import (
     AllowedView,
     ChartData,
+    DemographicsChartData,
     MetricsResponse,
     PanelFilter,
     RegistrationsChartData,
@@ -21,6 +22,7 @@ CHART_MODELS: dict[AllowedView, type[BaseModel]] = {
     AllowedView.temporal_evolution: TemporalEvolutionChartData,
     AllowedView.retention_rate: RetentionRateChartData,
     AllowedView.registrations: RegistrationsChartData,
+    AllowedView.demographics: DemographicsChartData,
 }
 
 logger = logging.getLogger(__name__)
