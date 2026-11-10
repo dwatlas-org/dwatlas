@@ -24,7 +24,7 @@ import {
 import { Spinner } from "@/components/ui/spinner";
 import { BrazilChoroplethMap } from "@/components/brazil-choropleth-map";
 import type { PanelChartPoint } from "@/lib/api";
-import type { BarSeries, ChartType } from "@/lib/panels";
+import type { BarSeries, ChartType, LineSeries } from "@/lib/panels";
 
 const CHART_COLORS: Record<ChartType, string> = {
   line: "#1e293b",
@@ -82,6 +82,7 @@ export function PanelChart({
   xKey = "label",
   tooltipLabelKey,
   barSeries,
+  lineSeries,
   isLoading = false,
   error = null,
 }: {
@@ -92,6 +93,7 @@ export function PanelChart({
   xKey?: string;
   tooltipLabelKey?: string;
   barSeries?: BarSeries[];
+  lineSeries?: LineSeries[];
   isLoading?: boolean;
   error?: string | null;
 }) {
@@ -102,25 +104,36 @@ export function PanelChart({
   }
 
   const valueKey = dataKey ?? "value";
+  const hasLineSeries = Boolean(lineSeries && lineSeries.length > 0);
+  const hasBarSeries = Boolean(barSeries && barSeries.length > 0);
+
   const chartConfig = (
-    barSeries && barSeries.length > 0
+    hasLineSeries
       ? Object.fromEntries(
-          barSeries.map((series) => [
+          lineSeries!.map((series) => [
             series.dataKey,
             { label: series.label, color: series.color },
           ]),
         )
-      : {
-          [valueKey]: {
-            label: metricLabel,
-            color: CHART_COLORS[kind],
-          },
-        }
+      : hasBarSeries
+        ? Object.fromEntries(
+            barSeries!.map((series) => [
+              series.dataKey,
+              { label: series.label, color: series.color },
+            ]),
+          )
+        : {
+            [valueKey]: {
+              label: metricLabel,
+              color: CHART_COLORS[kind],
+            },
+          }
   ) satisfies ChartConfig;
 
-  const seriesKeys =
-    barSeries && barSeries.length > 0
-      ? barSeries.map((series) => series.dataKey)
+  const seriesKeys = hasLineSeries
+    ? lineSeries!.map((series) => series.dataKey)
+    : hasBarSeries
+      ? barSeries!.map((series) => series.dataKey)
       : [valueKey];
 
   const tooltipLabelFormatter = makeTooltipLabelFormatter(tooltipLabelKey);
@@ -160,18 +173,37 @@ export function PanelChart({
     );
   }
 
+  const isPercentageMetric =
+    metricLabel.includes("%") ||
+    metricLabel.toLowerCase().includes("percent") ||
+    metricLabel.toLowerCase().includes("percentual");
+
   const yAxis = (
     <YAxis
+      width={65}
       tickLine={false}
       axisLine={false}
-      tickMargin={12}
+      tickMargin={8}
+      domain={isPercentageMetric ? [0, 100] : undefined}
       tick={{ fill: "#94a3b8", fontSize: 11 }}
-      label={{
-        value: metricLabel,
-        angle: -90,
-        position: "insideLeft",
-        style: { fill: "#64748b", fontSize: 12 },
-      }}
+      tickFormatter={(v) =>
+        isPercentageMetric && typeof v === "number" ? `${v}%` : String(v)
+      }
+      label={
+        metricLabel
+          ? {
+              value: metricLabel,
+              angle: -90,
+              position: "insideLeft",
+              offset: 0,
+              style: {
+                textAnchor: "middle",
+                fill: "#64748b",
+                fontSize: 12,
+              },
+            }
+          : undefined
+      }
     />
   );
   const xAxis = (
@@ -207,7 +239,7 @@ export function PanelChart({
           <LineChart
             accessibilityLayer
             data={chartData}
-            margin={{ left: -20, right: 12, top: 12, bottom: 12 }}
+            margin={{ left: 16, right: 16, top: 12, bottom: 12 }}
           >
             <CartesianGrid vertical={false} stroke="#f1f5f9" />
             {yAxis}
@@ -215,20 +247,67 @@ export function PanelChart({
             <ChartTooltip
               content={
                 <ChartTooltipContent
-                  className="w-[150px] bg-white text-slate-900 shadow-md border-slate-200"
-                  nameKey={valueKey}
+                  className="w-[180px] bg-white text-slate-900 shadow-md border-slate-200"
+                  nameKey={hasLineSeries ? undefined : valueKey}
                   labelFormatter={tooltipLabelFormatter}
+                  formatter={
+                    hasLineSeries
+                      ? (value, name, item) => {
+                          const rawLabelKey = `${item.dataKey}_label`;
+                          const customLabel = item.payload?.[rawLabelKey];
+                          const displayVal =
+                            customLabel != null
+                              ? String(customLabel)
+                              : value != null
+                                ? `${value}%`
+                                : "insufficient data";
+                          return (
+                            <div className="flex flex-1 justify-between items-center gap-2">
+                              <span className="text-muted-foreground">
+                                {name}
+                              </span>
+                              <span className="font-mono font-medium text-foreground tabular-nums">
+                                {displayVal}
+                              </span>
+                            </div>
+                          );
+                        }
+                      : undefined
+                  }
                 />
               }
             />
-            <Line
-              dataKey={valueKey}
-              type="linear"
-              stroke={`var(--color-${valueKey})`}
-              strokeWidth={2}
-              dot={{ fill: `var(--color-${valueKey})`, strokeWidth: 0, r: 4 }}
-              activeDot={{ r: 6 }}
-            />
+            {hasLineSeries ? (
+              <>
+                {lineSeries!.map((series) => (
+                  <Line
+                    key={series.dataKey}
+                    dataKey={series.dataKey}
+                    name={series.label}
+                    type="linear"
+                    stroke={`var(--color-${series.dataKey})`}
+                    strokeWidth={2}
+                    dot={{
+                      fill: `var(--color-${series.dataKey})`,
+                      strokeWidth: 0,
+                      r: 4,
+                    }}
+                    activeDot={{ r: 6 }}
+                    connectNulls={false}
+                  />
+                ))}
+                <ChartLegend content={<ChartLegendContent />} />
+              </>
+            ) : (
+              <Line
+                dataKey={valueKey}
+                type="linear"
+                stroke={`var(--color-${valueKey})`}
+                strokeWidth={2}
+                dot={{ fill: `var(--color-${valueKey})`, strokeWidth: 0, r: 4 }}
+                activeDot={{ r: 6 }}
+              />
+            )}
           </LineChart>
         )}
 
@@ -236,7 +315,7 @@ export function PanelChart({
           <BarChart
             accessibilityLayer
             data={chartData}
-            margin={{ left: -20, right: 12, top: 12, bottom: 12 }}
+            margin={{ left: 16, right: 16, top: 12, bottom: 12 }}
           >
             <CartesianGrid vertical={false} stroke="#f1f5f9" />
             {yAxis}
@@ -279,7 +358,7 @@ export function PanelChart({
           <AreaChart
             accessibilityLayer
             data={chartData}
-            margin={{ left: -20, right: 12, top: 12, bottom: 12 }}
+            margin={{ left: 16, right: 16, top: 12, bottom: 12 }}
           >
             <defs>
               <linearGradient id="fillValue" x1="0" y1="0" x2="0" y2="1">

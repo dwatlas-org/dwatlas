@@ -1,11 +1,19 @@
 export type PanelView =
-  "temporal_evolution" | "retention_rate" | "registrations" | "demographics";
+  | "temporal_evolution"
+  | "retention_rate"
+  | "registrations"
+  | "demographics"
+  | "gender";
 
 export type PanelFilters = {
   start_date?: string;
   end_date?: string;
   city?: string;
   state?: string;
+  age_min?: number;
+  age_max?: number;
+  vehicle_type?: string;
+  company_type?: string;
 };
 
 export type PanelMetricItem = {
@@ -24,6 +32,17 @@ export type DemographicsChartPoint = {
   user_count: number | null;
   label: string;
   color: string;
+};
+
+export type GenderChartPoint = {
+  bin_index: number;
+  label: string;
+  men: number | null;
+  women: number | null;
+  other: number | null;
+  men_label: string;
+  women_label: string;
+  other_label: string;
 };
 
 export type PanelChartPoint = Record<

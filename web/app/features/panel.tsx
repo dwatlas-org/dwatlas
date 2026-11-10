@@ -35,6 +35,7 @@ import {
   defaultPanelSlug,
   getPanelBySlug,
   type BarSeries,
+  type LineSeries,
   type ChartType,
 } from "@/lib/panels";
 
@@ -81,6 +82,7 @@ export function Panel() {
       xKey={panel.xKey}
       tooltipLabelKey={panel.tooltipLabelKey}
       barSeries={panel.barSeries}
+      lineSeries={panel.lineSeries}
     />
   );
 }
@@ -96,6 +98,7 @@ function PanelContent({
   xKey,
   tooltipLabelKey,
   barSeries,
+  lineSeries,
 }: {
   view: PanelView;
   title: string;
@@ -107,6 +110,7 @@ function PanelContent({
   xKey?: string;
   tooltipLabelKey?: string;
   barSeries?: BarSeries[];
+  lineSeries?: LineSeries[];
 }) {
   const [range, setRange] = useState<DateRange | undefined>(DEFAULT_RANGE);
   const [filters, setFilters] = useState<PanelFilters>(() =>
@@ -139,6 +143,7 @@ function PanelContent({
             xKey={xKey}
             tooltipLabelKey={tooltipLabelKey}
             barSeries={barSeries}
+            lineSeries={lineSeries}
             data={chart.data ?? []}
             isLoading={chart.isLoading}
             error={chart.error}
@@ -296,6 +301,7 @@ export function Chart({
   xKey,
   tooltipLabelKey,
   barSeries,
+  lineSeries,
   data = [],
   isLoading = false,
   error = null,
@@ -307,6 +313,7 @@ export function Chart({
   xKey?: string;
   tooltipLabelKey?: string;
   barSeries?: BarSeries[];
+  lineSeries?: LineSeries[];
   data?: PanelChartPoint[];
   isLoading?: boolean;
   error?: string | null;
@@ -352,6 +359,7 @@ export function Chart({
         xKey={xKey}
         tooltipLabelKey={tooltipLabelKey}
         barSeries={barSeries}
+        lineSeries={lineSeries}
         isLoading={isLoading}
         error={error}
       />

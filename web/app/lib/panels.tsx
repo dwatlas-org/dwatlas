@@ -21,6 +21,12 @@ export type BarSeries = {
   color: string;
 };
 
+export type LineSeries = {
+  dataKey: string;
+  label: string;
+  color: string;
+};
+
 function BrazilIcon({ className }: { className?: string }) {
   return (
     <svg
@@ -52,6 +58,7 @@ export type PanelSubItem = {
   xKey?: string;
   tooltipLabelKey?: string;
   barSeries?: BarSeries[];
+  lineSeries?: LineSeries[];
 };
 
 export type PanelGroup = {
@@ -119,7 +126,18 @@ export const panelGroups: PanelGroup[] = [
       {
         slug: "gender-identity",
         title: "Gender",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        description:
+          "Monthly percentage distribution of regular users by self-declared gender.",
+        view: "gender",
+        chartType: "line",
+        metricLabel: "Percentage of regular users",
+        chartTitle: "Distribution of regular users by gender",
+        xKey: "label",
+        lineSeries: [
+          { dataKey: "men", label: "Men", color: "#635b24" },
+          { dataKey: "women", label: "Women", color: "#d13b24" },
+          { dataKey: "other", label: "Other", color: "#6c4ca8" },
+        ],
       },
       {
         slug: "education-level",
