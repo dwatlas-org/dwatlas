@@ -59,7 +59,7 @@ export type PanelChartPoint = Record<
   string | number | null | undefined
 >;
 
-const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8000/api";
+const API_URL = import.meta.env.VITE_API_URL ?? "/api";
 
 async function postPanel<T>(
   path: string,

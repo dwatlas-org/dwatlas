@@ -18,6 +18,12 @@ export default defineConfig(({ mode }) => ({
   },
   server: {
     allowedHosts: ["app.dwatlas.org"],
+    proxy: {
+      "/api": {
+        target: "http://localhost:8000",
+        changeOrigin: true,
+      },
+    },
   },
   devtools: {
     enabled: mode === "development",
