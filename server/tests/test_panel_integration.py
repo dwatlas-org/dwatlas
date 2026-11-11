@@ -32,3 +32,16 @@ async def test_raw_query(pg_session: asyncpg.Connection):
     row = await pg_session.fetchval("SELECT 1")
 
     assert row == 1
+
+
+async def test_demographics_metrics_endpoint(client: AsyncClient):
+    response = await client.post(
+        "/api/panels/demographics/metrics",
+        json={},
+    )
+    assert response.status_code == 200
+    data = response.json()
+    assert "metrics" in data
+    assert len(data["metrics"]) == 4
+    labels = [m["label"] for m in data["metrics"]]
+    assert "Regular users" in labels

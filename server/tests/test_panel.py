@@ -194,11 +194,21 @@ async def test_read_charts_route(mock_service):
 
 
 @pytest.mark.asyncio
-async def test_repository_fetch_metrics_demographics_empty(mock_db):
+async def test_repository_fetch_metrics_demographics(mock_db):
+    mock_db.fetch.return_value = [
+        {"label": "Regular users", "value": 1236},
+        {"label": "Regular users are in Southeast (%)", "value": 59.1},
+        {"label": "Regular users are in São Paulo (SP) (%)", "value": 38.4},
+        {"label": "Cities in Brazil with regular users", "value": 294},
+    ]
     repo = get_panel_repository(db=mock_db)
-    result = await repo.fetch_metrics(AllowedView.demographics, PanelFilter())
-    assert result == []
-    mock_db.fetch.assert_not_called()
+    result = await repo.fetch_metrics(AllowedView.demographics, PanelFilter(state="SP"))
+    assert len(result) == 4
+    assert (
+        mock_db.fetch.call_args[0][0]
+        == "SELECT * FROM demographics_metrics(state => $1)"
+    )
+    assert mock_db.fetch.call_args[0][1] == "SP"
 
 
 @pytest.mark.asyncio
