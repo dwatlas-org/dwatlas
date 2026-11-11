@@ -29,8 +29,6 @@ class PanelRepository:
 def get_panel_repository(db: Any = Depends(get_pg_session)) -> PanelRepository:
 
     async def fetch_metrics(view: AllowedView, filters: PanelFilter) -> list[dict]:
-        if view in (AllowedView.gender, AllowedView.age):
-            return []
         query, args = build_function_call(f"{view.value}_metrics", filters)
         rows = await db.fetch(query, *args)
         return [dict(row) for row in rows]
