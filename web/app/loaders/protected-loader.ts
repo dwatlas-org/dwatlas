@@ -1,9 +1,10 @@
 import { getCurrentUser } from "@/lib/api";
+import { redirect } from "react-router";
 
 export async function protectedLoader() {
-  await getCurrentUser();
-  // if (!response.ok) {
-  //   throw redirect("/register");
-  // }
+  const response = await getCurrentUser();
+  if (!response.ok) {
+    throw redirect("/register");
+  }
   return null;
 }
