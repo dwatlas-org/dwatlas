@@ -147,8 +147,8 @@ export function TopbarLayout() {
                   <span className="text-orange-500 font-bold">Atlas</span>
                 </span>
                 <p className="mt-4 text-xs text-white leading-relaxed">
-                  Dados e pesquisa sobre trabalhadores de entrega por
-                  aplicativo. Aberto, livre e reutilizável.
+                  Data and research on platform delivery workers. Open, free,
+                  and reusable.
                 </p>
               </div>
 
@@ -157,13 +157,13 @@ export function TopbarLayout() {
                   href="#"
                   className="no-underline hover:text-white transition-colors"
                 >
-                  CONTATO
+                  CONTACT
                 </a>
                 <a
                   href="#"
                   className="no-underline hover:text-white transition-colors"
                 >
-                  Equipe
+                  Team
                 </a>
                 <a
                   href="#"
@@ -175,7 +175,7 @@ export function TopbarLayout() {
                   href="#"
                   className="no-underline hover:text-white transition-colors"
                 >
-                  Imprensa
+                  Press
                 </a>
                 <a
                   href="#"
@@ -187,25 +187,25 @@ export function TopbarLayout() {
             </div>
 
             <div className="mt-8 flex flex-col sm:flex-row justify-between items-center text-xs text-white gap-4">
-              <p>2026 DeliveryWorkerAtlas - Dados sob licença CC BY 4.0.</p>
+              <p>2026 DeliveryWorkerAtlas - Data under CC BY 4.0 license.</p>
               <div className="flex gap-6">
                 <a
                   href="#"
                   className="no-underline hover:text-stone-300 transition-colors"
                 >
-                  Política de privacidade
+                  Privacy Policy
                 </a>
                 <a
                   href="#"
                   className="no-underline hover:text-stone-300 transition-colors"
                 >
-                  Impresso
+                  Imprint
                 </a>
                 <a
                   href="#"
                   className="no-underline hover:text-stone-300 transition-colors"
                 >
-                  Acessibilidade
+                  Accessibility
                 </a>
               </div>
             </div>
