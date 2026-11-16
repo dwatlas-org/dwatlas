@@ -46,6 +46,7 @@ const footerLinks = [
   { title: "Glossary", url: "#" },
   { title: "FAQ", url: "#" },
   { title: "Contact", url: "#" },
+  { title: "Logout", url: "#" },
 ];
 
 export function MainNav({ ...props }: React.ComponentProps<typeof Sidebar>) {
