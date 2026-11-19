@@ -101,7 +101,7 @@ export const router = createBrowserRouter([
             loader: guestLoader,
           },
           {
-            path: "passwordupdate",
+            path: "passwordupdate/:token",
             Component: PasswordUpdate,
             action: updatePasswordAction,
             loader: guestLoader,
