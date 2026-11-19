@@ -34,6 +34,8 @@ class Settings(BaseSettings):
     REQUEST_ACCESS_TO: EmailStr
     REQUEST_ACCESS_FROM: EmailStr
 
+    RESET_PASSWORD_TOKEN_EXPIRE_MINUTES: int = 15
+
     EMAIL_PROVIDER: str = "console"  # "console" | "smtp" | "mailersend" | ...
 
     EMAIL_SMTP_USER: str | None = None

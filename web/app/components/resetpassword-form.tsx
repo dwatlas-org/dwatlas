@@ -79,7 +79,7 @@ function ResetPasswordFormBody({
           className="flex h-10 w-full items-center justify-center gap-2 rounded-lg bg-[#13315C] font-semibold text-white transition-all hover:bg-[#0E2545] active:scale-[0.98] disabled:opacity-60"
         >
           <span>
-            {isSubmitting ? "Sending E-mail..." : "Send password reset E-mail"}
+            {isSubmitting ? "E-Mail sent" : "Send password reset E-mail"}
           </span>
           <ArrowRight className="size-4 shrink-0" />
         </Button>

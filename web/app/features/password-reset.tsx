@@ -1,6 +1,7 @@
 import { useFetcher } from "react-router";
 import { Card, CardContent } from "@/components/ui/card";
 import { ResetPasswordForm } from "@/components/resetpassword-form";
+import { resetPassword } from "@/lib/api";
 
 export async function resetPasswordAction({ request }: { request: Request }) {
   const formData = await request.formData();
@@ -10,12 +11,12 @@ export async function resetPasswordAction({ request }: { request: Request }) {
     return { error: "Valid email is required" };
   }
 
+  resetPassword(email);
   return { success: true, email };
 }
 
 export function PasswordReset() {
   const fetcher = useFetcher();
-  const isSubmitting = fetcher.state === "submitting";
 
   return (
     <div className="flex min-h-svh w-full flex-col items-center bg-slate-50 px-4 py-12">
@@ -29,11 +30,11 @@ export function PasswordReset() {
             <ResetPasswordForm
               bare
               Form={fetcher.Form}
-              isSubmitting={isSubmitting}
+              isSubmitting={fetcher.data?.success}
               error={fetcher.data?.error}
               success={
                 fetcher.data?.success
-                  ? `Successfully sent password reset E-mail to ${fetcher.data.email}`
+                  ? `If it corresponds to an existing user, we will send a password reset link to ${fetcher.data.email}.`
                   : undefined
               }
             />

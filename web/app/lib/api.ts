@@ -167,3 +167,18 @@ export async function signup(
 
   return response;
 }
+
+export async function resetPassword(email: string): Promise<Response> {
+  const path = "/user/reset_password";
+  console.log(API_URL);
+  console.log(email);
+  const response = await fetch(`${API_URL}${path}`, {
+    method: "post",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      email: email,
+    }),
+  });
+
+  return response;
+}
