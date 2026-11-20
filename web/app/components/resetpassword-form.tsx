@@ -4,7 +4,7 @@ import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { ArrowRight } from "lucide-react";
 
-type SignupFormProps = React.ComponentProps<"div"> & {
+type ResetPasswordFormProps = React.ComponentProps<"div"> & {
   Form?: React.ElementType;
   isSubmitting?: boolean;
   error?: string;
@@ -96,7 +96,7 @@ export function ResetPasswordForm({
   success,
   bare = false,
   ...props
-}: SignupFormProps) {
+}: ResetPasswordFormProps) {
   if (bare) {
     return (
       <ResetPasswordFormBody
