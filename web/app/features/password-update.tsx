@@ -1,28 +1,31 @@
-import { useParams } from "react-router";
+import { useParams, useSearchParams } from "react-router";
 import { useFetcher } from "react-router";
 import { Card, CardContent } from "@/components/ui/card";
 import { UpdatePasswordForm } from "@/components/updatepassword-form";
-import { resetPassword } from "@/lib/api";
+import { updatePassword } from "@/lib/api";
 
 export async function updatePasswordAction({ request }: { request: Request }) {
   const formData = await request.formData();
-  const email = formData.get("email");
   const password = formData.get("password");
   const confirmPassword = formData.get("confirmPassword");
   const token = formData.get("token");
-  console.log(`action has token:${token}`);
+  const email = formData.get("email");
 
   if (password !== confirmPassword) {
     return { error: "Passwords do not match" };
+  }
+  const response = await updatePassword(email, token, password);
+  if (!response.ok) {
+    return { error: "Failed to update password" };
   }
   return { success: true, email };
 }
 
 export function PasswordUpdate() {
   const fetcher = useFetcher();
-  const params = useParams();
-  const token = params.token;
-  console.log(`PasswordUpdate has token:${token}`);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const token = searchParams.get("token");
+  const email = searchParams.get("email");
 
   return (
     <div className="flex min-h-svh w-full flex-col items-center bg-slate-50 px-4 py-12">
@@ -37,11 +40,12 @@ export function PasswordUpdate() {
               bare
               Form={fetcher.Form}
               token={token}
+              email={email}
               isSubmitting={fetcher.data?.success}
               error={fetcher.data?.error}
               success={
                 fetcher.data?.success
-                  ? `If it corresponds to an existing user, we will send a password reset link to ${fetcher.data.email}.`
+                  ? `Successfully updated password for ${fetcher.data.email}.`
                   : undefined
               }
             />

@@ -9,6 +9,7 @@ type SignupFormProps = React.ComponentProps<"div"> & {
   bare?: boolean;
   Form?: React.ElementType;
   token: string;
+  email: string;
   isSubmitting?: boolean;
   error?: string;
   success?: string;
@@ -21,6 +22,7 @@ function UpdatePasswordFormBody({
   className,
   Form = "form",
   token,
+  email,
   isSubmitting = false,
   error,
   success,
@@ -28,6 +30,7 @@ function UpdatePasswordFormBody({
   className?: string;
   Form?: React.ElementType;
   token: string;
+  email: string;
   isSubmitting?: boolean;
   error?: string;
   success?: string;
@@ -60,6 +63,7 @@ function UpdatePasswordFormBody({
 
         <div className="grid grid-cols-2 gap-4">
           <Input id="token" name="token" type="hidden" value={token} />
+          <Input id="email" name="email" type="hidden" value={email} />
           <Field className="flex flex-col gap-1.5">
             <FieldLabel
               htmlFor="password"
@@ -112,19 +116,20 @@ export function UpdatePasswordForm({
   className,
   Form = "form",
   token,
+  email,
   isSubmitting = false,
   error,
   success,
   bare = false,
   ...props
 }: SignupFormProps) {
-  console.log(`UpdatePasswordForm has token: ${token}`);
   if (bare) {
     return (
       <UpdatePasswordFormBody
         className={className}
         Form={Form}
         token={token}
+        email={email}
         isSubmitting={isSubmitting}
         error={error}
         success={success}
@@ -136,6 +141,7 @@ export function UpdatePasswordForm({
       <UpdatePasswordFormBody
         Form={Form}
         token={token}
+        email={email}
         isSubmitting={isSubmitting}
         error={error}
         success={success}

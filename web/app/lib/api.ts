@@ -180,3 +180,22 @@ export async function resetPassword(email: string): Promise<Response> {
 
   return response;
 }
+
+export async function updatePassword(
+  email: string,
+  token: string,
+  password: string,
+): Promise<Response> {
+  const path = "/user/password";
+  const response = await fetch(`${API_URL}${path}`, {
+    method: "put",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      email: email,
+      token: token,
+      password: password,
+    }),
+  });
+
+  return response;
+}
