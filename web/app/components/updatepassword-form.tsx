@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { ArrowRight } from "lucide-react";
-import { useParams } from "react-router";
 
 type UpdatePasswordFormProps = React.ComponentProps<"div"> & {
   bare?: boolean;
