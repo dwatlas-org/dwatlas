@@ -1,8 +1,8 @@
-import { useParams, useSearchParams } from "react-router";
 import { useFetcher } from "react-router";
 import { Card, CardContent } from "@/components/ui/card";
 import { UpdatePasswordForm } from "@/components/updatepassword-form";
 import { updatePassword } from "@/lib/api";
+import { useSearchParams } from "react-router";
 
 export async function updatePasswordAction({ request }: { request: Request }) {
   const formData = await request.formData();
@@ -11,13 +11,20 @@ export async function updatePasswordAction({ request }: { request: Request }) {
   const token = formData.get("token");
   const email = formData.get("email");
 
+  if (typeof password !== "string" || password.length < 8) {
+    return { error: "Password must be at least 8 characters" };
+  }
+
   if (password !== confirmPassword) {
     return { error: "Passwords do not match" };
   }
+
   const response = await updatePassword(email, token, password);
+
   if (!response.ok) {
     return { error: "Failed to update password" };
   }
+
   return { success: true, email };
 }
 
@@ -43,11 +50,7 @@ export function PasswordUpdate() {
               email={email}
               isSubmitting={fetcher.data?.success}
               error={fetcher.data?.error}
-              success={
-                fetcher.data?.success
-                  ? `Successfully updated password for ${fetcher.data.email}.`
-                  : undefined
-              }
+              success={fetcher.data?.success}
             />
           </CardContent>
         </Card>

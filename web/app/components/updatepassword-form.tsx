@@ -5,14 +5,14 @@ import { Input } from "@/components/ui/input";
 import { ArrowRight } from "lucide-react";
 import { useParams } from "react-router";
 
-type SignupFormProps = React.ComponentProps<"div"> & {
+type UpdatePasswordFormProps = React.ComponentProps<"div"> & {
   bare?: boolean;
   Form?: React.ElementType;
   token: string;
   email: string;
   isSubmitting?: boolean;
   error?: string;
-  success?: string;
+  success?: boolean;
 };
 
 const inputClass =
@@ -33,7 +33,7 @@ function UpdatePasswordFormBody({
   email: string;
   isSubmitting?: boolean;
   error?: string;
-  success?: string;
+  success?: boolean;
 }) {
   return (
     <Form
@@ -57,7 +57,10 @@ function UpdatePasswordFormBody({
         </div>
 
         {success ? (
-          <div className="text-sm text-green-600">{success}</div>
+          <div className="text-sm text-green-600">
+            Successfully updated your password, you can now{" "}
+            <a href="/register">login</a> with it.
+          </div>
         ) : null}
         {error ? <div className="text-sm text-red-600">{error}</div> : null}
 
@@ -122,7 +125,7 @@ export function UpdatePasswordForm({
   success,
   bare = false,
   ...props
-}: SignupFormProps) {
+}: UpdatePasswordFormProps) {
   if (bare) {
     return (
       <UpdatePasswordFormBody
