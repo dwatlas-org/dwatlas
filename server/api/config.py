@@ -15,6 +15,7 @@ class Settings(BaseSettings):
     ENVIRONMENT: str = "development"
     DEBUG: bool = False
     BASE_URL: str = "http://localhost:8000"
+    FRONTEND_BASE_URL: str = "http://localhost:5173"
     PROJECT: str = "DeliveryWorkersAtlas API"
     VERSION: str = "0.1"
 
@@ -33,6 +34,8 @@ class Settings(BaseSettings):
 
     REQUEST_ACCESS_TO: EmailStr
     REQUEST_ACCESS_FROM: EmailStr
+
+    RESET_PASSWORD_TOKEN_EXPIRE_MINUTES: int = 15
 
     EMAIL_PROVIDER: str = "console"  # "console" | "smtp" | "mailersend" | ...
 
