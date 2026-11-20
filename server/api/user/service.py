@@ -163,7 +163,7 @@ def send_password_reset(
     message["From"] = settings.REQUEST_ACCESS_FROM
     message["Subject"] = "Delivery Worker Atlas: Password Reset"
     message.set_content(
-        f"Your password reset link: {settings.FRONTEND_BASE_URL}/passwordupdate?token={token}&email={user.email}"
+        f"Your password reset link: {settings.FRONTEND_BASE_URL}/reset-password/update?token={token}&email={user.email}"
     )
     background_tasks.add_task(email_service.send, [message])
 

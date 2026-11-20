@@ -95,13 +95,13 @@ export const router = createBrowserRouter([
             loader: guestLoader,
           },
           {
-            path: "passwordreset",
+            path: "reset-password/request",
             Component: PasswordReset,
             action: resetPasswordAction,
             loader: guestLoader,
           },
           {
-            path: "passwordupdate",
+            path: "reset-password/update",
             Component: PasswordUpdate,
             action: updatePasswordAction,
             loader: guestLoader,
