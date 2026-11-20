@@ -95,7 +95,7 @@ function LoginFormBody({
                 <span>Remember me</span>
               </label>
               <a
-                href="#"
+                href="/passwordreset"
                 className="font-semibold text-[#13315C] hover:underline"
               >
                 Forgot your password?
