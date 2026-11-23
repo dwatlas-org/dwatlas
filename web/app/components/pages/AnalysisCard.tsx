@@ -1,4 +1,4 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, UserRound } from "lucide-react";
 import { Link } from "react-router";
 
 type AnalysisItem = {
@@ -46,11 +46,18 @@ export function AnalysisCard({ item, imagePosition }: AnalysisCardProps) {
         {item.title}
       </h2>
 
-      <div className="mt-2 h-0.5 w-12 bg-[#ff5b24]" />
-
       <p className="mt-4 text-sm leading-6 text-[#526bb1]">{item.summary}</p>
 
-      <p className="mt-4 text-sm text-[#526bb1]">{item.authors.join(", ")}</p>
+      <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2">
+        {item.authors.map((author) => (
+          <div key={author} className="flex min-w-0 items-center gap-2">
+            <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-500">
+              <UserRound className="size-5" aria-hidden="true" />
+            </span>
+            <span className="text-sm text-[#526bb1]">{author}</span>
+          </div>
+        ))}
+      </div>
 
       <Link
         to={`/pages/analyses/${item.id}`}

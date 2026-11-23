@@ -24,7 +24,7 @@ export function GlossaryEntry({
 
   return (
     <Collapsible
-      defaultOpen={term === "Worker-generated data"}
+      defaultOpen={false}
       disabled={!hasDefinition}
       className="group border-b border-blue-100"
     >

@@ -48,22 +48,6 @@
           "The results feed the DWA database, support the development of visualizations and territorial analysis methodologies, and strengthen the use of worker-generated data as a tool for research, advocacy, and data justice."
         ]
       },
-      "outputs": []
-    },
-    {
-      "id": "platform-work-economy",
-      "title": "The economics of platform work: earnings, costs, and sustainability",
-      "description": "This project analyzes the economic dynamics of delivery work across different platforms using data collected by Delivery Worker Atlas. The research seeks to understand remuneration patterns, the main operating costs, and the factors that affect the long-term sustainability of this activity.",
-      "tags": [
-        "Economics of work",
-        "Earnings and costs",
-        "Digital platforms",
-        "Sustainability",
-        "App-based work"
-      ],
-      "imageRef": "/institutional/research/research-placeholder.jpg",
-      "imageAlt": "Delivery worker using a navigation app on a motorcycle",
-      "details": null,
       "outputs": [
         {
           "type": "Article",
@@ -106,6 +90,22 @@
           "url": null
         }
       ]
+    },
+    {
+      "id": "platform-work-economy",
+      "title": "The economics of platform work: earnings, costs, and sustainability",
+      "description": "This project analyzes the economic dynamics of delivery work across different platforms using data collected by Delivery Worker Atlas. The research seeks to understand remuneration patterns, the main operating costs, and the factors that affect the long-term sustainability of this activity.",
+      "tags": [
+        "Economics of work",
+        "Earnings and costs",
+        "Digital platforms",
+        "Sustainability",
+        "App-based work"
+      ],
+      "imageRef": "/institutional/research/research-placeholder.jpg",
+      "imageAlt": "Delivery worker using a navigation app on a motorcycle",
+      "details": null,
+      "outputs": []
     },
     {
       "id": "data-rights-organization",

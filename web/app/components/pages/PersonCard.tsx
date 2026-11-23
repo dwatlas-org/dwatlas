@@ -1,4 +1,4 @@
-import { ChevronDown, Mail } from "lucide-react";
+import { ChevronDown, Mail, UserRound } from "lucide-react";
 
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -21,49 +21,25 @@ type PersonCardProps = {
   };
 };
 
-function getInitials(name: string) {
-  return name
-    .split(" ")
-    .map((part) => part[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase();
-}
-
 export function PersonCard({ person }: PersonCardProps) {
-  const contributionLabel = person.placeholder
-    ? "Contributions to the network"
-    : `${person.name}'s contributions to the network`;
-
   return (
-    <Card className="h-full rounded-lg border border-slate-200 bg-white shadow-none">
-      <CardContent className="flex h-full flex-col p-5">
+    <Card className="min-h-[380px] rounded-lg border border-slate-200 bg-white shadow-none">
+      <CardContent className="flex min-h-[380px] flex-col p-5">
+        {/* Profile information */}
         <div className="flex min-w-0 items-start gap-5">
-          <div
-            className="shrink-0 overflow-hidden rounded-md"
-            style={{
-              width: "120px",
-              height: "150px",
-              flex: "0 0 120px",
-            }}
-          >
+          <div className="flex h-[150px] w-[120px] shrink-0 items-center justify-center overflow-hidden rounded-md bg-slate-100">
             {person.imageRef ? (
               <img
                 src={person.imageRef}
                 alt={`${person.name} profile`}
-                className="block"
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  objectPosition: "center",
-                  display: "block",
-                }}
+                className="block h-full w-full object-cover object-center"
               />
             ) : (
-              <div className="flex h-full w-full items-center justify-center bg-slate-100 text-sm font-semibold text-slate-600">
-                {getInitials(person.name)}
-              </div>
+              <UserRound
+                className="h-14 w-14 text-slate-400"
+                strokeWidth={1.5}
+                aria-hidden="true"
+              />
             )}
           </div>
 
@@ -82,17 +58,19 @@ export function PersonCard({ person }: PersonCardProps) {
           </div>
         </div>
 
-        <p className="mt-5 text-sm leading-6 text-slate-700">
+        {/* Description */}
+        <p className="mt-5 min-h-[72px] text-sm leading-6 text-slate-700">
           {person.description}
         </p>
 
-        <div className="mt-auto pt-5">
+        {/* Contributions */}
+        <div className="pt-5">
           <Collapsible>
             <CollapsibleTrigger
-              className="group flex w-full items-center justify-between rounded-md bg-slate-100 px-4 py-2.5 text-left text-sm font-semibold text-slate-800 transition-colors hover:bg-slate-200 disabled:cursor-default disabled:opacity-100"
               disabled={!person.contributions}
+              className="group flex w-full items-center justify-between rounded-md bg-slate-100 px-4 py-2.5 text-left text-sm font-semibold text-slate-800 transition-colors hover:bg-slate-200 disabled:cursor-default disabled:opacity-100"
             >
-              <span>{contributionLabel}</span>
+              <span>Contributions to the network</span>
 
               <ChevronDown
                 className="h-4 w-4 shrink-0 transition-transform group-data-[state=open]:rotate-180"
@@ -106,12 +84,15 @@ export function PersonCard({ person }: PersonCardProps) {
               </CollapsibleContent>
             ) : null}
           </Collapsible>
+        </div>
 
+        {/* Contact information */}
+        <div className="mt-auto pt-4">
           <a
             href={`mailto:${person.email}`}
-            className="mt-4 inline-flex items-center gap-2 text-sm text-slate-800 underline decoration-slate-300 underline-offset-4 transition-colors hover:text-slate-950"
+            className="inline-flex items-center gap-2 break-all text-sm text-slate-800 underline decoration-slate-300 underline-offset-4 transition-colors hover:text-slate-950"
           >
-            <Mail className="h-4 w-4" aria-hidden="true" />
+            <Mail className="h-4 w-4 shrink-0" aria-hidden="true" />
             <span>{person.email}</span>
           </a>
         </div>

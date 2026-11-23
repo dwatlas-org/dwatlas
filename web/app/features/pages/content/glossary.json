@@ -1,7 +1,7 @@
 {
   "hero": {
-    "kicker": "Terms and definitions",
-    "title": "Glossary",
+    "kicker": "",
+    "title": "Terms and Definitions",
     "description": "This section presents the main concepts, indicators, and terms used by Delivery Worker Atlas. The definitions explain both concepts related to platform work and the way specific measures are produced and used by the project."
   },
   "search": {
@@ -68,80 +68,80 @@
   "terms": [
     {
       "letter": "A",
-      "term": "Delivery app",
-      "definition": null,
-      "source": null,
-      "tags": []
+      "term": "Algorithm",
+      "definition": "A finite sequence of computational instructions or rules used to process information and produce a result or decision. In delivery platforms, algorithms can help match orders with workers, calculate routes and estimated times, or determine which tasks are offered to whom.",
+      "source": "OECD/ILO/EU (2023); ILO (2022)",
+      "tags": ["Platform work", "Data and methodology"]
     },
     {
       "letter": "A",
-      "term": "Algorithm",
-      "definition": null,
-      "source": null,
-      "tags": []
+      "term": "Algorithmic management",
+      "definition": "The use of software-based procedures and data to organize, allocate, monitor, evaluate, or influence work. In delivery platforms, this may involve automated order assignment, performance ratings, incentives, and account restrictions. These systems can shape workers’ opportunities and autonomy, even when human supervisors are not directly involved.",
+      "source": "ILO (2022); Eurofound (2025)",
+      "tags": ["Platform work", "Data and methodology"]
     },
     {
       "letter": "A",
       "term": "Autonomy",
-      "definition": null,
-      "source": null,
-      "tags": []
-    },
-    {
-      "letter": "C",
-      "term": "Urban circulation",
-      "definition": null,
-      "source": null,
-      "tags": []
-    },
-    {
-      "letter": "C",
-      "term": "Employment contract",
-      "definition": null,
-      "source": null,
-      "tags": []
+      "definition": "The degree of control workers have over decisions about their work, including when and where to work, which tasks to accept, and how to perform them. In platform delivery, the freedom to log on or reject an order does not necessarily imply control over prices, access to tasks, performance evaluation, or platform rules.",
+      "source": "OECD/ILO/EU (2023); Eurofound (2025)",
+      "tags": ["Platform work", "Working time"]
     },
     {
       "letter": "D",
-      "term": "Worker-generated data",
-      "definition": "Worker-generated data are information produced directly by delivery workers and motorcycle couriers from their own work experience, through manual records in the app, geolocation sharing, sending screenshots, and other forms of contribution. These data include, among other things, earnings, expenses, working time, trips, platforms used, and working conditions. In Delivery Worker Atlas, these data are processed in aggregated and anonymized form, protecting participants' privacy, and are used to produce indicators, visualizations, and analyses of platform work in Brazil.",
-      "source": "Delivery Worker Atlas",
-      "tags": ["Platform work", "Data", "Worker participation", "Privacy"]
-    },
-    {
-      "letter": "D",
-      "term": "Work expenses",
-      "definition": null,
-      "source": null,
-      "tags": []
+      "term": "Delivery app",
+      "definition": "A mobile application used to request, organize, assign, track, or complete deliveries. Some delivery apps function as digital labour platforms by coordinating paid work between customers, businesses, and couriers; others may only support logistics or recordkeeping. Their functions and degree of control over workers vary.",
+      "source": "ILO (2026); OECD/ILO/EU (2023)",
+      "tags": ["Platform work", "Mobility"]
     },
     {
       "letter": "D",
       "term": "Distance traveled",
-      "definition": null,
-      "source": null,
-      "tags": []
+      "definition": "The length of the route covered by a worker during a defined period or activity, usually expressed in kilometres. It may include trips to pick up and deliver orders and, depending on the measurement method, travel between orders or while waiting for work. Analyses must specify which movements are counted and how distance is measured.",
+      "source": "Delivery Worker Atlas (operational definition)",
+      "tags": ["Mobility", "Data and methodology"]
+    },
+    {
+      "letter": "E",
+      "term": "Employment contract",
+      "definition": "An agreement establishing the terms under which a person performs work for another party, including obligations, remuneration, and applicable rights. The legal status of delivery workers differs across countries and arrangements; signing a platform’s terms of service does not, by itself, settle whether an employment relationship exists.",
+      "source": "ILO (2026); OECD/ILO/EU (2023)",
+      "tags": ["Platform work"]
     },
     {
       "letter": "G",
       "term": "Gross earnings",
-      "definition": null,
-      "source": null,
-      "tags": []
+      "definition": "The total amount recorded as earned from work before subtracting work-related expenses. Depending on the dataset, it may include payments for deliveries, bonuses, and tips. It should not be confused with the amount remaining after fuel, maintenance, vehicle rental, or other operating costs.",
+      "source": "Delivery Worker Atlas (operational definition)",
+      "tags": ["Earnings", "Data and methodology"]
     },
     {
-      "letter": "G",
+      "letter": "N",
       "term": "Net earnings",
-      "definition": null,
-      "source": null,
-      "tags": []
+      "definition": "Gross earnings minus the work-related expenses included in the calculation, over the same reference period. Net earnings provide an estimate of the amount remaining after operating costs, but are not necessarily equivalent to take-home pay after taxes, social contributions, or every unrecorded expense.",
+      "source": "Delivery Worker Atlas (operational definition)",
+      "tags": ["Earnings", "Expenses", "Data and methodology"]
     },
     {
-      "letter": "G",
-      "term": "Algorithmic management",
-      "definition": null,
-      "source": null,
-      "tags": []
+      "letter": "U",
+      "term": "Urban circulation",
+      "definition": "The movement of people, goods, vehicles, and information through urban space. In delivery work, it includes couriers’ journeys between commercial establishments, customers, and waiting areas, shaped by infrastructure, demand, platform decisions, and unequal access to different parts of the city.",
+      "source": "Delivery Worker Atlas (conceptual synthesis)",
+      "tags": ["Mobility", "Platform work"]
+    },
+    {
+      "letter": "W",
+      "term": "Work expenses",
+      "definition": "Costs incurred in carrying out paid work, such as fuel, vehicle maintenance, rental or financing, equipment, mobile data, and work-related fees. Their inclusion and classification depend on the study’s methodology. These expenses reduce the amount of income remaining from gross earnings.",
+      "source": "Delivery Worker Atlas (operational definition)",
+      "tags": ["Expenses", "Earnings"]
+    },
+    {
+      "letter": "W",
+      "term": "Worker-generated data",
+      "definition": "Information contributed or recorded by workers about their own working activities and conditions, including earnings, expenses, time, trips, and platforms used. Contributions may come from manual records, location data shared with consent, or other worker-provided evidence. In Delivery Worker Atlas, these records support aggregated analyses intended to protect participants’ privacy.",
+      "source": "Delivery Worker Atlas (project definition)",
+      "tags": ["Platform work", "Data and methodology"]
     }
   ],
   "cta": {
@@ -151,6 +151,12 @@
     "actionTarget": "contact"
   },
   "sourceNotes": {
-    "definitionsNotShown": "The supplied glossary design only shows the definition for 'Worker-generated data'. Definitions for the other listed terms are therefore left null."
+    "editorialNote": "Definitions are original summaries informed by the sources cited in each entry; DWA operational definitions should be checked against the final published methodology.",
+    "references": {
+      "ILO (2022)": "https://www.ilo.org/publications/algorithmic-management-work-and-its-implications-different-contexts",
+      "ILO (2026)": "https://www.ilo.org/resource/other/c193-decent-work-platform-economy-convention-2026",
+      "OECD/ILO/EU (2023)": "https://www.oecd.org/en/publications/handbook-on-measuring-digital-platform-employment-and-work_0ddcac3b-en.html",
+      "Eurofound (2025)": "https://www.eurofound.europa.eu/en/publications/all/platform-work-algorithmic-management"
+    }
   }
 }

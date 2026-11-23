@@ -1,13 +1,13 @@
-import { InstitutionalHero } from "../../components/pages/InstitutionalHero";
-import { OrganizationLogoCard } from "../../components/pages/OrganizationLogoCard";
-import { PersonCard } from "../../components/pages/PersonCard";
+import { InstitutionalHero } from "@/components/pages/InstitutionalHero";
+import { OrganizationLogoCard } from "@/components/pages/OrganizationLogoCard";
+import { PersonCard } from "@/components/pages/PersonCard";
 import aboutContent from "./content/about.json";
 
 const { hero, sections } = aboutContent;
 
 function SectionHeading({ title }: { title: string }) {
   return (
-    <h2 className="mb-7 font-serif text-3xl font-extrabold leading-tight tracking-tight text-[#112040] md:text-4xl">
+    <h2 className="!mt-0 mb-5 font-serif text-3xl font-extrabold leading-tight tracking-tight text-[#112040] md:text-4xl">
       {title}
     </h2>
   );
@@ -45,13 +45,12 @@ export function AboutPage() {
         description={hero.description}
       />
 
-      <section className="w-full py-10 md:py-12">
+      <section className="w-full pb-5 pt-6 md:pb-6 md:pt-8">
         <div className="mx-auto max-w-6xl px-6 md:px-8">
           <SectionHeading title={sections.currentContributors.title} />
-
-          <ul className="grid list-none grid-cols-1 gap-5 p-0 md:grid-cols-2 lg:grid-cols-3">
+          <ul className="grid list-none grid-cols-1 items-start gap-5 p-0 md:grid-cols-2 lg:grid-cols-3">
             {sections.currentContributors.people.map((person) => (
-              <li key={person.id} className="h-full list-none">
+              <li key={person.id} className="min-w-0 list-none">
                 <PersonCard person={person} />
               </li>
             ))}
@@ -59,13 +58,12 @@ export function AboutPage() {
         </div>
       </section>
 
-      <section className="w-full pb-12 pt-6 md:pb-14 md:pt-8">
+      <section className="w-full pb-8 pt-3 md:pb-10 md:pt-4">
         <div className="mx-auto max-w-6xl px-6 md:px-8">
           <SectionHeading title={sections.pastContributors.title} />
-
-          <ul className="grid list-none grid-cols-1 gap-5 p-0 md:grid-cols-2 lg:grid-cols-3">
+          <ul className="grid list-none grid-cols-1 items-start gap-5 p-0 md:grid-cols-2 lg:grid-cols-3">
             {sections.pastContributors.people.map((person) => (
-              <li key={person.id} className="h-full list-none">
+              <li key={person.id} className="min-w-0 list-none">
                 <PersonCard person={person} />
               </li>
             ))}
@@ -73,14 +71,14 @@ export function AboutPage() {
         </div>
       </section>
 
-      <section className="w-full border-t border-[#e3e7ef] py-12 md:py-14">
+      <section className="w-full pb-8 pt-4 md:pb-10 md:pt-5">
         <div className="mx-auto max-w-6xl px-6 md:px-8">
           <SectionHeading title={sections.institutions.title} />
           <OrganizationGrid items={sections.institutions.items} />
         </div>
       </section>
 
-      <section className="w-full pb-16 pt-4 md:pb-20 md:pt-6">
+      <section className="w-full pb-12 pt-4 md:pb-14 md:pt-5">
         <div className="mx-auto max-w-6xl px-6 md:px-8">
           <SectionHeading title={sections.funding.title} />
           <OrganizationGrid items={sections.funding.items} />
