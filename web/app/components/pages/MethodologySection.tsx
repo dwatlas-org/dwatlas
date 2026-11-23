@@ -83,9 +83,12 @@ const iconSequence = [Database, Settings, Users, BarChart3, FileText];
 
 function SectionTitle({ number, title }: { number: string; title: string }) {
   return (
-    <div className="mb-4">
-      <div className="mb-1 text-lg font-bold text-[#ff5b24]">{number}</div>
-      <h2 className="font-serif text-4xl font-extrabold leading-tight tracking-tight text-[#0f216b] md:text-5xl">
+    <div className="mb-4 flex flex-col gap-1">
+      <span className="m-0 block text-lg font-bold leading-6 text-[#ff5b24]">
+        {number}
+      </span>
+
+      <h2 className="!m-0 font-serif text-4xl font-extrabold leading-tight tracking-tight text-[#0f216b] md:text-5xl">
         {title}
       </h2>
     </div>
@@ -113,7 +116,7 @@ function IntroductionSection({ section }: MethodologySectionProps) {
       <Paragraphs paragraphs={section.paragraphs} />
 
       {section.conceptCards?.length ? (
-        <div className="mt-7 grid gap-5 border-b border-slate-200 pb-8 sm:grid-cols-2 lg:grid-cols-5">
+        <div className="mt-7 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
           {section.conceptCards.map((card, index) => {
             const Icon = iconSequence[index % iconSequence.length];
 
@@ -546,10 +549,7 @@ export function MethodologySection({ section }: MethodologySectionProps) {
   }
 
   return (
-    <section
-      id={section.id}
-      className="scroll-mt-24 border-b border-slate-200 pb-10 last:border-b-0"
-    >
+    <section id={section.id} className="scroll-mt-24 pb-10">
       {content}
     </section>
   );

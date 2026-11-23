@@ -78,7 +78,6 @@ function DetailList({ label, items }: { label: string; items: string[] }) {
 export function ResearchCard({ project }: ResearchCardProps) {
   const hasDetails = Boolean(project.details);
   const hasOutputs = Boolean(project.outputs?.length);
-  const canExpand = hasDetails || hasOutputs;
 
   return (
     <Card className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-none">
@@ -99,7 +98,7 @@ export function ResearchCard({ project }: ResearchCardProps) {
                   <Badge
                     key={tag}
                     variant="outline"
-                    className="rounded-full border-slate-300 bg-slate-50 px-3 py-1 text-xs font-medium text-slate-700"
+                    className="rounded-sm border-slate-300 bg-slate-50 px-3 py-1 text-xs font-medium text-slate-700"
                   >
                     {tag}
                   </Badge>
@@ -125,112 +124,116 @@ export function ResearchCard({ project }: ResearchCardProps) {
 
         <Separator className="bg-slate-200" />
 
-        <Collapsible>
-          <CollapsibleTrigger
-            disabled={!canExpand}
-            className="group flex w-full items-center justify-between bg-[#f4f6f8] px-6 py-4 text-left text-sm font-bold text-[#112040] transition-colors hover:bg-[#edf1f5] disabled:cursor-default disabled:opacity-100 md:px-7"
-          >
-            <span>
-              {hasDetails
-                ? "Project details"
-                : hasOutputs
-                  ? "Outputs"
-                  : "More information"}
-            </span>
+        <div className="divide-y divide-slate-200">
+          <Collapsible>
+            <CollapsibleTrigger
+              disabled={!hasDetails}
+              className="group flex w-full items-center justify-between bg-[#f4f6f8] px-6 py-4 text-left text-sm font-bold text-[#112040] transition-colors hover:bg-[#edf1f5] disabled:cursor-not-allowed disabled:text-slate-400 disabled:hover:bg-[#f4f6f8] md:px-7"
+            >
+              <span>Project details</span>
+              <ChevronDown
+                className="h-4 w-4 shrink-0 transition-transform group-data-[state=open]:rotate-180"
+                aria-hidden="true"
+              />
+            </CollapsibleTrigger>
+            {hasDetails ? (
+              <CollapsibleContent>
+                <div className="space-y-8 px-6 py-7 md:px-7">
+                  {project.details ? (
+                    <div className="grid gap-7 md:grid-cols-2">
+                      {project.details.people?.length ? (
+                        <div>
+                          <p className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500">
+                            People
+                          </p>
 
-            <ChevronDown
-              className="h-4 w-4 shrink-0 transition-transform group-data-[state=open]:rotate-180"
-              aria-hidden="true"
-            />
-          </CollapsibleTrigger>
-
-          {canExpand ? (
-            <CollapsibleContent>
-              <div className="space-y-8 px-6 py-7 md:px-7">
-                {project.details ? (
-                  <div className="grid gap-7 md:grid-cols-2">
-                    {project.details.people?.length ? (
-                      <div>
-                        <p className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500">
-                          People
-                        </p>
-
-                        <div className="mt-2 space-y-2">
-                          {project.details.people.map((person) => (
-                            <div
-                              key={`${person.name}-${person.role}`}
-                              className="text-sm leading-6 text-slate-700"
-                            >
-                              <span className="font-semibold text-slate-900">
-                                {person.name}
-                              </span>
-                              <span className="text-slate-500">
-                                {" "}
-                                · {person.role}
-                              </span>
-                            </div>
-                          ))}
+                          <div className="mt-2 space-y-2">
+                            {project.details.people.map((person) => (
+                              <div
+                                key={`${person.name}-${person.role}`}
+                                className="text-sm leading-6 text-slate-700"
+                              >
+                                <span className="font-semibold text-slate-900">
+                                  {person.name}
+                                </span>
+                                <span className="text-slate-500">
+                                  {" "}
+                                  · {person.role}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
                         </div>
-                      </div>
-                    ) : null}
+                      ) : null}
 
-                    {project.details.period ? (
-                      <div>
-                        <p className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500">
-                          Period
-                        </p>
+                      {project.details.period ? (
+                        <div>
+                          <p className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500">
+                            Period
+                          </p>
 
-                        <p className="mt-2 text-sm leading-6 text-slate-700">
-                          {project.details.period.label}
-                        </p>
-                      </div>
-                    ) : null}
+                          <p className="mt-2 text-sm leading-6 text-slate-700">
+                            {project.details.period.label}
+                          </p>
+                        </div>
+                      ) : null}
 
-                    <DetailList
-                      label="Institutions"
-                      items={project.details.institutions ?? []}
-                    />
+                      <DetailList
+                        label="Institutions"
+                        items={project.details.institutions ?? []}
+                      />
 
-                    <DetailList
-                      label="Funding"
-                      items={project.details.funding ?? []}
-                    />
-                  </div>
-                ) : null}
-
-                {project.details?.contribution?.length ? (
-                  <div className="rounded-md bg-[#f4f6f8] p-5">
-                    <h3 className="font-serif text-lg font-bold text-[#112040]">
-                      {project.details.contributionTitle ??
-                        "Contribution to Delivery Worker Atlas"}
-                    </h3>
-
-                    <div className="mt-3 space-y-3">
-                      {project.details.contribution.map((paragraph) => (
-                        <p
-                          key={paragraph}
-                          className="text-sm leading-6 text-slate-700"
-                        >
-                          {paragraph}
-                        </p>
-                      ))}
+                      <DetailList
+                        label="Funding"
+                        items={project.details.funding ?? []}
+                      />
                     </div>
-                  </div>
-                ) : null}
+                  ) : null}
 
-                {hasOutputs ? (
-                  <div>
-                    <h3 className="mb-3 font-serif text-xl font-bold text-[#112040]">
-                      Outputs
-                    </h3>
+                  {project.details?.contribution?.length ? (
+                    <div className="rounded-md bg-[#f4f6f8] px-5 pb-5 pt-2">
+                      <h3 className="font-serif text-lg font-bold text-[#112040]">
+                        {project.details.contributionTitle ??
+                          "Contribution to Delivery Worker Atlas"}
+                      </h3>
 
-                    <ResearchOutputs outputs={project.outputs ?? []} />
-                  </div>
-                ) : null}
-              </div>
-            </CollapsibleContent>
-          ) : null}
-        </Collapsible>
+                      <div className="mt-3 space-y-3">
+                        {project.details.contribution.map((paragraph) => (
+                          <p
+                            key={paragraph}
+                            className="text-sm leading-6 text-slate-700"
+                          >
+                            {paragraph}
+                          </p>
+                        ))}
+                      </div>
+                    </div>
+                  ) : null}
+                </div>
+              </CollapsibleContent>
+            ) : null}
+          </Collapsible>
+
+          <Collapsible>
+            <CollapsibleTrigger
+              disabled={!hasOutputs}
+              className="group flex w-full items-center justify-between bg-[#f4f6f8] px-6 py-4 text-left text-sm font-bold text-[#112040] transition-colors hover:bg-[#edf1f5] disabled:cursor-not-allowed disabled:text-slate-400 disabled:hover:bg-[#f4f6f8] md:px-7"
+            >
+              <span>Outputs</span>
+              <ChevronDown
+                className="h-4 w-4 shrink-0 transition-transform group-data-[state=open]:rotate-180"
+                aria-hidden="true"
+              />
+            </CollapsibleTrigger>
+            {hasOutputs ? (
+              <CollapsibleContent>
+                <div className="px-6 py-3 md:px-7">
+                  <ResearchOutputs outputs={project.outputs ?? []} />
+                </div>
+              </CollapsibleContent>
+            ) : null}
+          </Collapsible>
+        </div>
       </CardContent>
     </Card>
   );

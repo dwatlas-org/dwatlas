@@ -7,12 +7,12 @@ export function ContactPage() {
   return (
     <main className="flex min-h-full w-full flex-col bg-white">
       <InstitutionalHero
-        kicker={contactContent.hero.kicker}
+        kicker={undefined}
         title={contactContent.hero.title}
         description={contactContent.hero.description}
       />
 
-      <section className="w-full flex-1 py-8 md:py-10">
+      <section className="w-full flex-1 pb-8 pt-3 md:pb-10 md:pt-4">
         <div className="mx-auto w-full max-w-6xl px-6 md:px-8">
           <ContactForm form={contactContent.form} />
         </div>

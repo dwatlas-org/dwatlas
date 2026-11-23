@@ -15,18 +15,18 @@
           "affiliation": "Martin Luther University Halle-Wittenberg / UFRJ",
           "description": "Geographer and doctoral researcher studying platform delivery work and its relationship with the production of urban space.",
           "email": "igor@dwatlas.org",
-          "imageRef": "/institutional/avatars/avatar-01.png",
+          "imageRef": null,
           "contributions": "Overall project coordination, research development, data analysis, development of data-collection and visualization methodologies, coordination with institutional partners, production of texts and reports, and organization of events and debates."
         },
         {
           "id": "quinn",
           "name": "Quinn",
-          "role": "Research and data",
-          "affiliation": "Independent researcher",
-          "description": "Research on platform work, data justice, and participatory methodologies.",
+          "role": "Software development",
+          "affiliation": "Independent developer",
+          "description": "Software developer with experience in web applications and data visualization.",
           "email": "quinn@dwatlas.org",
-          "imageRef": "/institutional/avatars/avatar-01.png",
-          "contributions": null
+          "imageRef": null,
+          "contributions": "Software development, including the implementation of user authentication, login, and access management functionalities, as well as contributions to the development, maintenance, and improvement of the platform."
         },
         {
           "id": "daniel",
@@ -35,8 +35,8 @@
           "affiliation": "Independent developer",
           "description": "Software developer with experience in web applications and data visualization.",
           "email": "daniel@dwatlas.org",
-          "imageRef": "/institutional/avatars/avatar-01.png",
-          "contributions": null
+          "imageRef": null,
+          "contributions": "Management and coordination of software development activities, including the organization of technical tasks, development planning, coordination of implementation processes, and oversight of the platform's technical development."
         },
         {
           "id": "ian",
@@ -45,8 +45,8 @@
           "affiliation": "Independent developer",
           "description": "Developer with experience in web applications, geospatial data, and visualization.",
           "email": "ian@dwatlas.org",
-          "imageRef": "/institutional/avatars/avatar-01.png",
-          "contributions": null
+          "imageRef": null,
+          "contributions": "Software development, implementation and improvement of web application features, user interfaces, and data visualization components, contributing to the functionality, usability, and ongoing development of the platform."
         },
         {
           "id": "ux-design-placeholder",
@@ -55,7 +55,7 @@
           "affiliation": "Institution / independent work",
           "description": "Brief description of trajectory and experience relevant to the project.",
           "email": "nome@dwatlas.org",
-          "imageRef": "/institutional/avatars/avatar-01.png",
+          "imageRef": null,
           "contributions": null,
           "placeholder": true
         },
@@ -66,7 +66,7 @@
           "affiliation": "Institution / independent work",
           "description": "Brief description of trajectory and experience relevant to the project.",
           "email": "nome@dwatlas.org",
-          "imageRef": "/institutional/avatars/avatar-01.png",
+          "imageRef": null,
           "contributions": null,
           "placeholder": true
         }
@@ -82,7 +82,7 @@
           "affiliation": "Institution / independent work",
           "description": "Brief description of trajectory and experience relevant to the project.",
           "email": "nome@dwatlas.org",
-          "imageRef": "/institutional/avatars/avatar-01.png",
+          "imageRef": null,
           "contributions": null,
           "placeholder": true
         },
@@ -93,7 +93,7 @@
           "affiliation": "Institution / independent work",
           "description": "Brief description of trajectory and experience relevant to the project.",
           "email": "nome@dwatlas.org",
-          "imageRef": "/institutional/avatars/avatar-01.png",
+          "imageRef": null,
           "contributions": null,
           "placeholder": true
         },
@@ -104,7 +104,7 @@
           "affiliation": "Institution / independent work",
           "description": "Brief description of trajectory and experience relevant to the project.",
           "email": "nome@dwatlas.org",
-          "imageRef": "/institutional/avatars/avatar-01.png",
+          "imageRef": null,
           "contributions": null,
           "placeholder": true
         }
@@ -122,11 +122,6 @@
           "name": "Martin Luther University Halle-Wittenberg (MLU)",
           "logoRef": "/institutional/logos/mlu.png",
           "url": "https://www.uni-halle.de/"
-        },
-        {
-          "name": "Institute for Research and Urban and Regional Planning (IPPUR/UFRJ)",
-          "logoRef": "/institutional/logos/ippur.png",
-          "url": "https://ippur.ufrj.br/"
         }
       ]
     },
@@ -144,19 +139,9 @@
           "url": "https://www.gov.br/cnpq/pt-br"
         },
         {
-          "name": "AMOBITEC",
-          "logoRef": "/institutional/logos/amobitec.png",
-          "url": "https://amobitec.org/"
-        },
-        {
-          "name": "CEBRAP",
-          "logoRef": "/institutional/logos/cebrap.png",
-          "url": "https://cebrap.org.br/"
-        },
-        {
-          "name": "International Labour Organization",
-          "logoRef": "/institutional/logos/ilo.png",
-          "url": "https://www.ilo.org/"
+          "name": "FAPERJ",
+          "logoRef": "/institutional/logos/faperj.png",
+          "url": "https://www.faperj.br/"
         }
       ]
     }
