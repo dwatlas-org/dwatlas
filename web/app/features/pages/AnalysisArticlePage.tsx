@@ -1,4 +1,4 @@
-import { ArrowLeft, Download, Quote, Share2 } from "lucide-react";
+import { ArrowLeft, Download, Quote, Share2, UserRound } from "lucide-react";
 import { Link, Navigate, useParams } from "react-router";
 
 import { AnalysisBarChart } from "@/components/pages/AnalysisBarChart";
@@ -88,8 +88,6 @@ export function AnalysisArticlePage() {
               {article.title}
             </h1>
 
-            <div className="mt-4 h-0.5 w-14 bg-[#ff5b24]" />
-
             <p className="mt-4 max-w-3xl text-lg leading-7 text-[#3551a4]">
               {article.subtitle}
             </p>
@@ -124,10 +122,19 @@ export function AnalysisArticlePage() {
         </div>
 
         <div className="mt-6">
-          <p className="text-sm font-semibold text-[#102a8f]">
-            {article.authors.join(", ")}
-          </p>
-          <p className="mt-1 text-sm text-[#526bb1]">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+            {article.authors.map((author) => (
+              <div key={author} className="flex items-center gap-3">
+                <span className="flex size-14 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-500">
+                  <UserRound className="size-7" aria-hidden="true" />
+                </span>
+                <span className="text-sm font-semibold text-[#102a8f]">
+                  {author}
+                </span>
+              </div>
+            ))}
+          </div>
+          <p className="mt-3 text-sm text-[#526bb1]">
             With contributions from: {article.contributors.join(", ")}
           </p>
         </div>

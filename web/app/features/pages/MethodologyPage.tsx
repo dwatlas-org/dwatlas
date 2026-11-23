@@ -21,7 +21,7 @@ function MethodologyContent() {
 
       <div className="relative min-w-0 flex-1 bg-white">
         {!open ? (
-          <div className="sticky top-0 z-20 flex h-12 items-center border-b border-slate-100 bg-white/95 px-3 backdrop-blur">
+          <div className="absolute left-3 top-8 z-20">
             <button
               type="button"
               onClick={toggleSidebar}

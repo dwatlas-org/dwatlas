@@ -1,7 +1,7 @@
 {
   "hero": {
-    "kicker": "Frequently Asked Questions",
-    "title": "FAQ",
+    "kicker": "",
+    "title": "Frequently Asked Questions",
     "description": "This section brings together answers to the most common questions about Delivery Worker Atlas, covering the project, the data, the methodology, privacy, and the ways the information produced can be used."
   },
   "categories": [
@@ -14,11 +14,7 @@
           "answer": [
             "Delivery Worker Atlas (DWA) is an open research, data, and visualization infrastructure on delivery platform work in Brazil. The project brings together, analyzes, and makes available data produced in collaboration with workers, seeking to contribute to public debate on mobility, working conditions, remuneration, territorial inequalities, and the rights of platform workers.",
             "Its goal is to produce knowledge about working time, earnings, expenses, urban circulation, and other dimensions of platform work, while preserving participants' privacy and making analytical methods transparent and accessible to workers, researchers, and partner organizations."
-          ],
-          "link": {
-            "label": "Learn more about the project",
-            "target": "about"
-          }
+          ]
         },
         {
           "question": "Why was the project created?",

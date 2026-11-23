@@ -35,7 +35,7 @@ export function ResearchOutputs({ outputs }: ResearchOutputsProps) {
               <div className="mb-2 flex flex-wrap items-center gap-2">
                 <Badge
                   variant="outline"
-                  className="rounded-full border-slate-300 bg-white px-2.5 py-0.5 text-xs font-medium text-slate-700"
+                  className="rounded-sm border-slate-300 bg-white px-2.5 py-0.5 text-xs font-medium text-slate-700"
                 >
                   {output.type}
                 </Badge>

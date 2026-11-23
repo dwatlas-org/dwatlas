@@ -1,7 +1,7 @@
 {
   "hero": {
-    "kicker": "From record to visualization",
-    "title": "Data Tree",
+    "kicker": "",
+    "title": "From Record to Visualization",
     "description": "This page presents the organization, provenance, and processing of the data used in Delivery Worker Atlas. The data tree visually shows how different information sources are integrated, processed, and transformed into research products, visualizations, and analyses."
   },
   "diagram": {
