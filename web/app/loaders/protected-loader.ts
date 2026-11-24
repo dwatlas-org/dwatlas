@@ -1,4 +1,4 @@
-import { getCurrentUser } from "@/lib/api";
+// import { getCurrentUser } from "@/lib/api";
 // import { redirect } from "react-router";
 
 export async function protectedLoader() {
