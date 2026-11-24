@@ -1,3 +1,5 @@
+import datetime
+
 import pytest
 from factory.alchemy import SQLAlchemyModelFactory
 from faker import Faker
@@ -6,8 +8,10 @@ from pytest_factoryboy import register
 from sqlmodel import Session, SQLModel, create_engine
 from sqlmodel.pool import StaticPool
 
+from api.auth.service import create_access_token
 from api.main import app
 from api.user.database import get_session
+from api.user.models import User
 
 from .factories import UserFactory
 
@@ -31,10 +35,9 @@ def session_fixture():
 
 @pytest.fixture(name="client")
 def client_fixture(session: Session):
-    def get_session_override():
-        return session
-
-    app.dependency_overrides[get_session] = get_session_override
+    app.dependency_overrides[get_session] = lambda: (
+        session
+    )  # override to use test session
     client = TestClient(app, base_url="http://localhost")
     yield client
     app.dependency_overrides.clear()
@@ -67,6 +70,13 @@ def username_fixture() -> str:
 @pytest.fixture(name="basepath", scope="function")
 def basepath() -> str:
     return BASE_PATH
+
+
+@pytest.fixture(name="valid_token", scope="function")
+def valid_token(user: User) -> str:
+    expires_minutes = datetime.timedelta(minutes=15)
+    token = create_access_token({"sub": user.email}, expires_minutes)
+    return token
 
 
 register(UserFactory)

@@ -5,6 +5,7 @@ import pytest
 from asyncpg import PostgresError
 from fastapi import HTTPException
 from httpx import ASGITransport, AsyncClient
+from sqlmodel import Session
 
 from api.main import app
 from api.panel.repository import (
@@ -14,6 +15,7 @@ from api.panel.repository import (
 )
 from api.panel.schema import AllowedView, PanelFilter
 from api.panel.service import PanelService, get_panel_service
+from api.user.database import get_session
 
 
 @pytest.fixture
@@ -153,12 +155,15 @@ async def test_service_get_chart(mock_repo):
 
 
 @pytest.mark.asyncio
-async def test_read_metrics_route(mock_service):
+async def test_read_metrics_route(mock_service, valid_token: str, session: Session):
+
     app.dependency_overrides[get_panel_service] = lambda: mock_service
+    app.dependency_overrides[get_session] = lambda: session
 
     async with AsyncClient(
         transport=ASGITransport(app=app), base_url="http://test"
     ) as client:
+        client.cookies = {"access_token": valid_token}
         response = await client.post(
             "/api/panels/temporal_evolution/metrics",
             json={"state": "SP", "start_date": "2026-01-01"},
@@ -175,12 +180,14 @@ async def test_read_metrics_route(mock_service):
 
 
 @pytest.mark.asyncio
-async def test_read_charts_route(mock_service):
+async def test_read_charts_route(mock_service, valid_token: str, session: Session):
     app.dependency_overrides[get_panel_service] = lambda: mock_service
+    app.dependency_overrides[get_session] = lambda: session
 
     async with AsyncClient(
         transport=ASGITransport(app=app), base_url="http://test"
     ) as client:
+        client.cookies = {"access_token": valid_token}
         response = await client.post(
             "/api/panels/temporal_evolution/charts",
             json={"start_date": "2024-06-01"},
@@ -190,6 +197,41 @@ async def test_read_charts_route(mock_service):
     data = response.json()
     assert len(data) == 2
     assert data[0] == {"label": "2024-06-01", "value": 32}
+    app.dependency_overrides.clear()
+
+
+@pytest.mark.asyncio
+async def test_read_metrics_route_unauthenticated(mock_service, session: Session):
+
+    app.dependency_overrides[get_panel_service] = lambda: mock_service
+    app.dependency_overrides[get_session] = lambda: session
+
+    async with AsyncClient(
+        transport=ASGITransport(app=app), base_url="http://test"
+    ) as client:
+        response = await client.post(
+            "/api/panels/temporal_evolution/metrics",
+            json={"state": "SP", "start_date": "2026-01-01"},
+        )
+
+    assert response.status_code == 401
+    app.dependency_overrides.clear()
+
+
+@pytest.mark.asyncio
+async def test_read_charts_route_unauthenticated(mock_service, session: Session):
+    app.dependency_overrides[get_panel_service] = lambda: mock_service
+    app.dependency_overrides[get_session] = lambda: session
+
+    async with AsyncClient(
+        transport=ASGITransport(app=app), base_url="http://test"
+    ) as client:
+        response = await client.post(
+            "/api/panels/temporal_evolution/charts",
+            json={"start_date": "2024-06-01"},
+        )
+
+    assert response.status_code == 401
     app.dependency_overrides.clear()
 
 

@@ -1,15 +1,21 @@
 import asyncpg
 import pytest
 from httpx import ASGITransport, AsyncClient
+from sqlmodel import Session
 
 from api.config import settings
 from api.main import app, lifespan
+from api.user.database import get_session
 
 
 @pytest.fixture
-async def app_setup():
+async def app_setup(session: Session):
     async with lifespan(app):
+        app.dependency_overrides[get_session] = lambda: (
+            session
+        )  # override to use test session
         yield app
+        app.dependency_overrides.clear()
 
 
 @pytest.fixture
@@ -34,7 +40,16 @@ async def test_raw_query(pg_session: asyncpg.Connection):
     assert row == 1
 
 
-async def test_demographics_metrics_endpoint(client: AsyncClient):
+async def test_demographics_metrics_endpoint_unauthenticated(client: AsyncClient):
+    response = await client.post(
+        "/api/panels/demographics/metrics",
+        json={},
+    )
+    assert response.status_code == 401
+
+
+async def test_demographics_metrics_endpoint(client: AsyncClient, valid_token: str):
+    client.cookies = {"access_token": valid_token}
     response = await client.post(
         "/api/panels/demographics/metrics",
         json={},
