@@ -13,7 +13,7 @@ from api.main import app
 from api.user.database import get_session
 from api.user.models import User
 
-from .factories import UserFactory
+from .factories import RoleFactory, UserFactory
 
 fake = Faker()
 
@@ -79,6 +79,15 @@ def valid_token(user: User) -> str:
     return token
 
 
+@pytest.fixture(name="superuser", scope="function")
+def superuser() -> User:
+    role = RoleFactory(name="superuser")
+    user = UserFactory(roles=[role])
+    return user
+
+
 register(UserFactory)
 register(UserFactory, "second_user")
 register(UserFactory, "third_user")
+
+register(RoleFactory)

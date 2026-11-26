@@ -8,7 +8,7 @@ from sqlmodel import Session
 
 from api.config import settings
 from api.user.database import get_session
-from api.user.models import User
+from api.user.models import Role, User
 from api.user.service import get_user_email
 
 from .models import TokenData
@@ -65,3 +65,19 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
         to_encode, settings.AUTH_SECRET_KEY, algorithm=settings.AUTH_ALGORITHM
     )
     return encoded_jwt
+
+
+def has_role(required_roles: list[Role]):
+    async def role_checker(current_user: User = Depends(get_current_active_user)):
+        for role in required_roles:
+            if role not in [role.name for role in current_user.roles]:
+                raise HTTPException(
+                    status_code=status.HTTP_403_FORBIDDEN,
+                    detail=f"Role {role} required",
+                )
+        return current_user
+
+    return role_checker
+
+
+is_superuser = has_role(["superuser"])

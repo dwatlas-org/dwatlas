@@ -2,7 +2,7 @@ import factory
 from faker import Factory as FakerFactory
 from pytest_factoryboy import register
 
-from api.user.models import User
+from api.user.models import Role, User
 from api.user.service import hash_password
 
 faker = FakerFactory.create()
@@ -21,3 +21,11 @@ class UserFactory(factory.alchemy.SQLAlchemyModelFactory):
     full_name: str = factory.LazyFunction(lambda: faker.name())
     disabled: bool = False
     hashed_password: str = factory.LazyFunction(lambda: hash_password(faker.word()))
+
+
+class RoleFactory(factory.alchemy.SQLAlchemyModelFactory):
+    class Meta:
+        model = Role
+        sqlalchemy_session_persistence = "commit"
+
+    name: str = factory.LazyFunction(lambda: faker.word())

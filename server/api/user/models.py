@@ -2,7 +2,7 @@ import datetime
 
 from pydantic import EmailStr
 from sqlalchemy import UniqueConstraint
-from sqlmodel import Field, SQLModel
+from sqlmodel import Field, Relationship, SQLModel
 
 
 class RequestAccessData(SQLModel):
@@ -19,6 +19,11 @@ class UserBase(SQLModel):
     disabled: bool | None = None
 
 
+class UserRoleLink(SQLModel, table=True):
+    user_id: int | None = Field(default=None, foreign_key="user.id", primary_key=True)
+    role_id: int | None = Field(default=None, foreign_key="role.id", primary_key=True)
+
+
 class User(UserBase, table=True):
     __table_args__ = (UniqueConstraint("email"),)
     id: int | None = Field(default=None, primary_key=True)
@@ -31,6 +36,14 @@ class User(UserBase, table=True):
         sa_column_kwargs={"onupdate": lambda: datetime.datetime.now(datetime.UTC)},
     )
     last_login: datetime.datetime | None = None
+    roles: list["Role"] = Relationship(back_populates="users", link_model=UserRoleLink)
+
+
+class Role(SQLModel, table=True):
+    __table_args__ = (UniqueConstraint("name"),)
+    id: int | None = Field(default=None, primary_key=True)
+    name: str
+    users: list["User"] = Relationship(back_populates="roles", link_model=UserRoleLink)
 
 
 class UserCreate(UserBase):
