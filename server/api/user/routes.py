@@ -3,11 +3,14 @@ from typing import Annotated
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, status
 from sqlmodel import Session
 
+from api.auth.service import is_superuser
+
 from .database import get_session
 from .models import (
     PasswordResetData,
     PasswordUpdateData,
     RequestAccessData,
+    User,
     UserCreate,
     UserPublic,
     UserSignup,
@@ -33,12 +36,21 @@ router = APIRouter(prefix="/api/user", tags=["user"])
 
 
 @router.get("/all")
-def api_read_users(*, session: Annotated[Session, Depends(get_session)]):
+def api_read_users(
+    *,
+    session: Annotated[Session, Depends(get_session)],
+    current_active_user: Annotated[User, Depends(is_superuser)],
+):
     return read_users(session)
 
 
 @router.post("/", response_model=UserPublic, status_code=status.HTTP_201_CREATED)
-def api_create_user(*, session: Session = Depends(get_session), user: UserCreate):
+def api_create_user(
+    *,
+    session: Session = Depends(get_session),
+    user: UserCreate,
+    current_active_user: Annotated[User, Depends(is_superuser)],
+):
     try:
         user = create_user(user, session)
     except DuplicateUserEmailError:
@@ -58,7 +70,12 @@ def api_delete_user(*, session: Session = Depends(get_session), user_id: int):
 
 
 @router.get("/{user_id}", response_model=UserPublic)
-def api_read_user(*, session: Session = Depends(get_session), user_id: int):
+def api_read_user(
+    *,
+    session: Session = Depends(get_session),
+    user_id: int,
+    current_active_user: Annotated[User, Depends(is_superuser)],
+):
     user = read_user(user_id, session)
     if not user:
         raise HTTPException(

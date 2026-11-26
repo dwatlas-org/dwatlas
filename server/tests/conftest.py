@@ -79,6 +79,13 @@ def valid_token(user: User) -> str:
     return token
 
 
+@pytest.fixture(name="valid_token_superuser", scope="function")
+def valid_token_superuser(superuser: User) -> str:
+    expires_minutes = datetime.timedelta(minutes=15)
+    token = create_access_token({"sub": superuser.email}, expires_minutes)
+    return token
+
+
 @pytest.fixture(name="superuser", scope="function")
 def superuser() -> User:
     role = RoleFactory(name="superuser")

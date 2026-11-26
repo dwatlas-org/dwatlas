@@ -7,8 +7,39 @@ from api.main import app
 from api.user.models import User
 
 
-def test_api_create_user(client: TestClient, user_data: dict[str, str], basepath: str):
+def test_api_create_user_unauthenticated(
+    client: TestClient, user_data: dict[str, str], basepath: str
+):
+    response = client.post(
+        f"{basepath}/user/",
+        json=user_data,
+    )
+    app.dependency_overrides.clear()
+
+    assert response.status_code == status.HTTP_401_UNAUTHORIZED
+
+
+def test_api_create_user_nosuperuser(
+    client: TestClient, user_data: dict[str, str], basepath: str, valid_token: str
+):
+    client.cookies = {"access_token": valid_token}
+    response = client.post(
+        f"{basepath}/user/",
+        json=user_data,
+    )
+    app.dependency_overrides.clear()
+
+    assert response.status_code == status.HTTP_403_FORBIDDEN
+
+
+def test_api_create_user(
+    client: TestClient,
+    user_data: dict[str, str],
+    basepath: str,
+    valid_token_superuser: str,
+):
     pre = datetime.datetime.now(datetime.UTC)
+    client.cookies = {"access_token": valid_token_superuser}
     response = client.post(
         f"{basepath}/user/",
         json=user_data,
@@ -29,8 +60,13 @@ def test_api_create_user(client: TestClient, user_data: dict[str, str], basepath
 
 
 def test_api_create_user_duplicate_email(
-    user: User, password: str, client: TestClient, basepath: str
+    user: User,
+    password: str,
+    client: TestClient,
+    basepath: str,
+    valid_token_superuser: str,
 ):
+    client.cookies = {"access_token": valid_token_superuser}
     response = client.post(
         f"{basepath}/user/",
         json={"email": user.email, "password": password},
